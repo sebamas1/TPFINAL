@@ -1,7 +1,6 @@
 package main.java.Batalla.naval.TPFinal;
 import java.util.ArrayList;
 
-import barcos.java.Batalla.naval.TPFinal.*;
 public class Tablero implements Observer {
 	DisplayDelTablero display;
 	public Tablero(DisplayDelTablero display) {

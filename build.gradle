@@ -33,10 +33,18 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'Batalla.naval.TPFinal.App'
+    mainClassName = 'Batalla.naval.TPFinal.Main'
 }
 
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
+       testLogging{
+       events "passed", "skipped", "failed"
+    }
+}
+jar{
+     manifest{
+         attributes 'Main-Class': 'main.java.Batalla.naval.TPFinalMain'
+     }
 }
