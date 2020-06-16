@@ -4,16 +4,34 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.ColorModel;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import javax.swing.JFrame;
 
+import barcos.java.Batalla.naval.TPFinal.Barco;
+
+/**
+ * Esta clase es el concrete subject del observer Tablero. El usuario interactua
+ * con esta clase que controla toda la parte grafica de la aplicacion.
+ */
 public class DisplayDelTablero implements Subject {
 	private HashSet<Observer> observers;
+	private Tablero tablero;
+	private boolean debeColocar1 = false;
+	private boolean debeColocar2 = false;
+	private Grilla grilla;
+	private HashMap<Integer, ArrayList<Barco>> barcosJugadores;
 
 	public DisplayDelTablero() {
-		Grilla grilla = new Grilla();
+		grilla = new Grilla(this);
+		barcosJugadores = new HashMap<Integer, ArrayList<Barco>>();
 		observers = new HashSet<Observer>();
+		tablero = new Tablero(this);
+		Jugador usuario = new Jugador("Seba", 0, this);
+
 	}
 
 	public void registerObserver(Observer observer) {
@@ -30,12 +48,42 @@ public class DisplayDelTablero implements Subject {
 		}
 	}
 
+	public void colocarBarcos(ArrayList<Barco> barcos, Integer ID) {
+		barcosJugadores.put(ID, barcos);
+		if (ID == 0) {
+			debeColocar1 = true;
+		} else if (ID == 1) {
+			debeColocar2 = true;
+		}
+	}
+
+	/**
+	 * Esta clase crea casillas para luego ser colocadas en la grilla. Es del tipo
+	 * Button, que puede manejar JFrame e implementa MouseListener para "escuchar"
+	 * el mouse del usuario.
+	 */
+	@SuppressWarnings("serial")
 	private class Casilla extends Button implements MouseListener {
 		private int propiedadCasilla;
 		private boolean atacada = false;
 		private boolean ocupado = false;
+		private int posicionX;
+		private int posicionY;
 
-		public Casilla(int x, int y, int height, int width, int jugador) throws IllegalArgumentException {
+		/**
+		 * Rellenar descripcion de clase
+		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		 * 
+		 * @param x       posicion en el eje x
+		 * @param y       posicion en el eje y
+		 * @param height  dimension de altura
+		 * @param width   dimension de ancho
+		 * @param jugador debe tomar valor 0 para el usuario o 1 para la IA
+		 * @param display es la referencia al display del tablero, esta ahi para
+		 *                comunicacion
+		 */
+		public Casilla(int x, int y, int height, int width, int jugador, DisplayDelTablero display)
+				throws IllegalArgumentException {
 			if (jugador == 0 || jugador == 1) {
 				this.propiedadCasilla = jugador;
 			} else
@@ -60,12 +108,65 @@ public class DisplayDelTablero implements Subject {
 
 		}
 
-		public void mouseReleased(MouseEvent e) {
-			if (!ocupado) {
-				setBackground(new Color(220, 0, 0));
-			} else
-				setBackground(new Color(0, 0, 220));
+		public void setPosicion(int x, int y) {
+			posicionX = x;
+			posicionY = y;
+		}
 
+		/**
+		 * Controla cuando se libera el dedo del mouse, y pinta la casilla con el color
+		 * que corresponda.
+		 * 
+		 * @param e evento del mouse
+		 */
+		public void mouseReleased(MouseEvent e) {
+		if(debeColocar1) {
+        	try {
+        		ubicarBarco(e);
+        	} catch(NullPointerException f) {
+        		int color = 220;
+        		Color defecto = getBackground();
+        		for(int i = 0; i < color ; i++) {
+        			setBackground(new Color(i, 0, 0));
+        			try {
+        				Thread.sleep(1);
+        			}catch(InterruptedException j) {}
+        		}
+        		setBackground(defecto);
+        	}
+        }
+		}
+		/**
+		 *  Si se hace click izuqierdo sobre un boton, ubica el barco verticalmente, con click derecho se ubica
+		 *  horizontalmente.
+		 *  Se controla que el usuario no pueda ingresar barcos en lugares incorrectos, aunque todavia se pueden
+		 *  poner barcos en ambas grillas.
+		 * @param e evento del mouse
+		 * @throws NullPointerException
+		 */
+		private void ubicarBarco(MouseEvent e) throws NullPointerException{
+				if (e.getButton() == 1) {
+					for (int i = 0; i < barcosJugadores.get(0).get(0).getTamaño(); i++) {
+						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
+						casilla.setBackground(new Color(220, 0, 0));
+					}
+					setBackground(new Color(220, 0, 0));
+					barcosJugadores.get(0).remove(0);
+					if (barcosJugadores.get(0).size() == 0) {
+						debeColocar1 = false;
+					}
+				} else if (e.getButton() == 3) {
+					for (int i = 0; i < barcosJugadores.get(0).get(0).getTamaño(); i++) {
+						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
+						casilla.setBackground(new Color(220, 0, 0));
+					}
+					setBackground(new Color(220, 0, 0));
+					barcosJugadores.get(0).remove(0);
+					if (barcosJugadores.get(0).size() == 0) {
+						debeColocar1 = false;
+					}
+				}
+			
 		}
 
 		public boolean getOcupada() {
@@ -85,14 +186,25 @@ public class DisplayDelTablero implements Subject {
 		}
 	}
 
+	/**
+	 * Grilla del tablero
+	 */
+	@SuppressWarnings("serial")
 	private class Grilla extends JFrame {
 		private final int FILAS = 10;
 		private final int COLUMNAS = 10;
 		private final int sizeCasilla = 45;
 		private int WIDTH = 800;
 		private int HEIGHT = 1500;
+		private HashMap<String, Casilla> casillas = new HashMap<String, Casilla>();
 
-		public Grilla() {
+		/**
+		 * El constructor crea una ventana de JFrame, luego crea la cantidad de casillas
+		 * especificadas y se las pasa a la ventana de JFrame en la posicion
+		 * correspondiente. Guarda las casillas en un HashMap y les da a las casillas su
+		 * valor de posicion. Esto es para tener una referencia a todas las casillas.
+		 */
+		public Grilla(DisplayDelTablero display) {
 			setTitle("Batalla naval!");
 			setSize(WIDTH, HEIGHT);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,12 +214,22 @@ public class DisplayDelTablero implements Subject {
 			setLayout(null);
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					add(new Casilla((10 + sizeCasilla * i), (10 + sizeCasilla * j), sizeCasilla, sizeCasilla, 0));
+					Casilla casilla = new Casilla((10 + sizeCasilla * i), (10 + sizeCasilla * j), sizeCasilla,
+							sizeCasilla, 1, display);
+					casilla.setPosicion(10 + sizeCasilla * i, 10 + sizeCasilla * j);
+					String codigoCasilla = (10 + sizeCasilla * i) + "" + (10 + sizeCasilla * j);
+					casillas.put(codigoCasilla, casilla);
+					add(casilla);
 				}
 			}
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					add(new Casilla((10 + sizeCasilla * i), (520 + sizeCasilla * j), sizeCasilla, sizeCasilla, 1));
+					Casilla casilla = new Casilla((10 + sizeCasilla * i), (520 + sizeCasilla * j), sizeCasilla,
+							sizeCasilla, 0, display);
+					casilla.setPosicion(10 + sizeCasilla * i, 520 + sizeCasilla * j);
+					String codigoCasilla = (10 + sizeCasilla * i) + "" + (520 + sizeCasilla * j);
+					casillas.put(codigoCasilla, casilla);
+					add(casilla);
 				}
 			}
 
