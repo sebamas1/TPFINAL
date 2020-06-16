@@ -1,37 +1,11 @@
 package main.java.Batalla.naval.TPFinal;
 
+public interface Subject {
 
-/**
- * 
- */
-public abstract class Subject {
+	public void registerObserver(Observer observer);
 
-    /**
-     * Default constructor
-     */
-    public Subject() {
-    }
+	public void detachObserver(Observer observer);
 
-
-    /**
-     * 
-     */
-    public void registerObserver() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void detachObserver() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void notifyObservers() {
-        // TODO implement here
-    }
+	public void notifyObservers();
 
 }
