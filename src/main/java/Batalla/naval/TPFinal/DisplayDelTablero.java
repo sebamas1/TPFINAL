@@ -150,11 +150,13 @@ public class DisplayDelTablero implements Subject {
 				if (e.getButton() == 1) {
 					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
+						casilla.setOcupada();
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				} else if (e.getButton() == 3) {
 					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
+						casilla.setOcupada();
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				}
@@ -168,11 +170,14 @@ public class DisplayDelTablero implements Subject {
 		//flag me dice si chequero a la derecha o abajo (click izq o derecho)
 		
 		public boolean esValido(MouseEvent e) {
+			Casilla casilla = null;
 			if(e.getButton() == 1) {
 				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
 		        	try {
-						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
-						if(casilla.getOcupada() == true) return false;
+						casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
+						if(casilla.getOcupada() == true) {
+							return false;
+						}
 		        	} catch(NullPointerException f) {
 		        		return false;
 		        	}
@@ -181,7 +186,7 @@ public class DisplayDelTablero implements Subject {
 			else if(e.getButton() == 3){
 				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
 		        	try {
-						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
+						casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
 						if(casilla.getOcupada() == true) return false;
 		        	} catch(NullPointerException f) {
 		        		return false;
