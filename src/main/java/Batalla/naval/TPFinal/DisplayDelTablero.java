@@ -88,7 +88,7 @@ public class DisplayDelTablero implements Subject {
 		public Casilla(int x, int y, int jugador, DisplayDelTablero display)
 				throws IllegalArgumentException {
 			if (jugador == 0 || jugador == 1) {
-				this.propiedadCasilla = jugador;
+				this.setPropietario(jugador);;
 			} else
 				throw new IllegalArgumentException("Ingresar jugador 0 o jugador 1");
 			setBounds(x, y, Grilla.SIZE_CASILLA, Grilla.SIZE_CASILLA);
@@ -274,8 +274,7 @@ public class DisplayDelTablero implements Subject {
 			setLayout(null);
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 1, display);
-					casilla.setPropietario(0);
+					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, display);
 					casilla.setPosicion(MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i, MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j);
 					String codigoCasilla = (MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i) + "" + (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
@@ -284,8 +283,7 @@ public class DisplayDelTablero implements Subject {
 			}
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 0, display);
-					casilla.setPropietario(1);
+					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, display);
 					casilla.setPosicion(MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i, MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j);
 					String codigoCasilla = (MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i) + "" + (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
