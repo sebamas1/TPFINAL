@@ -118,8 +118,9 @@ public class DisplayDelTablero implements Subject {
 		 * @param e evento del mouse
 		 */
 		public void mouseReleased(MouseEvent e) {
-		if(debeColocar1) {
+		if(debeColocar1 && esValido(e)) {
         	try {
+        		
         		ubicarBarco(e);
         	} catch(NullPointerException f) {
         		int color = 220;
@@ -164,7 +165,33 @@ public class DisplayDelTablero implements Subject {
 				}
 			
 		}
-
+		//flag me dice si chequero a la derecha o abajo (click izq o derecho)
+		
+		public boolean esValido(MouseEvent e) {
+			if(e.getButton() == 1) {
+				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
+		        	try {
+						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
+						if(casilla.getOcupada() == true) return false;
+		        	} catch(NullPointerException f) {
+		        		return false;
+		        	}
+				}
+			}
+			else if(e.getButton() == 3){
+				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
+		        	try {
+						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
+						if(casilla.getOcupada() == true) return false;
+		        	} catch(NullPointerException f) {
+		        		return false;
+		        	}
+				}
+			}
+			return true;
+		}
+		
+		
 		public boolean getOcupada() {
 			return ocupado;
 		}
