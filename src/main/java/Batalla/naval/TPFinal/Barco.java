@@ -4,6 +4,7 @@ abstract public class Barco {
 	public PosicionBarco pos;
 	public int size;
 	public int vida;
+	public int propietario;
 	
 
 	public Barco() {
@@ -15,6 +16,10 @@ abstract public class Barco {
 
 	public int getVida() {
 		return vida;
+	}
+	
+	public int getPropietario() {
+		return propietario;
 	}
 
 	public void reducirVida() {
@@ -31,5 +36,8 @@ abstract public class Barco {
 	public void setPos(PosicionBarco pos) {
 		this.pos = pos;
 	}
-
+	
+	public void setProp(int ID) {
+		this.propietario = ID;
+	}
 }

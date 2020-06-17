@@ -16,16 +16,17 @@ import javax.swing.JFrame;
  * con esta clase que controla toda la parte grafica de la aplicacion.
  */
 public class DisplayDelTablero implements Subject {
+	private int cont_aux = 0;
 	private HashSet<Observer> observers;
 	private Tablero tablero;
 	private boolean debeColocar1 = false;
 	private boolean debeColocar2 = false;
 	private Grilla grilla;
-	private HashMap<Integer, ArrayList<Barco>> barcosJugadores;
+	private ArrayList<Barco> barcosJugadores;
 
 	public DisplayDelTablero() {
 		grilla = new Grilla(this);
-		barcosJugadores = new HashMap<Integer, ArrayList<Barco>>();
+		barcosJugadores = null;
 		observers = new HashSet<Observer>();
 		tablero = new Tablero(this);
 		Jugador usuario = new Jugador("Seba", 0, this);
@@ -47,7 +48,10 @@ public class DisplayDelTablero implements Subject {
 	}
 
 	public void colocarBarcos(ArrayList<Barco> barcos, Integer ID) {
-		barcosJugadores.put(ID, barcos);
+		barcosJugadores = barcos;
+		for (int i = 0; i < barcos.size(); i++) {
+				barcos.get(i).setProp(ID);
+	    	}
 		if (ID == 0) {
 			debeColocar1 = true;
 		} else if (ID == 1) {
@@ -148,21 +152,21 @@ public class DisplayDelTablero implements Subject {
 			//Click izquierdo -> completa tantos cuadrados como size hacia abajo
 			//Click derecho -> completa tantos cuadrados como size hacia la derecha
 				if (e.getButton() == 1) {
-					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
+					for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
 						casilla.setOcupada();
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				} else if (e.getButton() == 3) {
-					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
+					for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
 						casilla.setOcupada();
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				}
+				cont_aux = cont_aux + 1;
 				setBackground(new Color(220, 0, 0));
-				barcosJugadores.get(0).remove(0);
-				if (barcosJugadores.get(0).size() == 0) {
+				if (cont_aux >= Tablero.CANT_BARCOS) {
 					debeColocar1 = false;
 				}
 			
@@ -172,7 +176,7 @@ public class DisplayDelTablero implements Subject {
 		public boolean esValido(MouseEvent e) {
 			Casilla casilla = null;
 			if(e.getButton() == 1) {
-				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
+				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
 		        	try {
 						casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
 						if(casilla.getOcupada() == true) {
@@ -184,7 +188,7 @@ public class DisplayDelTablero implements Subject {
 				}
 			}
 			else if(e.getButton() == 3){
-				for(int i=0; i< barcosJugadores.get(0).get(0).getSize(); i++) {
+				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
 		        	try {
 						casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
 						if(casilla.getOcupada() == true) return false;
