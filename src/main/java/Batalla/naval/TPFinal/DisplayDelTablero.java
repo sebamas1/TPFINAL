@@ -93,6 +93,7 @@ public class DisplayDelTablero implements Subject {
 				throw new IllegalArgumentException("Ingresar jugador 0 o jugador 1");
 			setBounds(x, y, Grilla.SIZE_CASILLA, Grilla.SIZE_CASILLA);
 			addMouseListener(this);
+			this.setBackground(new Color(220,220,220));
 		}
 
 		public void mouseClicked(MouseEvent e) {
@@ -249,12 +250,12 @@ public class DisplayDelTablero implements Subject {
 	private class Grilla extends JFrame {
 		private static final int FILAS = 10;
 		private static final int COLUMNAS = 10;
-		private static final int SIZE_CASILLA = 45;
-		private static final int WIDTH = 800;
-		private static final int HEIGHT = 1500;
+		private static final int SIZE_CASILLA = 30;
+		private static final int WIDTH = 750;
+		private static final int HEIGHT = 780;
 		private static final int MARGEN_TOP_GRILLA1 = 10;
 		private static final int MARGEN_LEFT_GRILLA1 = 10;
-		private static final int MARGEN_TOP_GRILLA2 = 520;
+		private static final int MARGEN_TOP_GRILLA2 = 433;
 		private static final int MARGEN_LEFT_GRILLA2 = 10;
 		private HashMap<String, Casilla> casillas = new HashMap<String, Casilla>();
 
