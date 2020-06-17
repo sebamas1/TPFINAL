@@ -13,13 +13,15 @@ public class Tablero implements Observer {
 
 	}
     public void colocarBarcos() {
+    	BarcosFactory factory = new BarcosFactory();
 		ArrayList<Barco> barcos = new ArrayList<Barco>();
-    	Barco corbeta1 = new Corbeta();
-		Barco corbeta2 = new Corbeta();
-		Barco corbeta3 = new Corbeta();
-		Barco fragata1 = new Fragata();
-		Barco fragata2 = new Fragata();
-		Barco destructor1 = new Destructor();
+    	Barco corbeta1 = factory.createBarco("corbeta");
+		Barco corbeta2 = factory.createBarco("corbeta");
+		Barco corbeta3 = factory.createBarco("corbeta");
+		Barco fragata1 = factory.createBarco("fragata");
+		Barco fragata2 = factory.createBarco("fragata");
+		Barco destructor1 = factory.createBarco("destructor");
+		
 		barcos.add(corbeta1);
 		barcos.add(corbeta2);
 		barcos.add(corbeta3);

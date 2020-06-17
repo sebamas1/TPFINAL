@@ -143,26 +143,24 @@ public class DisplayDelTablero implements Subject {
 		 * @throws NullPointerException
 		 */
 		private void ubicarBarco(MouseEvent e) throws NullPointerException{
+			
+			//Click izquierdo -> completa tantos cuadrados como size hacia abajo
+			//Click derecho -> completa tantos cuadrados como size hacia la derecha
 				if (e.getButton() == 1) {
 					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
 						casilla.setBackground(new Color(220, 0, 0));
-					}
-					setBackground(new Color(220, 0, 0));
-					barcosJugadores.get(0).remove(0);
-					if (barcosJugadores.get(0).size() == 0) {
-						debeColocar1 = false;
 					}
 				} else if (e.getButton() == 3) {
 					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
 						casilla.setBackground(new Color(220, 0, 0));
 					}
-					setBackground(new Color(220, 0, 0));
-					barcosJugadores.get(0).remove(0);
-					if (barcosJugadores.get(0).size() == 0) {
-						debeColocar1 = false;
-					}
+				}
+				setBackground(new Color(220, 0, 0));
+				barcosJugadores.get(0).remove(0);
+				if (barcosJugadores.get(0).size() == 0) {
+					debeColocar1 = false;
 				}
 			
 		}

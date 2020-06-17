@@ -1,17 +1,16 @@
 package main.java.Batalla.naval.TPFinal;
 
-public class Barco {
-	private int posicionTop;
-	private int posicionLeft;
-	protected int size;
-	protected int vida;
+abstract public class Barco {
+	public PosicionBarco pos;
+	public int tamaño;
+	public int vida;
+	
 
 	public Barco() {
-		
 	}
 
 	public int getSize() {
-		return size;
+		return tamaño;
 	}
 
 	public int getVida() {
@@ -23,6 +22,14 @@ public class Barco {
 	}
 	public boolean estaVivo() {
 		return vida > 0;
+	}
+
+	public PosicionBarco getPos() {
+		return pos;
+	}
+
+	public void setPos(PosicionBarco pos) {
+		this.pos = pos;
 	}
 
 }
