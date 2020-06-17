@@ -5,8 +5,8 @@ public class Fragata extends Barco {
 
 
 	public Fragata() {
-		tamaño = 3;
-		vida = tamaño;
+		size = 3;
+		vida = size;
 	}
 
 }

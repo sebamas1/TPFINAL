@@ -2,7 +2,7 @@ package main.java.Batalla.naval.TPFinal;
 
 abstract public class Barco {
 	public PosicionBarco pos;
-	public int tamaño;
+	public int size;
 	public int vida;
 	
 
@@ -10,7 +10,7 @@ abstract public class Barco {
 	}
 
 	public int getSize() {
-		return tamaño;
+		return size;
 	}
 
 	public int getVida() {

@@ -4,8 +4,8 @@ public class Destructor extends Barco {
 
 
 	public Destructor() {
-		tamaño = 4;
-		vida = tamaño;
+		size = 4;
+		vida = size;
 	}
 
 }

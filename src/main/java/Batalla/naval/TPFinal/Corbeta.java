@@ -4,8 +4,8 @@ public class Corbeta extends Barco {
 
 
 	public Corbeta() {
-		tamaño = 2;
-		vida = tamaño;
+		size = 2;
+		vida = size;
 	}
 
 }
