@@ -1,10 +1,10 @@
 package main.java.Batalla.naval.TPFinal;
 
 abstract public class Barco {
-	public PosicionBarco pos;
-	public int size;
-	public int vida;
-	public int propietario;
+	protected PosicionBarco pos;
+	protected int size;
+	protected int vida;
+	protected int propietario;
 	
 
 	public Barco() {
