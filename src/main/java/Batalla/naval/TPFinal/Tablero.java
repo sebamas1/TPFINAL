@@ -1,7 +1,6 @@
 package main.java.Batalla.naval.TPFinal;
 import java.util.ArrayList;
 
-import barcos.java.Batalla.naval.TPFinal.*;
 public class Tablero implements Observer {
 	DisplayDelTablero display;
 	public Tablero(DisplayDelTablero display) {
@@ -35,7 +34,7 @@ public class Tablero implements Observer {
 
 
 	public void getBarco(int a, int b) {
-		// TODO implement here
+		return;
 	}
 
 }

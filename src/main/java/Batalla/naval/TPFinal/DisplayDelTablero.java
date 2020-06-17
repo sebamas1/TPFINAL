@@ -11,8 +11,6 @@ import java.util.HashSet;
 
 import javax.swing.JFrame;
 
-import barcos.java.Batalla.naval.TPFinal.Barco;
-
 /**
  * Esta clase es el concrete subject del observer Tablero. El usuario interactua
  * con esta clase que controla toda la parte grafica de la aplicacion.
@@ -146,7 +144,7 @@ public class DisplayDelTablero implements Subject {
 		 */
 		private void ubicarBarco(MouseEvent e) throws NullPointerException{
 				if (e.getButton() == 1) {
-					for (int i = 0; i < barcosJugadores.get(0).get(0).getTamaño(); i++) {
+					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
 						casilla.setBackground(new Color(220, 0, 0));
 					}
@@ -156,7 +154,7 @@ public class DisplayDelTablero implements Subject {
 						debeColocar1 = false;
 					}
 				} else if (e.getButton() == 3) {
-					for (int i = 0; i < barcosJugadores.get(0).get(0).getTamaño(); i++) {
+					for (int i = 0; i < barcosJugadores.get(0).get(0).getSize(); i++) {
 						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
 						casilla.setBackground(new Color(220, 0, 0));
 					}

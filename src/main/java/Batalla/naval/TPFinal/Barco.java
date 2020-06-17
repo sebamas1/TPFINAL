@@ -1,17 +1,17 @@
-package barcos.java.Batalla.naval.TPFinal;
+package main.java.Batalla.naval.TPFinal;
 
 public class Barco {
 	private int posicionTop;
 	private int posicionLeft;
-	protected int tamaño;
+	protected int size;
 	protected int vida;
 
 	public Barco() {
 		
 	}
 
-	public int getTamaño() {
-		return tamaño;
+	public int getSize() {
+		return size;
 	}
 
 	public int getVida() {
