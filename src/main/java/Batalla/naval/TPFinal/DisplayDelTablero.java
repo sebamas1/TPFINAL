@@ -84,13 +84,13 @@ public class DisplayDelTablero implements Subject {
 		 * @param display es la referencia al display del tablero, esta ahi para
 		 *                comunicacion
 		 */
-		public Casilla(int x, int y, int height, int width, int jugador, DisplayDelTablero display)
+		public Casilla(int x, int y, int jugador, DisplayDelTablero display)
 				throws IllegalArgumentException {
 			if (jugador == 0 || jugador == 1) {
 				this.propiedadCasilla = jugador;
 			} else
 				throw new IllegalArgumentException("Ingresar jugador 0 o jugador 1");
-			setBounds(x, y, height, width);
+			setBounds(x, y, Grilla.SIZE_CASILLA, Grilla.SIZE_CASILLA);
 			addMouseListener(this);
 		}
 
@@ -153,18 +153,18 @@ public class DisplayDelTablero implements Subject {
 			//Click derecho -> completa tantos cuadrados como size hacia la derecha
 				if (e.getButton() == 1) {
 					barcosJugadores.get(cont_aux).setPos(new PosicionBarco(posicionX, posicionY,
-							posicionX, posicionY + grilla.sizeCasilla * barcosJugadores.get(cont_aux).getSize()));
+							posicionX, posicionY + Grilla.SIZE_CASILLA * barcosJugadores.get(cont_aux).getSize()));
 					for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
-						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
-						casilla.setOcupada();
+						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (Grilla.SIZE_CASILLA * i)));
+						casilla.setOcupada(true);
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				} else if (e.getButton() == 3) {
 					barcosJugadores.get(cont_aux).setPos(new PosicionBarco (posicionX, posicionY, 
-							grilla.sizeCasilla*barcosJugadores.get(cont_aux).getSize(), posicionY));
+							Grilla.SIZE_CASILLA*barcosJugadores.get(cont_aux).getSize(), posicionY));
 					for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
-						Casilla casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
-						casilla.setOcupada();
+						Casilla casilla = grilla.casillas.get((posicionX + (Grilla.SIZE_CASILLA * i)) + "" + posicionY);
+						casilla.setOcupada(true);
 						casilla.setBackground(new Color(220, 0, 0));
 					}
 				}
@@ -180,14 +180,13 @@ public class DisplayDelTablero implements Subject {
 				}
 			
 		}
-		//flag me dice si chequero a la derecha o abajo (click izq o derecho)
 		
 		public boolean esValido(MouseEvent e) {
 			Casilla casilla = null;
 			if(e.getButton() == 1) {
 				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
 		        	try {
-						casilla = grilla.casillas.get(posicionX + "" + (posicionY + (grilla.sizeCasilla * i)));
+						casilla = grilla.casillas.get(posicionX + "" + (posicionY + (Grilla.SIZE_CASILLA * i)));
 						if(casilla.getOcupada() == true) {
 							return false;
 						}
@@ -199,7 +198,7 @@ public class DisplayDelTablero implements Subject {
 			else if(e.getButton() == 3){
 				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
 		        	try {
-						casilla = grilla.casillas.get((posicionX + (grilla.sizeCasilla * i)) + "" + posicionY);
+						casilla = grilla.casillas.get((posicionX + (Grilla.SIZE_CASILLA * i)) + "" + posicionY);
 						if(casilla.getOcupada() == true) return false;
 		        	} catch(NullPointerException f) {
 		        		return false;
@@ -218,12 +217,12 @@ public class DisplayDelTablero implements Subject {
 			return atacada;
 		}
 
-		public void setOcupada() {
-			ocupado = true;
+		public void setOcupada(boolean ocupada) {
+			ocupado = ocupada;
 		}
 
-		public void setAtacada() {
-			atacada = true;
+		public void setAtacada(boolean attacked) {
+			atacada = attacked;
 		}
 	}
 
@@ -232,11 +231,11 @@ public class DisplayDelTablero implements Subject {
 	 */
 	@SuppressWarnings("serial")
 	private class Grilla extends JFrame {
-		private final int FILAS = 10;
-		private final int COLUMNAS = 10;
-		private final int sizeCasilla = 45;
-		private int WIDTH = 800;
-		private int HEIGHT = 1500;
+		public  static final int FILAS = 10;
+		private static final int COLUMNAS = 10;
+		private static final int SIZE_CASILLA = 45;
+		private static final int WIDTH = 800;
+		private static final int HEIGHT = 1500;
 		private HashMap<String, Casilla> casillas = new HashMap<String, Casilla>();
 
 		/**
@@ -255,20 +254,18 @@ public class DisplayDelTablero implements Subject {
 			setLayout(null);
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((10 + sizeCasilla * i), (10 + sizeCasilla * j), sizeCasilla,
-							sizeCasilla, 1, display);
-					casilla.setPosicion(10 + sizeCasilla * i, 10 + sizeCasilla * j);
-					String codigoCasilla = (10 + sizeCasilla * i) + "" + (10 + sizeCasilla * j);
+					Casilla casilla = new Casilla((10 + SIZE_CASILLA * i), (10 + SIZE_CASILLA * j), 1, display);
+					casilla.setPosicion(10 + SIZE_CASILLA * i, 10 + SIZE_CASILLA * j);
+					String codigoCasilla = (10 + SIZE_CASILLA * i) + "" + (10 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
 					add(casilla);
 				}
 			}
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((10 + sizeCasilla * i), (520 + sizeCasilla * j), sizeCasilla,
-							sizeCasilla, 0, display);
-					casilla.setPosicion(10 + sizeCasilla * i, 520 + sizeCasilla * j);
-					String codigoCasilla = (10 + sizeCasilla * i) + "" + (520 + sizeCasilla * j);
+					Casilla casilla = new Casilla((10 + SIZE_CASILLA * i), (520 + SIZE_CASILLA * j), 0, display);
+					casilla.setPosicion(10 + SIZE_CASILLA * i, 520 + SIZE_CASILLA * j);
+					String codigoCasilla = (10 + SIZE_CASILLA * i) + "" + (520 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
 					add(casilla);
 				}
