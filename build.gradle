@@ -45,6 +45,6 @@ test {
 }
 jar{
      manifest{
-         attributes 'Main-Class': 'main.java.Batalla.naval.TPFinalMain'
+         attributes 'Main-Class': 'main.java.Batalla.naval.TPFinal.Main'
      }
 }

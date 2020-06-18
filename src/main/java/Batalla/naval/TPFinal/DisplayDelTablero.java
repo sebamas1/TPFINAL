@@ -15,10 +15,9 @@ import javax.swing.JFrame;
  * Esta clase es el concrete subject del observer Tablero. El usuario interactua
  * con esta clase que controla toda la parte grafica de la aplicacion.
  */
-public class DisplayDelTablero implements Subject {
-	public static final Color ROJO = new Color(220,0,0);
+public class DisplayDelTablero implements Observer {
+	public static final Color ROJO = new Color(220, 0, 0);
 	private int cont_aux = 0;
-	private HashSet<Observer> observers;
 	private Tablero tablero;
 	private boolean debeColocar1 = false;
 	private boolean debeColocar2 = false;
@@ -28,31 +27,20 @@ public class DisplayDelTablero implements Subject {
 	public DisplayDelTablero() {
 		grilla = new Grilla(this);
 		barcosJugadores = null;
-		observers = new HashSet<Observer>();
-		tablero = new Tablero(this);
+		tablero = new Tablero();
 		Jugador usuario = new Jugador("Seba", 0, this);
 
 	}
 
-	public void registerObserver(Observer observer) {
-		observers.add(observer);
-	}
+	public void update() {
 
-	public void detachObserver(Observer observer) {
-		observers.remove(observer);
-	}
-
-	public void notifyObservers() {
-		for (Observer observer : observers) {
-			observer.update();
-		}
 	}
 
 	public void colocarBarcos(ArrayList<Barco> barcos, Integer ID) {
 		barcosJugadores = barcos;
 		for (int i = 0; i < barcos.size(); i++) {
-				barcos.get(i).setProp(ID);
-	    	}
+			barcos.get(i).setProp(ID);
+		}
 		if (ID == 0) {
 			debeColocar1 = true;
 		} else if (ID == 1) {
@@ -85,10 +73,10 @@ public class DisplayDelTablero implements Subject {
 		 * @param display es la referencia al display del tablero, esta ahi para
 		 *                comunicacion
 		 */
-		public Casilla(int x, int y, int jugador, DisplayDelTablero display)
-				throws IllegalArgumentException {
+		public Casilla(int x, int y, int jugador, DisplayDelTablero display) throws IllegalArgumentException {
 			if (jugador == 0 || jugador == 1) {
-				this.setPropietario(jugador);;
+				this.setPropietario(jugador);
+				;
 			} else
 				throw new IllegalArgumentException("Ingresar jugador 0 o jugador 1");
 			setBounds(x, y, Grilla.SIZE_CASILLA, Grilla.SIZE_CASILLA);
@@ -123,100 +111,103 @@ public class DisplayDelTablero implements Subject {
 		 * @param e evento del mouse
 		 */
 		public void mouseReleased(MouseEvent e) {
-		if(debeColocar1 && esValido(e)) {
-        	try {
-        		
-        		ubicarBarco(e);
-        	} catch(NullPointerException f) {
-        		int color = 220;
-        		Color defecto = getBackground();
-        		for(int i = 0; i < color ; i++) {
-        			setBackground(new Color(i, 0, 0));
-        			try {
-        				Thread.sleep(1);
-        			}catch(InterruptedException j) {}
-        		}
-        		setBackground(defecto);
-        	}
-        }
+			if (debeColocar1 && esValido(e)) {
+				try {
+
+					ubicarBarco(e);
+				} catch (NullPointerException f) {
+					int color = 220;
+					Color defecto = getBackground();
+					for (int i = 0; i < color; i++) {
+						setBackground(new Color(i, 0, 0));
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException j) {
+						}
+					}
+					setBackground(defecto);
+				}
+			}
 		}
+
 		/**
-		 *  Si se hace click izuqierdo sobre un boton, ubica el barco verticalmente, con click derecho se ubica
-		 *  horizontalmente.
-		 *  Se controla que el usuario no pueda ingresar barcos en lugares incorrectos, aunque todavia se pueden
-		 *  poner barcos en ambas grillas.
+		 * Si se hace click izuqierdo sobre un boton, ubica el barco verticalmente, con
+		 * click derecho se ubica horizontalmente. Se controla que el usuario no pueda
+		 * ingresar barcos en lugares incorrectos, aunque todavia se pueden poner barcos
+		 * en ambas grillas.
+		 * 
 		 * @param e evento del mouse
 		 * @throws NullPointerException
 		 */
-		private void ubicarBarco(MouseEvent e) throws NullPointerException{
-			
-			//Click izquierdo -> completa tantos cuadrados como size hacia abajo
-			//Click derecho -> completa tantos cuadrados como size hacia la derecha
-				int tamanoBarco = barcosJugadores.get(cont_aux).getSize();
-				if (e.getButton() == 1) {
-					barcosJugadores.get(cont_aux).setPos(new PosicionBarco(posicionX, posicionY,
-							posicionX, posicionY + Grilla.SIZE_CASILLA * tamanoBarco));
-					for (int i = 0; i < tamanoBarco; i++) {
-						Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (Grilla.SIZE_CASILLA * i)));
-						casilla.setOcupada(true);
-						casilla.setBackground(DisplayDelTablero.ROJO);
-					}
-				} else if (e.getButton() == 3) {
-					barcosJugadores.get(cont_aux).setPos(new PosicionBarco (posicionX, posicionY, 
-							Grilla.SIZE_CASILLA * tamanoBarco, posicionY));
-					for (int i = 0; i < tamanoBarco; i++) {
-						Casilla casilla = grilla.casillas.get((posicionX + (Grilla.SIZE_CASILLA * i)) + "" + posicionY);
-						casilla.setOcupada(true);
-						casilla.setBackground(DisplayDelTablero.ROJO);
-					}
+		private void ubicarBarco(MouseEvent e) throws NullPointerException {
+
+			// Click izquierdo -> completa tantos cuadrados como size hacia abajo
+			// Click derecho -> completa tantos cuadrados como size hacia la derecha
+			int tamanoBarco = barcosJugadores.get(cont_aux).getSize();
+			if (e.getButton() == 1) {
+				barcosJugadores.get(cont_aux).setPos(new PosicionBarco(posicionX, posicionY, posicionX,
+						posicionY + Grilla.SIZE_CASILLA * tamanoBarco));
+				for (int i = 0; i < tamanoBarco; i++) {
+					Casilla casilla = grilla.casillas.get(posicionX + "" + (posicionY + (Grilla.SIZE_CASILLA * i)));
+					casilla.setOcupada(true);
+					casilla.setBackground(DisplayDelTablero.ROJO);
 				}
-				cont_aux = cont_aux + 1;
-				setBackground(DisplayDelTablero.ROJO);
-				if (cont_aux >= Tablero.CANT_BARCOS) {
-					debeColocar1 = false;
-					/*for (int i = 0; i < barcosJugadores.size(); i++) {
-						Barco temp = barcosJugadores.get(i);
-						System.out.println(temp.getPos().getXi() + " " + temp.getPos().getYi() + "   "
-								+ temp.getPos().getXf() + " " + temp.getPos().getYf());
-			    	}*/
+			} else if (e.getButton() == 3) {
+				barcosJugadores.get(cont_aux)
+						.setPos(new PosicionBarco(posicionX, posicionY, Grilla.SIZE_CASILLA * tamanoBarco, posicionY));
+				for (int i = 0; i < tamanoBarco; i++) {
+					Casilla casilla = grilla.casillas.get((posicionX + (Grilla.SIZE_CASILLA * i)) + "" + posicionY);
+					casilla.setOcupada(true);
+					casilla.setBackground(DisplayDelTablero.ROJO);
 				}
-			
+			}
+			cont_aux = cont_aux + 1;
+			setBackground(DisplayDelTablero.ROJO);
+			if (cont_aux >= Tablero.CANT_BARCOS) {
+				debeColocar1 = false;
+				/*
+				 * for (int i = 0; i < barcosJugadores.size(); i++) { Barco temp =
+				 * barcosJugadores.get(i); System.out.println(temp.getPos().getXi() + " " +
+				 * temp.getPos().getYi() + "   " + temp.getPos().getXf() + " " +
+				 * temp.getPos().getYf()); }
+				 */
+			}
+
 		}
-		
+
 		public boolean esValido(MouseEvent e) {
 			Casilla casilla = grilla.casillas.get(posicionX + "" + posicionY);
-			
-			//si clickeo en casillas del otro jugador no cuenta
-			if(casilla.getPropietario() != barcosJugadores.get(cont_aux).getPropietario()) {
+
+			// si clickeo en casillas del otro jugador no cuenta
+			if (casilla.getPropietario() != barcosJugadores.get(cont_aux).getPropietario()) {
 				return false;
 			}
-			
-			if(e.getButton() == 1) {
-				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
-		        	try {
+
+			if (e.getButton() == 1) {
+				for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
+					try {
 						casilla = grilla.casillas.get(posicionX + "" + (posicionY + (Grilla.SIZE_CASILLA * i)));
-						if(casilla.getOcupada() == true) {
+						if (casilla.getOcupada() == true) {
 							return false;
 						}
-		        	} catch(NullPointerException f) {
-		        		return false;
-		        	}
+					} catch (NullPointerException f) {
+						return false;
+					}
 				}
-			}
-			else if(e.getButton() == 3){
-				for(int i=0; i< barcosJugadores.get(cont_aux).getSize(); i++) {
-		        	try {
+			} else if (e.getButton() == 3) {
+				for (int i = 0; i < barcosJugadores.get(cont_aux).getSize(); i++) {
+					try {
 						casilla = grilla.casillas.get((posicionX + (Grilla.SIZE_CASILLA * i)) + "" + posicionY);
-						if(casilla.getOcupada() == true) return false;
-		        	} catch(NullPointerException f) {
-		        		return false;
-		        	}
+						if (casilla.getOcupada() == true)
+							return false;
+					} catch (NullPointerException f) {
+						return false;
+					}
 				}
 			}
 			return true;
 		}
-		
-		
+
 		public boolean getOcupada() {
 			return ocupado;
 		}
@@ -232,11 +223,11 @@ public class DisplayDelTablero implements Subject {
 		public void setAtacada(boolean attacked) {
 			atacada = attacked;
 		}
-		
+
 		public void setPropietario(int ID) {
 			this.propiedadCasilla = ID;
 		}
-		
+
 		public int getPropietario() {
 			return this.propiedadCasilla;
 		}
@@ -274,18 +265,22 @@ public class DisplayDelTablero implements Subject {
 			setLayout(null);
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, display);
+					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
+							(MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, display);
 					casilla.setPosicion(MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i, MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j);
-					String codigoCasilla = (MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i) + "" + (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j);
+					String codigoCasilla = (MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i) + ""
+							+ (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
 					add(casilla);
 				}
 			}
 			for (int i = 0; i < COLUMNAS; i++) {
 				for (int j = 0; j < FILAS; j++) {
-					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i), (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, display);
+					Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
+							(MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, display);
 					casilla.setPosicion(MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i, MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j);
-					String codigoCasilla = (MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i) + "" + (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j);
+					String codigoCasilla = (MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i) + ""
+							+ (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j);
 					casillas.put(codigoCasilla, casilla);
 					add(casilla);
 				}
