@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 
 public class Controler {
   private Tablero tablero;
+  AccionBehavior accion;
+  
 
   /** El controler del sistema siguiendo MVC.
    * @param tablero El tablero que va a controlar
@@ -24,8 +26,12 @@ public class Controler {
   public void notifyEvent(MouseEvent e, int i, int j, int id) {
     //hardcodeado para testear coloca barcos nada mas
     if (e.getButton() == 1 || e.getButton() == 3) {
-      tablero.colocarBarco(e.getButton(), i, j, id);
+      accion = new RealizarDisparo();
+      System.out.println("Deberia ejecutarme3");
+      accion.realizarAccion(tablero, e, i, j, id);
+      System.out.println("Deberia ejecutarme5");
       tablero.notifyObservers();
+      
     }
   }  
 }

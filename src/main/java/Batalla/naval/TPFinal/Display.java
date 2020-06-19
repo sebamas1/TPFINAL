@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 public class Display extends JFrame implements Observer {
   private Tablero tablero;
   public static final Color ROJO = new Color(255, 0, 0);
+  public static final Color GRIS = new Color(20, 20, 20);
   private static final int FILAS = 10;
   private static final int COLUMNAS = 10;
   public static final int SIZE_CASILLA = 30;
@@ -87,20 +88,45 @@ public class Display extends JFrame implements Observer {
   
   /** Colorea la grilla segun los valores del tablero.
    */
+  
   public void colorearGrilla() {
+    System.out.println("HOLAHOLAHOLAHOLA");
     int[][] tableroLogico0 = tablero.getGrilla0();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
+        System.out.print(tableroLogico0[i][j] + " " + tableroLogico0[i][j]);
         switch (tableroLogico0[i][j]) {
           case Tablero.BARCO:
             casillas0[i][j].setBackground(ROJO);
+            break;
+          case Tablero.AGUA_MISS:
+            casillas0[i][j].setBackground(GRIS);
             break;
           default:
             ;
         }
       }
+      System.out.println("");
     }
   }
+//  public void colorearGrilla() {
+//    int[][] tableroLogico0 = tablero.getGrilla0();
+//    for (int i = 0; i < FILAS; i++) {
+//      for (int j = 0; j < COLUMNAS; j++) {
+//        System.out.print("holis");
+//        switch (tableroLogico0[i][j]) {
+//          case Tablero.BARCO:
+//            casillas0[i][j].setBackground(ROJO);
+//            //break;
+////          case Tablero.AGUA_MISS:
+////            casillas0[i][j].setBackground(GRIS);
+////            break;
+////          default:
+////            ;
+//        }
+//      }
+//    }
+//  }
   
 
   
@@ -161,6 +187,7 @@ public class Display extends JFrame implements Observer {
     public void mouseReleased(MouseEvent e) {
       //Le avisa al controlador de que se solto el click, en que fila, columna y de que grilla
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
+      System.out.println("Deberia ejecutarme");
     }
   }
 }
