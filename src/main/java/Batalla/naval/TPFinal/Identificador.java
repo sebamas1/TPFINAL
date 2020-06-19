@@ -19,10 +19,10 @@ public class Identificador
  public Identificador()
  {
 	 idField = new JTextField(10);
-	 createAndDisplayGUI();
+	 crearYDesplegarGUI();
  }
 
- private void createAndDisplayGUI()
+ private void crearYDesplegarGUI()
  {
   int selection = JOptionPane.showConfirmDialog(null, getPanel(), "Ingreso del ID : ", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
@@ -30,7 +30,7 @@ public class Identificador
   {
 	  String aux = String.valueOf(idField.getText());
 	  System.out.println("aux es:" + aux + ".");
-	  if(aux != null && aux != "") ID = aux; 
+	  if(!(aux != null || aux != "")) ID = aux; 
 
 	  JOptionPane.showMessageDialog(null, "ID is : " + (ID), "ID : ", JOptionPane.PLAIN_MESSAGE);
   }
