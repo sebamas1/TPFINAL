@@ -1,28 +1,62 @@
 package main.java.Batalla.naval.TPFinal;
 
+/** Guarda 4 ints que definen donde esta el barco.
+ * La posicion de los barcos esta definida por donde empiezan
+ * y donde terminan (son como una linea recta)
+ * @author Juan Pablo
+ *
+ */
 public class PosicionBarco {
-	private int x_inicio;
-	private int y_inicio;
-	private int x_final;
-	private int y_final;
-	
-	public PosicionBarco(int xi, int yi, int xf, int yf){
-		this.x_inicio = xi;
-		this.y_inicio = yi;
-		this.x_final  = xf;
-		this.y_final  = yf;
-	}
-	
-	public int getXi() {
-		return x_inicio;
-	}
-	public int getXf() {
-		return x_final;
-	}
-	public int getYi() {
-		return y_inicio;
-	}
-	public int getYf() {
-		return y_final;
-	}
+  private int inicialX;
+  private int inicialY;
+  private int finalX;
+  private int finalY;
+  	
+  /** Setea las coordenadas iniciales y finales.
+   * 
+   * @param xi x inicial
+   * @param yi y inicial
+   * @param xf x final
+   * @param yf y final
+   */
+  public PosicionBarco(int xi, int yi, int xf, int yf) {
+    this.inicialX = xi;
+    this.inicialY = yi;
+    this.finalX  = xf;
+    this.finalY  = yf;
+  }
+
+  public int getInicialX() {
+    return inicialX;
+  }
+
+  public void setInicialX(int inicialX) {
+    this.inicialX = inicialX;
+  }
+
+  public int getInicialY() {
+    return inicialY;
+  }
+
+  public void setInicialY(int inicialY) {
+    this.inicialY = inicialY;
+  }
+
+  public int getFinalX() {
+    return finalX;
+  }
+
+  public void setFinalX(int finalX) {
+    this.finalX = finalX;
+  }
+
+  public int getFinalY() {
+    return finalY;
+  }
+
+  public void setFinalY(int finalY) {
+    this.finalY = finalY;
+  }
+  	
+  
 }
