@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -73,12 +74,14 @@ class MainTest {
 	
 	@SuppressWarnings("deprecation")
 	void clickCasilla(Coordenada coord, boolean izq) {
-		Point p;
-		p = display.getCasillas0()[coord.getFila()][coord.getColumna()].getLocationOnScreen();
-		int button = izq? InputEvent.BUTTON1_MASK : InputEvent.BUTTON3_MASK;
-		bot.mouseMove(p.x+5, p.y+5);
-		bot.mousePress(button);
-		bot.mouseRelease(button);
+		MouseEvent asd;
+		if(izq == true) {
+			asd = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0, MouseEvent.BUTTON1_DOWN_MASK, 0, 0, 0, false, MouseEvent.BUTTON1);
+		}else {
+			asd = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0, MouseEvent.BUTTON3_DOWN_MASK, 0, 0, 0, false, MouseEvent.BUTTON3);
+		}
+		display.getCasillas0()[coord.getFila()][coord.getColumna()].mouseReleased(asd);
+		bot.delay(300);
 	}
 
 	
