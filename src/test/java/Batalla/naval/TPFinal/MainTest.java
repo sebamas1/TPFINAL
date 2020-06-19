@@ -3,6 +3,7 @@ package test.java.Batalla.naval.TPFinal;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.AWTException;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
@@ -14,11 +15,12 @@ import main.java.Batalla.naval.TPFinal.Tablero;
 
 class MainTest {
 	private Robot bot;
+	Display display;
 
 	@Test
 	void test() throws AWTException {
 		
-		Display display = new Display();
+		display = new Display();
 		bot = new Robot();
 		Tablero tablero = display.getTablero();
 		ArrayList<Coordenada> listaChequearEmpty = new ArrayList<Coordenada>();
@@ -65,13 +67,16 @@ class MainTest {
 			}
 		}
 		
+		
 		//fail("Not yet implemented");
 	}
 	
 	@SuppressWarnings("deprecation")
 	void clickCasilla(Coordenada coord, boolean izq) {
+		Point p;
+		p = display.getCasillas0()[coord.getFila()][coord.getColumna()].getLocationOnScreen();
 		int button = izq? InputEvent.BUTTON1_MASK : InputEvent.BUTTON3_MASK;
-		bot.mouseMove(420 + Display.SIZE_CASILLA * coord.getColumna(), 70 + Display.SIZE_CASILLA * coord.getFila());
+		bot.mouseMove(p.x+5, p.y+5);
 		bot.mousePress(button);
 		bot.mouseRelease(button);
 	}
