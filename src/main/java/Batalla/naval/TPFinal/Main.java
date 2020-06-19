@@ -3,7 +3,8 @@ package main.java.Batalla.naval.TPFinal;
 public class Main {
 
   public static void main(String[] args) {
-    Display launcher = new Display();
+	  Identificador id = new Identificador();
+	  Display launcher = new Display();
     
   }
 
