@@ -17,13 +17,9 @@ import main.java.Batalla.naval.TPFinal.Tablero;
 class MainTest {
 	private Robot bot;
 	Display display;
-
-	   public static void setupHeadlessMode() {
-	        System.setProperty("java.awt.headless", "false");
-	    }
 	@Test
 	void test() throws AWTException {
-		
+		System.setProperty("java.awt.headless", "false");
 		display = new Display();
 		bot = new Robot();
 		Tablero tablero = display.getTablero();
