@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 
 
-public class TableroPosta implements Subject {
+public class Tablero implements Subject {
 	private static final int FILAS = 10;
 	private static final int COLUMNAS = 10;
 	private int[][] grillaJugador0;
@@ -22,7 +22,7 @@ public class TableroPosta implements Subject {
 	private int turno;
 	private int nroTurno;
 
-	public TableroPosta() {
+	public Tablero() {
 		
 		jugador0 = new Jugador("JP", 0);
 		grillaJugador0 = new int[FILAS][COLUMNAS];

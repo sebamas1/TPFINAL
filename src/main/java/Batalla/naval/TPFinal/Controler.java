@@ -3,9 +3,9 @@ package main.java.Batalla.naval.TPFinal;
 import java.awt.event.MouseEvent;
 
 public class Controler {
-	private TableroPosta tablero;
+	private Tablero tablero;
 
-	public Controler(TableroPosta tablero) {
+	public Controler(Tablero tablero) {
 		this.tablero = tablero;
 		tablero.crearGrilla();
 		

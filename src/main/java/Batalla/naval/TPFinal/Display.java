@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class Display extends JFrame implements Observer {
-	private TableroPosta tablero;
-	private static final Color ROJO = new Color(255,0,0);
+	private Tablero tablero;
+	public static final Color ROJO = new Color(255,0,0);
 	private int FILAS = 10;
 	private int COLUMNAS = 10;
-	private static final int SIZE_CASILLA = 45;
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 1500;
-	private static final int MARGEN_TOP_GRILLA1 = 10;
-	private static final int MARGEN_LEFT_GRILLA1 = 10;
-	private static final int MARGEN_TOP_GRILLA2 = 520;
-	private static final int MARGEN_LEFT_GRILLA2 = 10;
+	public static final int SIZE_CASILLA = 30;
+	public static final int WIDTH = 750;
+	public static final int HEIGHT = 780;
+	public static final int MARGEN_TOP_GRILLA1 = 10;
+	public static final int MARGEN_LEFT_GRILLA1 = 10;
+	public static final int MARGEN_TOP_GRILLA2 = 430;
+	public static final int MARGEN_LEFT_GRILLA2 = 10;
 	private final Controler controler;
 	private Casilla[][] casillas0;
 	private Casilla[][] casillas1;
@@ -32,12 +32,25 @@ public class Display extends JFrame implements Observer {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setLayout(null);
-		tablero = new TableroPosta();
+		tablero = new Tablero();
 		tablero.registerObserver(this);
 		controler = new Controler(tablero);
 		casillas0 = new Casilla[FILAS][COLUMNAS];
 		casillas1 = new Casilla[FILAS][COLUMNAS];
 		this.crearGrilla();
+	}
+
+	public Tablero getTablero(){
+		return this.tablero;
+	}
+	
+	
+	public Casilla[][] getCasillas0() {
+		return casillas0;
+	}
+
+	public void setCasillas0(Casilla[][] casillas0) {
+		this.casillas0 = casillas0;
 	}
 
 	public void update() {
@@ -74,7 +87,7 @@ public class Display extends JFrame implements Observer {
 		for(int i=0; i< FILAS; i++) {
 			for(int j=0; j<COLUMNAS; j++) {
 				switch(tableroLogico0[i][j]) {
-				case TableroPosta.BARCO:
+				case Tablero.BARCO:
 					casillas0[i][j].setBackground(ROJO);
 				}
 			}
@@ -84,7 +97,7 @@ public class Display extends JFrame implements Observer {
 
 	
 	@SuppressWarnings("serial")
-	private class Casilla extends Button implements MouseListener {
+	public class Casilla extends Button implements MouseListener {
 		
 		private int fila;
 		private int columna;
