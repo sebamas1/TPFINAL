@@ -18,6 +18,9 @@ class MainTest {
 	private Robot bot;
 	Display display;
 
+	   public static void setupHeadlessMode() {
+	        System.setProperty("java.awt.headless", "false");
+	    }
 	@Test
 	void test() throws AWTException {
 		
