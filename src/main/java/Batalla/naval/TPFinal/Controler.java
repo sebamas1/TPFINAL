@@ -24,13 +24,17 @@ public class Controler {
    * @param id id del jugador 
    */
   public void notifyEvent(MouseEvent e, int i, int j, int id) {
+   
+    if (tablero.getTurno() < 8) {
+      accion = new ColocarBarcos();
+    } else {
+      accion = new RealizarDisparo();
+    }
     //hardcodeado para testear coloca barcos nada mas
     if (e.getButton() == 1 || e.getButton() == 3) {
-      accion = new RealizarDisparo();
-      System.out.println("Deberia ejecutarme3");
       accion.realizarAccion(tablero, e, i, j, id);
-      System.out.println("Deberia ejecutarme5");
       tablero.notifyObservers();
+      //tablero.printMatriz();
       
     }
   }  

@@ -12,7 +12,9 @@ import javax.swing.JFrame;
 public class Display extends JFrame implements Observer {
   private Tablero tablero;
   public static final Color ROJO = new Color(255, 0, 0);
-  public static final Color GRIS = new Color(20, 20, 20);
+  public static final Color GRIS = new Color(130, 130, 130);
+  public static final Color AZUL = new Color(0, 65, 106);
+  public static final Color CELESTE = new Color(60, 220, 255);
   private static final int FILAS = 10;
   private static final int COLUMNAS = 10;
   public static final int SIZE_CASILLA = 30;
@@ -72,6 +74,7 @@ public class Display extends JFrame implements Observer {
       for (int j = 0; j < FILAS; j++) {
         Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
             (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, j, i);
+        casilla.setBackground(CELESTE);
         casillas0[j][i] = casilla;
         add(casilla);
       }
@@ -79,7 +82,8 @@ public class Display extends JFrame implements Observer {
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
         Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
-            (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, i, j);
+            (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, j, i);
+        casilla.setBackground(CELESTE);
         casillas1[j][i] = casilla;
         add(casilla);
       }
@@ -90,45 +94,41 @@ public class Display extends JFrame implements Observer {
    */
   
   public void colorearGrilla() {
-    System.out.println("HOLAHOLAHOLAHOLA");
     int[][] tableroLogico0 = tablero.getGrilla0();
+    int[][] tableroLogico1 = tablero.getGrillaJugador1();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-        System.out.print(tableroLogico0[i][j] + " " + tableroLogico0[i][j]);
-        switch (tableroLogico0[i][j]) {
+        
+        switch (tableroLogico1[i][j]) {
           case Tablero.BARCO:
-            casillas0[i][j].setBackground(ROJO);
+            casillas1[i][j].setBackground(GRIS);
             break;
           case Tablero.AGUA_MISS:
+            casillas1[i][j].setBackground(AZUL);
+            break;
+          case Tablero.BARCO_HIT:
+            casillas1[i][j].setBackground(ROJO);
+            break;
+          default:
+            ;
+        }
+        
+        switch (tableroLogico0[i][j]) {
+          case Tablero.BARCO:
             casillas0[i][j].setBackground(GRIS);
+            break;
+          case Tablero.AGUA_MISS:
+            casillas0[i][j].setBackground(AZUL);
+            break;
+          case Tablero.BARCO_HIT:
+            casillas0[i][j].setBackground(ROJO);
             break;
           default:
             ;
         }
       }
-      System.out.println("");
     }
   }
-//  public void colorearGrilla() {
-//    int[][] tableroLogico0 = tablero.getGrilla0();
-//    for (int i = 0; i < FILAS; i++) {
-//      for (int j = 0; j < COLUMNAS; j++) {
-//        System.out.print("holis");
-//        switch (tableroLogico0[i][j]) {
-//          case Tablero.BARCO:
-//            casillas0[i][j].setBackground(ROJO);
-//            //break;
-////          case Tablero.AGUA_MISS:
-////            casillas0[i][j].setBackground(GRIS);
-////            break;
-////          default:
-////            ;
-//        }
-//      }
-//    }
-//  }
-  
-
   
   @SuppressWarnings("serial")
   public class Casilla extends Button implements MouseListener {

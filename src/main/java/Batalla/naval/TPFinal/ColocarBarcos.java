@@ -19,27 +19,25 @@ public class ColocarBarcos implements AccionBehavior {
   
   public void realizarAccion(Tablero tablero, MouseEvent e, int row, int column, int idCasilla) {
     
+    int turnoJugador = tablero.getTurno() % 2;
     if (!esValido(tablero, e, row, column, idCasilla)) {
       return;
     }
-    System.out.println("Deberia ejecutarme");
-    int [][] grilla = tablero.getGrilla0();
-    //int [][] grilla = tablero.getTurno() == 0 ? tablero.getGrilla0() : tablero.getGrillaJugador1();
-    ArrayList<Barco> barcosJug = tablero.getJugador0().getBarcos();
-    //ArrayList<Barco> barcosJug = tablero.getTurno() == 0 ? tablero.getJugador0().getBarcos()
-        //: tablero.getJugador1().getBarcos();
+    //int [][] grilla = tablero.getGrilla0();
+    int [][] grilla = turnoJugador == 0 ? tablero.getGrilla0() : tablero.getGrillaJugador1();
+    //ArrayList<Barco> barcosJug = tablero.getJugador0().getBarcos();
+    ArrayList<Barco> barcosJug = turnoJugador % 2 == 0 ? tablero.getJugador0().getBarcos()
+        : tablero.getJugador1().getBarcos();
     if (e.getButton() == 1) {
       for (int i = 0; i < barcosJug.get(0).getSize(); i++) {
         grilla[row + i][column] = Tablero.BARCO;
-        System.out.println("marco barco");
       }
     } else if (e.getButton() == 3) {
       for (int i = 0; i < barcosJug.get(0).getSize(); i++) {
         grilla[row][column + i] = Tablero.BARCO;
       }
     }
-    System.out.println("Deberia ejecutarme");
-    //tablero.setTurno(tablero.getTurno() + 1);
+    tablero.setTurno(tablero.getTurno() + 1);
   }
 
   
@@ -56,17 +54,17 @@ public class ColocarBarcos implements AccionBehavior {
   
   public boolean esValido(Tablero tablero, MouseEvent e, int row, int column, int idCasilla) {
     
-    if (tablero.getTurno() != idCasilla) {
+    int turnoJugador = tablero.getTurno() % 2;
+    if (turnoJugador != idCasilla) {
       return false;
     }
-    int [][] grilla = tablero.getGrilla0();
-    //int [][] grilla = tablero.getTurno() == 0 ? tablero.getGrilla0() : tablero.getGrillaJugador1();
-    ArrayList<Barco> barcos = tablero.getJugador0().getBarcos();
-    //ArrayList<Barco> barcos = tablero.getTurno() == 0 ? tablero.getJugador0().getBarcos()
-      //  : tablero.getJugador1().getBarcos();
+    int [][] grilla = turnoJugador == 0 ? tablero.getGrilla0() : tablero.getGrillaJugador1();
+    ArrayList<Barco> barcos = turnoJugador == 0 ? tablero.getJugador0().getBarcos() 
+        : tablero.getJugador1().getBarcos();
     
     //si es click izquierdo chequeo a la derecha de la casilla
     //hardcodeado primer barco
+    
     if (e.getButton() == 1) {
       for (int i = 0; i < barcos.get(0).getSize(); i++) {     
         try {

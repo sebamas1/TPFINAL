@@ -9,12 +9,13 @@ public class RealizarDisparo implements AccionBehavior {
    * y que no se haya disparado antes en esa casilla.
    */
   public boolean esValido(Tablero tablero, MouseEvent e, int row, int column, int idCasilla) {
-
-    if (tablero.getTurno() != idCasilla) {
+    
+    int turnoJugador = tablero.getTurno() % 2;
+    if (turnoJugador == idCasilla) {
       return false;
     }
-    int [][] grilla = tablero.getGrilla0();
-    //int[][] grilla = tablero.getTurno() == 0 ? tablero.getGrillaJugador1() : tablero.getGrilla0();
+    int[][] grilla = (turnoJugador == 0) 
+        ? tablero.getGrillaJugador1() : tablero.getGrilla0();
     if (grilla[row][column] == Tablero.AGUA_MISS || grilla[row][column] == Tablero.BARCO_HIT) {
       return false;
     } else {
@@ -31,9 +32,8 @@ public class RealizarDisparo implements AccionBehavior {
     if (!esValido(tablero, e, row, column, idCasilla)) {
       return;
     }
-    //int[][] grilla = tablero.getTurno() == 0 ? tablero.getGrillaJugador1() : tablero.getGrilla0();
-    int[][] grilla = tablero.getGrilla0();
-
+    int[][] grilla = (tablero.getTurno() % 2 == 0) 
+        ? tablero.getGrillaJugador1() : tablero.getGrilla0();
     switch (grilla[row][column]) {
 
       case Tablero.AGUA:
@@ -48,7 +48,7 @@ public class RealizarDisparo implements AccionBehavior {
         ;
     }
     
-    //tablero.setTurno(tablero.getTurno() + 1);
-}
+    tablero.setTurno(tablero.getTurno() + 1);
+  }
 
 }

@@ -28,15 +28,15 @@ class MainTest {
   }
     
   void clickCasilla(Coordenada coord, boolean izq) {
-    MouseEvent asd;
+    MouseEvent click;
     if (izq == true) {
-      asd = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0,
+      click = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0,
           MouseEvent.BUTTON1_DOWN_MASK, 0, 0, 0, false, MouseEvent.BUTTON1);
     } else {
-      asd = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0, 
+      click = new MouseEvent(display, MouseEvent.MOUSE_RELEASED, 0, 
           MouseEvent.BUTTON3_DOWN_MASK, 0, 0, 0, false, MouseEvent.BUTTON3);
     }
-    display.getCasillas0()[coord.getFila()][coord.getColumna()].mouseReleased(asd);
+    display.getCasillas0()[coord.getFila()][coord.getColumna()].mouseReleased(click);
   }
 
   

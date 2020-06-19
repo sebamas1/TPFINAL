@@ -16,7 +16,7 @@ public class Tablero implements Subject {
   public static final int BARCO = 0;
   public static final int AGUA = 1;
   public static final int BARCO_HIT = 2;
-  public static final int AGUA_MISS = 2;
+  public static final int AGUA_MISS = 3;
   private HashSet<Observer> observers;
   private boolean grillaCreada = false;
   private int turno;
@@ -29,6 +29,7 @@ public class Tablero implements Subject {
   public Tablero() {
     
     jugador0 = new Jugador("JP", 0);
+    jugador1 = new Jugador("Seba", 1);
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
     observers = new HashSet<Observer>();
@@ -124,6 +125,21 @@ public class Tablero implements Subject {
     this.jugador1 = jugador1;
   }
 
+  public void printMatriz() {
+    for (int i = 0; i < FILAS; i++) {
+      for (int j = 0; j < COLUMNAS; j++) {
+        System.out.print(grillaJugador0[i][j] + "  ");
+      }
+      System.out.println();
+    }
+    System.out.println();      System.out.println();
+    for (int i = 0; i < FILAS; i++) {
+      for (int j = 0; j < COLUMNAS; j++) {
+        System.out.print(grillaJugador1[i][j] + "  ");
+      }
+      System.out.println();
+    }
+  }
   
 
 
