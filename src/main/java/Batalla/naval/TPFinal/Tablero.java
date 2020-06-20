@@ -83,13 +83,15 @@ public class Tablero implements Subject {
   }
 
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
-    if (turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())) {
-      deltaGrillaBehaviour = new ColocarBarcos(this);
-      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-    } else {
-      deltaGrillaBehaviour = new RealizarDisparo(this);
-      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-    }
+    deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
+    deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+//    if (turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())) {
+//      deltaGrillaBehaviour = new ColocarBarcos(this);
+//      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+//    } else {
+//      deltaGrillaBehaviour = new RealizarDisparo(this);
+//      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+//    }
     notifyObservers();
   }
 

@@ -22,7 +22,7 @@ class UiTest {
   void test() throws AWTException {
     
     // Comentar este test antes de pushear a github
-    this.testUI();
+    //this.testUI();
     
     
   }
