@@ -49,11 +49,11 @@ public class RealizarDisparo implements AccionBehavior {
   
       case Tablero.BARCO:
         grilla[row][column] = Tablero.BARCO_HIT;
-        Barco barquito = tablero.encontrarBarco(row, column);
-        barquito.reducirVida();
-        if (barquito.getVida() == 0) {
-          System.out.println("Destruiste un barco");
-        }
+//        Barco barquito = tablero.encontrarBarco(row, column);
+//        barquito.reducirVida();
+//        if (barquito.getVida() == 0) {
+//          System.out.println("Destruiste un barco");
+//        }
         break;
   
       default:
