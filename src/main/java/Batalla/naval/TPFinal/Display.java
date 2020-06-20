@@ -1,13 +1,16 @@
 package main.java.Batalla.naval.TPFinal;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Display extends JFrame implements Observer {
   private Tablero tablero;
@@ -24,6 +27,7 @@ public class Display extends JFrame implements Observer {
   private final Controler controler;
   private Casilla[][] casillas0;
   private Casilla[][] casillas1;
+  private Container contenedor;
 
   /** Crea la UI
    * Dibuja el tablero creando 2 matrices de botones
@@ -33,18 +37,29 @@ public class Display extends JFrame implements Observer {
    */
   public Display() {
     this.setTitle("Batalla naval!");
-    this.setSize(WIDTH, HEIGHT);
+//  this.setSize(WIDTH, HEIGHT); //Cuando lo descomento arruina la disposicicon de las casillas
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
+//  this.setResizable(false); //esto no permitiria agrandar nuevamente la ventana
     this.setLocationRelativeTo(null);
-    this.setVisible(true);
-    this.setLayout(null);
+//  this.setLayout(null);
+    
+    Identificador id = new Identificador();
+    contenedor = this.getContentPane();
+    contenedor.setLayout(new BorderLayout());
+    JLabel identificador = new JLabel(id.getID());
+//  identificador.setFont(identificador.getFont().deriveFont(24.0f)); //Cambiar el tamaño de fuente del texto de la eiqueta
+    contenedor.add(identificador, BorderLayout.NORTH);
+    
     tablero = new Tablero();
     tablero.registerObserver(this);
     controler = new Controler(tablero);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
+
     this.crearGrilla();
+    contenedor.add(new JLabel(), BorderLayout.SOUTH); //hay que agregar esto porque si no se pierde el ultimo boton. Por que? ni idea
+    this.pack();
+    this.setVisible(true);
   }
 
   public Tablero getTablero() {
@@ -72,7 +87,7 @@ public class Display extends JFrame implements Observer {
         Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
             (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, j, i);
         casillas0[j][i] = casilla;
-        add(casilla);
+        contenedor.add(casilla,BorderLayout.SOUTH);
       }
     }
     for (int i = 0; i < COLUMNAS; i++) {
@@ -80,7 +95,7 @@ public class Display extends JFrame implements Observer {
         Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
             (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, i, j);
         casillas1[j][i] = casilla;
-        add(casilla);
+        contenedor.add(casilla,BorderLayout.SOUTH);
       }
     }
   }

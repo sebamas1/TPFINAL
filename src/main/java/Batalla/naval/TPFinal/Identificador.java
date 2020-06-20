@@ -29,10 +29,10 @@ public class Identificador
   if (selection == JOptionPane.OK_OPTION) // si el usuario ingreso el ID y presiono OK
   {
 	  String aux = String.valueOf(idField.getText());
-	  System.out.println("aux es:" + aux + ".");
-	  if(!(aux != null || aux != "")) ID = aux; 
+//	  System.out.println("aux es:" + aux + ".");
+	  if(aux != null && aux != "") ID = aux; 
 
-	  JOptionPane.showMessageDialog(null, "ID is : " + (ID), "ID : ", JOptionPane.PLAIN_MESSAGE);
+	  JOptionPane.showMessageDialog(null, "ID ingresado : " + (ID), "ID : ", JOptionPane.PLAIN_MESSAGE);
   }
   else if (selection == JOptionPane.CANCEL_OPTION) // si se apreto el boton cancelar
   {
