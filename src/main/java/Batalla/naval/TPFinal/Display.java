@@ -13,7 +13,7 @@ public class Display extends JFrame implements Observer {
   private Tablero tablero;
   public static final Color ROJO = new Color(255, 0, 0);
   public static final Color GRIS = new Color(130, 130, 130);
-  public static final Color AZUL = new Color(0, 65, 106);
+  public static final Color AZUL = new Color(0, 0, 255);
   public static final Color CELESTE = new Color(60, 220, 255);
   private static final int FILAS = 10;
   private static final int COLUMNAS = 10;
@@ -187,7 +187,6 @@ public class Display extends JFrame implements Observer {
     public void mouseReleased(MouseEvent e) {
       //Le avisa al controlador de que se solto el click, en que fila, columna y de que grilla
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
-      System.out.println("Deberia ejecutarme");
     }
   }
 }

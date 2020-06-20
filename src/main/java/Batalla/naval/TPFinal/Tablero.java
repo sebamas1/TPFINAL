@@ -3,8 +3,6 @@ package main.java.Batalla.naval.TPFinal;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
-
 public class Tablero implements Subject {
   private static final int FILAS = 10;
   private static final int COLUMNAS = 10;
@@ -21,12 +19,13 @@ public class Tablero implements Subject {
   private int turno = 0;
   private int nroTurno;
   private AccionBehavior deltaGrillaBehaviour;
-  /** titulo.
-   * doc
+
+  /**
+   * titulo. doc
    */
-  
+
   public Tablero() {
-    
+
     jugador0 = new Jugador("JP", 0);
     jugador1 = new Jugador("Seba", 1);
     grillaJugador0 = new int[FILAS][COLUMNAS];
@@ -34,8 +33,12 @@ public class Tablero implements Subject {
     observers = new HashSet<Observer>();
   }
 
-  /** Crea la grilla donde se manjea la logica
-   *  si no esta creada la crea.
+  public void setGrillaJugador0(int[][] grillaJugador0) {
+    this.grillaJugador0 = grillaJugador0;
+  }
+
+  /**
+   * Crea la grilla donde se manjea la logica si no esta creada la crea.
    */
   public void crearGrilla() {
 
@@ -55,10 +58,11 @@ public class Tablero implements Subject {
     observers.add(observer);
   }
 
-  /** Remueve observer.
+  /**
+   * Remueve observer.
    * 
    */
-  
+
   public void detachObserver(Observer observer) {
     try {
       observers.remove(observer);
@@ -67,36 +71,36 @@ public class Tablero implements Subject {
     }
   }
 
-  /** Notifica observers.
+  /**
+   * Notifica observers.
    * 
    */
-  
+
   public void notifyObservers() {
     for (Observer observer : observers) {
       observer.update();
     }
   }
+
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
-    if(turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())){
+    if (turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
-      if(turno % 2 == 0) {
-        deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-      } else deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-      notifyObservers();
+      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
       deltaGrillaBehaviour = new RealizarDisparo(this);
-      notifyObservers();
+      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     }
+    notifyObservers();
   }
-  
+
   public int[][] getGrillaJugador0() {
     return this.grillaJugador0;
   }
-  
+
   public int[][] getGrillaJugador1() {
     return grillaJugador1;
   }
-  
+
   public int getTurno() {
     return turno;
   }
@@ -117,7 +121,6 @@ public class Tablero implements Subject {
 
     this.grillaJugador1 = grillaJugador1;
   }
-  
 
   public Jugador getJugador0() {
     return jugador0;
@@ -138,22 +141,56 @@ public class Tablero implements Subject {
   public void printMatriz() {
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-       // System.out.print(grillaJugador0[i][j] + "  ");
+        // System.out.print(grillaJugador0[i][j] + " ");
       }
-     // System.out.println();
+      // System.out.println();
     }
-    System.out.println();      System.out.println();
+    System.out.println();
+    System.out.println();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-       // System.out.print(grillaJugador1[i][j] + "  ");
+        // System.out.print(grillaJugador1[i][j] + " ");
       }
-     // System.out.println();
+      // System.out.println();
     }
   }
-  
 
+  /**
+   * Le das la fila y columna de una casilla que tiene un barco y te devuelve el
+   * barco que esta en esa casilla.
+   * 
+   * @param x fila
+   * @param y columna
+   * @return
+   */
+  public Barco encontrarBarco(int x, int y) {
+
+    int xi;
+    int xf;
+    int yi;
+    int yf;
+    Jugador jugador = this.getTurno() % 2 == 0 ? this.getJugador1() : this.getJugador0();
+    
+    for (int i = 0; i < jugador.getBarcos().size(); i++) {
+      xi = jugador.getBarcos().get(i).getPos().getInicialX();
+      xf = jugador.getBarcos().get(i).getPos().getFinalX();
+      yi = jugador.getBarcos().get(i).getPos().getInicialY();
+      yf = jugador.getBarcos().get(i).getPos().getFinalY();
+      boolean variaFilas = yi == yf ? true : false;
+      for (int j = 0; j < jugador.getBarcos().get(i).getSize(); j++) {
+        if (variaFilas) {
+          if (xi + j == x && yi == y) {
+            return jugador.getBarcos().get(i);
+          }
+        } else {
+          if (xi == x && yi + j == y) {
+            return jugador.getBarcos().get(i);
+          }
+        }
+      }
+    }
+//    System.out.println("\n\n\n SE ROMPIO");
+    return null;
+  }
 
 }
-
-
-

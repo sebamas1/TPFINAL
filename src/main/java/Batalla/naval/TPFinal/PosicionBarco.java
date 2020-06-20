@@ -18,18 +18,10 @@ public class PosicionBarco {
    * @param posicion en columnas del barco
    */
   public PosicionBarco(int filaI, int columnaI, int filaF, int columnaF) {
-    this.inicialY = filaI;
-    this.inicialX = columnaI;
-    this.finalY  = filaF;
-    this.finalX  = columnaF;
-  }
-
-  public int getInicialX() {
-    return inicialX;
-  }
-
-  public void setInicialX(int inicialX) {
-    this.inicialX = inicialX;
+    this.inicialY = columnaI;
+    this.inicialX = filaI;
+    this.finalY  = columnaF;
+    this.finalX  = filaF;
   }
 
   public int getInicialY() {
@@ -40,12 +32,12 @@ public class PosicionBarco {
     this.inicialY = inicialY;
   }
 
-  public int getFinalX() {
-    return finalX;
+  public int getInicialX() {
+    return inicialX;
   }
 
-  public void setFinalX(int finalX) {
-    this.finalX = finalX;
+  public void setInicialX(int inicialX) {
+    this.inicialX = inicialX;
   }
 
   public int getFinalY() {
@@ -55,6 +47,14 @@ public class PosicionBarco {
   public void setFinalY(int finalY) {
     this.finalY = finalY;
   }
-  	
+
+  public int getFinalX() {
+    return finalX;
+  }
+
+  public void setFinalX(int finalX) {
+    this.finalX = finalX;
+  }
+
   
 }

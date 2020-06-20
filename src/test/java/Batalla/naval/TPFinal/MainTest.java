@@ -67,7 +67,7 @@ class MainTest {
       Coordenada aux = listaChequearEmpty.get(i);
       int fila = aux.getFila();
       int col = aux.getColumna();
-      if (tablero.getGrilla0()[fila][col] != Tablero.AGUA 
+      if (tablero.getGrillaJugador0()[fila][col] != Tablero.AGUA 
           || display.getCasillas0()[fila][col].getBackground() == Display.ROJO) {
         fail("se marco/coloreo algo que no se tenia que marcar en el tablero/UI");
       }
@@ -78,7 +78,7 @@ class MainTest {
       Coordenada aux = listaChequearRojo.get(i);
       int fila = aux.getFila();  
       int col = aux.getColumna();
-      if (tablero.getGrilla0()[fila][col] != Tablero.BARCO
+      if (tablero.getGrillaJugador0()[fila][col] != Tablero.BARCO
           || display.getCasillas0()[fila][col].getBackground() != Display.ROJO) {
         fail("no se marco/coloreo algo que se tenia que marcar en el tablero/UI");
       }
