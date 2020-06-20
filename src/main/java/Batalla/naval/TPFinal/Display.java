@@ -94,7 +94,7 @@ public class Display extends JFrame implements Observer {
    */
   
   public void colorearGrilla() {
-    int[][] tableroLogico0 = tablero.getGrilla0();
+    int[][] tableroLogico0 = tablero.getGrillaJugador0();
     int[][] tableroLogico1 = tablero.getGrillaJugador1();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {

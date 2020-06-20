@@ -9,6 +9,7 @@ public class Jugador {
   private String nombre;
   private int playerID;
   private ArrayList<Barco> barcos;
+  public int barcosColocadosJugador = 0;
 
   /** El jugador tiene los barcos, ya veremos bien que mas hacemos, puede cambiar esto.
    * le ponemos un nombre para mostrar en el display cuando gana
@@ -24,10 +25,12 @@ public class Jugador {
     BarcosFactory factory = new BarcosFactory();
     this.nombre = nombre;
     this.playerID = playerID;
-    barcos.add(factory.createBarco("corbeta"));
-    barcos.add(factory.createBarco("corbeta"));
-    barcos.add(factory.createBarco("corbeta"));
-    barcos.add(factory.createBarco("destructor"));
+    barcos.add(factory.createBarco("Corbeta"));
+    barcos.add(factory.createBarco("Corbeta"));
+    barcos.add(factory.createBarco("Corbeta"));
+    barcos.add(factory.createBarco("Fragata"));
+    barcos.add(factory.createBarco("Fragata"));
+    barcos.add(factory.createBarco("Destructor"));
   }
   
   public ArrayList<Barco> getBarcos(){

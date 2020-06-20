@@ -7,23 +7,21 @@ package main.java.Batalla.naval.TPFinal;
  *
  */
 public class PosicionBarco {
-  private int inicialX;
   private int inicialY;
-  private int finalX;
+  private int inicialX;
   private int finalY;
+  private int finalX;
   	
   /** Setea las coordenadas iniciales y finales.
    * 
-   * @param xi x inicial
-   * @param yi y inicial
-   * @param xf x final
-   * @param yf y final
+   * @param posicion en filas del barco
+   * @param posicion en columnas del barco
    */
-  public PosicionBarco(int xi, int yi, int xf, int yf) {
-    this.inicialX = xi;
-    this.inicialY = yi;
-    this.finalX  = xf;
-    this.finalY  = yf;
+  public PosicionBarco(int filaI, int columnaI, int filaF, int columnaF) {
+    this.inicialY = filaI;
+    this.inicialX = columnaI;
+    this.finalY  = filaF;
+    this.finalX  = columnaF;
   }
 
   public int getInicialX() {

@@ -8,11 +8,11 @@ public class BarcosFactory {
   public Barco createBarco(String type) {
     Barco barco = null;
 
-    if (type.equals("corbeta")) {
+    if (type.equals("Corbeta")) {
       barco = new Corbeta();
-    } else if (type.equals("fragata")) {
+    } else if (type.equals("Fragata")) {
       barco = new Fragata();
-    } else if (type.equals("destructor")) {
+    } else if (type.equals("Destructor")) {
       barco = new Destructor();
     } 
     return barco;
@@ -29,11 +29,11 @@ public class BarcosFactory {
   public Barco createBarco(String type, int xi, int yi, int xf, int yf) {
     Barco barco = null;
 
-    if (type.equals("corbeta")) {
+    if (type.equals("Corbeta")) {
       barco = new Corbeta();
-    } else if (type.equals("fragata")) {
+    } else if (type.equals("Fragata")) {
       barco = new Fragata();
-    } else if (type.equals("destructor")) {
+    } else if (type.equals("Destructor")) {
       barco = new Destructor();
     } 
     barco.setPos(new PosicionBarco(xi, yi, xf, yf));

@@ -1,6 +1,5 @@
 package main.java.Batalla.naval.TPFinal;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -19,9 +18,9 @@ public class Tablero implements Subject {
   public static final int AGUA_MISS = 3;
   private HashSet<Observer> observers;
   private boolean grillaCreada = false;
-  private int turno;
+  private int turno = 0;
   private int nroTurno;
-
+  private AccionBehavior deltaGrillaBehaviour;
   /** titulo.
    * doc
    */
@@ -33,7 +32,6 @@ public class Tablero implements Subject {
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
     observers = new HashSet<Observer>();
-    turno = 0;
   }
 
   /** Crea la grilla donde se manjea la logica
@@ -78,9 +76,25 @@ public class Tablero implements Subject {
       observer.update();
     }
   }
+  public void dispararEventoEnGrilla(int click, int i, int j, int id) {
+    if(turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())){
+      deltaGrillaBehaviour = new ColocarBarcos(this);
+      if(turno % 2 == 0) {
+        deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+      } else deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+      notifyObservers();
+    } else {
+      deltaGrillaBehaviour = new RealizarDisparo(this);
+      notifyObservers();
+    }
+  }
   
-  public int[][] getGrilla0() {
+  public int[][] getGrillaJugador0() {
     return this.grillaJugador0;
+  }
+  
+  public int[][] getGrillaJugador1() {
+    return grillaJugador1;
   }
   
   public int getTurno() {
@@ -97,10 +111,6 @@ public class Tablero implements Subject {
 
   public int getColumnas() {
     return COLUMNAS;
-  }
-
-  public int[][] getGrillaJugador1() {
-    return grillaJugador1;
   }
 
   public void setGrillaJugador1(int[][] grillaJugador1) {
@@ -128,16 +138,16 @@ public class Tablero implements Subject {
   public void printMatriz() {
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-        System.out.print(grillaJugador0[i][j] + "  ");
+       // System.out.print(grillaJugador0[i][j] + "  ");
       }
-      System.out.println();
+     // System.out.println();
     }
     System.out.println();      System.out.println();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-        System.out.print(grillaJugador1[i][j] + "  ");
+       // System.out.print(grillaJugador1[i][j] + "  ");
       }
-      System.out.println();
+     // System.out.println();
     }
   }
   

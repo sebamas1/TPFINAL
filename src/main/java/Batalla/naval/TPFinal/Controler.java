@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 
 public class Controler {
   private Tablero tablero;
-  AccionBehavior accion;
+
   
 
   /** El controler del sistema siguiendo MVC.
@@ -25,17 +25,10 @@ public class Controler {
    */
   public void notifyEvent(MouseEvent e, int i, int j, int id) {
    
-    if (tablero.getTurno() < 8) {
-      accion = new ColocarBarcos();
-    } else {
-      accion = new RealizarDisparo();
-    }
+
     //hardcodeado para testear coloca barcos nada mas
     if (e.getButton() == 1 || e.getButton() == 3) {
-      accion.realizarAccion(tablero, e, i, j, id);
-      tablero.notifyObservers();
-      //tablero.printMatriz();
-      
-    }
+      tablero.dispararEventoEnGrilla(e.getButton(), i, j, id);
+     }
   }  
 }
