@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.java.Batalla.naval.TPFinal.ColocarBarcos;
 import main.java.Batalla.naval.TPFinal.RealizarDisparo;
 import main.java.Batalla.naval.TPFinal.Tablero;
 
@@ -56,16 +57,17 @@ class RealizarDisparoTest {
   @Test
   void testRealizarAccion() {
     tablero.setTurno(0);
-    int[][] grilla = tablero.getGrillaJugador1();
-    grilla[3][3] = Tablero.BARCO;
-    grilla[3][4] = Tablero.AGUA;
-    tablero.setGrillaJugador1(grilla);
-    disparo.realizarAccion(0, 3, 3, 1);
-    assertEquals(Tablero.BARCO_HIT, (tablero.getGrillaJugador1())[3][3]);
+    ColocarBarcos aux = new ColocarBarcos(tablero);
+    aux.realizarAccion(3, 3, 2, 0);
     assertEquals(1, tablero.getTurno());
-    tablero.setTurno(0);
+    disparo.realizarAccion(0, 3, 3, 0);
+    assertEquals(2, tablero.getTurno());
+    assertEquals(Tablero.BARCO_HIT, (tablero.getGrillaJugador0())[3][3]);
+    int[][] grilla = tablero.getGrillaJugador1();
+    grilla[3][4] = Tablero.AGUA;
     disparo.realizarAccion(0, 3, 4, 1);
     assertEquals(Tablero.AGUA_MISS, (tablero.getGrillaJugador1())[3][4]);
+    assertEquals(3, tablero.getTurno());
   }
 
 }

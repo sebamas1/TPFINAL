@@ -83,8 +83,9 @@ public class Tablero implements Subject {
   }
 
   /**
-   * Decide que evento ejecutar y luego lo ejecuta, 
-   * Hay que ver cuando queremos que haga el disparo especial
+   * Decide que evento ejecutar y luego lo ejecuta, Hay que ver cuando queremos
+   * que haga el disparo especial.
+   * 
    * @param click El mouseEvent
    * @param i     En que fila esta la casilla
    * @param j     En que columna esta la casilla
@@ -146,17 +147,17 @@ public class Tablero implements Subject {
   public void printMatriz() {
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-        // System.out.print(grillaJugador0[i][j] + " ");
+        System.out.print(grillaJugador0[i][j] + " ");
       }
-      // System.out.println();
+      System.out.println();
     }
     System.out.println();
     System.out.println();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
-        // System.out.print(grillaJugador1[i][j] + " ");
+        System.out.print(grillaJugador1[i][j] + " ");
       }
-      // System.out.println();
+      System.out.println();
     }
   }
 

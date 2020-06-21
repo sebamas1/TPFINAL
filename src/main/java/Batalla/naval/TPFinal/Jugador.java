@@ -27,10 +27,10 @@ public class Jugador {
     this.playerID = playerID;
     barcos.add(factory.createBarco("Corbeta"));
     barcos.add(factory.createBarco("Corbeta"));
-    barcos.add(factory.createBarco("Corbeta"));
     barcos.add(factory.createBarco("Fragata"));
     barcos.add(factory.createBarco("Fragata"));
     barcos.add(factory.createBarco("Destructor"));
+    barcos.add(factory.createBarco("Portaaviones"));
   }
   
   public ArrayList<Barco> getBarcos(){

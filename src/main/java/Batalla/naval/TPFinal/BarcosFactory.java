@@ -14,7 +14,9 @@ public class BarcosFactory {
       barco = new Fragata();
     } else if (type.equals("Destructor")) {
       barco = new Destructor();
-    } 
+    } else if (type.equals("Portaaviones")) {
+      barco = new Portaaviones();
+    }
     return barco;
   }
   
@@ -35,7 +37,9 @@ public class BarcosFactory {
       barco = new Fragata();
     } else if (type.equals("Destructor")) {
       barco = new Destructor();
-    } 
+    } else if (type.contentEquals("Portaaviones")) {
+      barco = new Portaaviones();
+    }
     barco.setPos(new PosicionBarco(xi, yi, xf, yf));
     return barco;
   }
