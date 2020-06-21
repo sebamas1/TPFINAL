@@ -82,16 +82,27 @@ public class Tablero implements Subject {
     }
   }
 
+  /**
+   * Decide que evento ejecutar y luego lo ejecuta, 
+   * Hay que ver cuando queremos que haga el disparo especial
+   * @param click El mouseEvent
+   * @param i     En que fila esta la casilla
+   * @param j     En que columna esta la casilla
+   * @param id    En que grilla esta la casilla
+   */
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
-    deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
-    deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-//    if (turno < (jugador0.getBarcos().size() + jugador0.getBarcos().size())) {
-//      deltaGrillaBehaviour = new ColocarBarcos(this);
-//      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-//    } else {
-//      deltaGrillaBehaviour = new RealizarDisparo(this);
-//      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
-//    }
+    if (turno < Jugador.CANT_BARCOS * 2) {
+      deltaGrillaBehaviour = new ColocarBarcos(this);
+      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+    } else {
+      if (this.getTurno() != 20) {
+        deltaGrillaBehaviour = new RealizarDisparo(this);
+      } else {
+        deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
+      }
+      deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+
+    }
     notifyObservers();
   }
 
@@ -109,14 +120,6 @@ public class Tablero implements Subject {
 
   public void setTurno(int turno) {
     this.turno = turno;
-  }
-
-  public int getFilas() {
-    return FILAS;
-  }
-
-  public int getColumnas() {
-    return COLUMNAS;
   }
 
   public void setGrillaJugador1(int[][] grillaJugador1) {
@@ -172,7 +175,7 @@ public class Tablero implements Subject {
     int yi;
     int yf;
     Jugador jugador = this.getTurno() % 2 == 0 ? this.getJugador1() : this.getJugador0();
-    
+
     for (int i = 0; i < jugador.getBarcos().size(); i++) {
       xi = jugador.getBarcos().get(i).getPos().getInicialX();
       xf = jugador.getBarcos().get(i).getPos().getFinalX();

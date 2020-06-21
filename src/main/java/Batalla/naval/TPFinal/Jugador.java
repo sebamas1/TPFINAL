@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Jugador {
   
-  public static final int CANT_BARCOS = 4;
+  public static final int CANT_BARCOS = 6;
   private String nombre;
   private int playerID;
   private ArrayList<Barco> barcos;

@@ -10,30 +10,30 @@ import org.junit.jupiter.api.Test;
 import main.java.Batalla.naval.TPFinal.Tablero;
 
 class TableroTest {
-	
-	Tablero tablero;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		tablero = new Tablero();
-	}
+  Tablero tablero;
 
-	@Test
-	/**
-	 * Testea que las grillas no puedan ser creadas mas de una vez
-	 */
-	void testCrearGrilla() {
-		tablero.crearGrilla();
-		int[][] grilla = tablero.getGrillaJugador1();
-		grilla[0][0] = tablero.BARCO;
-		tablero.setGrillaJugador1(grilla);
-		tablero.crearGrilla();
-		assertEquals(grilla, tablero.getGrillaJugador1());
-	}
+  @BeforeEach
+  void setUp() throws Exception {
+    tablero = new Tablero();
+  }
 
-	@Test
-	void testDispararEventoEnGrilla() {
-		//fail("Not yet implemented");
-	}
+  @Test
+  /**
+   * Testea que las grillas no puedan ser creadas mas de una vez.
+   */
+  void testCrearGrilla() {
+    tablero.crearGrilla();
+    int[][] grilla = tablero.getGrillaJugador1();
+    grilla[0][0] = tablero.BARCO;
+    tablero.setGrillaJugador1(grilla);
+    tablero.crearGrilla();
+    assertEquals(grilla, tablero.getGrillaJugador1());
+  }
+
+  @Test
+  void testDispararEventoEnGrilla() {
+    // fail("Not yet implemented");
+  }
 
 }
