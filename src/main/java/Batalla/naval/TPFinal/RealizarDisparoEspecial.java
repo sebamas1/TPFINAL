@@ -54,8 +54,12 @@ public class RealizarDisparoEspecial implements AccionBehavior {
     int turnoJugador = tablero.getTurno() % 2;
     if (turnoJugador == idCasilla) {
       return false;
+    } 
+    int[][] grilla = (turnoJugador == 0) ? tablero.getGrillaJugador1() : tablero.getGrillaJugador0();
+    if (grilla[row][column] == Tablero.AGUA_MISS || grilla[row][column] == Tablero.BARCO_HIT) {
+       return false;
     } else {
-      return true;
+       return true;
     }
   }
 }
