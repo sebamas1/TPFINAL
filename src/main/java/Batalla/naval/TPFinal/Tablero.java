@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Tablero implements Subject {
-  private static final int FILAS = 10;
-  private static final int COLUMNAS = 10;
+  public static final int FILAS = 10;
+  public static final int COLUMNAS = 10;
   private int[][] grillaJugador0;
   private int[][] grillaJugador1;
   private Jugador jugador0;
@@ -16,8 +16,7 @@ public class Tablero implements Subject {
   public static final int AGUA_MISS = 3;
   private HashSet<Observer> observers;
   private boolean grillaCreada = false;
-  private int turno = 0;
-  private int nroTurno;
+  private int turno;
   private AccionBehavior deltaGrillaBehaviour;
 
   /**
@@ -26,8 +25,10 @@ public class Tablero implements Subject {
 
   public Tablero() {
 
-    jugador0 = new Jugador("JP", 0);
-    jugador1 = new Jugador("Seba", 1);
+    this.turno = 0;
+    jugador0 = new Humano("JP", 0);
+    jugador1 = new AI(this);
+    // jugador1 = new Jugador("Seba", 1);
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
     observers = new HashSet<Observer>();
@@ -91,8 +92,10 @@ public class Tablero implements Subject {
    * @param j     En que columna esta la casilla
    * @param id    En que grilla esta la casilla
    */
+  
+  //gran parte de esto hay que meterlo en el controler
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
-    if (turno < Jugador.CANT_BARCOS * 2) {
+    if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
@@ -104,7 +107,24 @@ public class Tablero implements Subject {
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
 
     }
-    notifyObservers();
+    if (terminoPartida()) {
+      System.out.println("GANO: " + this.encontrarGanador().getNombre());
+    }
+    
+    int aux;
+    int[] coord;
+    while (this.getTurno() % 2 == 1) {
+      aux = turno < Humano.CANT_BARCOS * 2 ? jugador1.getPlayerID() : jugador0.getPlayerID();
+      coord = jugador1.realizarTurno();
+      if (deltaGrillaBehaviour.esValido(1, coord[0], coord[1], aux)) {
+        deltaGrillaBehaviour.realizarAccion(1, coord[0], coord[1], aux);
+      }
+    }
+    
+    if (terminoPartida()) {
+      System.out.println("GANO: " + this.encontrarGanador().getNombre());
+    }
+    this.notifyObservers();
   }
 
   public int[][] getGrillaJugador0() {
@@ -132,7 +152,7 @@ public class Tablero implements Subject {
     return jugador0;
   }
 
-  public void setJugador0(Jugador jugador0) {
+  public void setJugador0(Humano jugador0) {
     this.jugador0 = jugador0;
   }
 
@@ -140,10 +160,14 @@ public class Tablero implements Subject {
     return jugador1;
   }
 
-  public void setJugador1(Jugador jugador1) {
+  public void setJugador1(Humano jugador1) {
     this.jugador1 = jugador1;
   }
 
+  /**
+   * para debuggear porque ver una matriz con el debugger
+   * es muy desagradable.
+   */
   public void printMatriz() {
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
@@ -195,8 +219,42 @@ public class Tablero implements Subject {
         }
       }
     }
-//    System.out.println("\n\n\n SE ROMPIO");
     return null;
   }
 
+  private boolean terminoPartida() {
+    boolean perdio0 = true;
+    boolean perdio1 = true;
+    for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
+      if (jugador0.getBarcos().get(i).getVida() != 0) {
+        perdio0 = false;
+      }
+      if (jugador1.getBarcos().get(i).getVida() != 0) {
+        perdio1 = false;
+      }
+    }
+    return perdio0 || perdio1;
+  }
+
+  private Jugador encontrarGanador() {
+    boolean perdio0 = true;
+    boolean perdio1 = true;
+    for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
+      if (jugador0.getBarcos().get(i).getVida() != 0) {
+        perdio0 = false;
+      }
+      if (jugador1.getBarcos().get(i).getVida() != 0) {
+        perdio1 = false;
+      }
+    }
+    if (perdio0 && !perdio1) {
+      return jugador1;
+    } else if (perdio1 && !perdio0) {
+      return jugador0;
+    } else {
+      System.out.println("upa encontrarGanador()");
+      return null;
+    }
+
+  }
 }

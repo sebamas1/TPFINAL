@@ -52,7 +52,8 @@ public class RealizarDisparo implements AccionBehavior {
         Barco barquito = tablero.encontrarBarco(row, column);
         barquito.reducirVida();
         if (barquito.getVida() == 0) {
-          System.out.println("Destruiste un barco");
+          System.out.println("Destruiste un/una " + barquito.getClass().getSimpleName()
+              + " del jugador" + idCasilla);
         }
         break;
   

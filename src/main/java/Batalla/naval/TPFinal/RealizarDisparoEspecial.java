@@ -31,6 +31,7 @@ public class RealizarDisparoEspecial implements AccionBehavior {
               break;
             case Tablero.BARCO:
               grilla[row + i][column + j] = Tablero.BARCO_HIT;
+              tablero.encontrarBarco(row + i, column + j).reducirVida();
               break;
             default:
               ;
