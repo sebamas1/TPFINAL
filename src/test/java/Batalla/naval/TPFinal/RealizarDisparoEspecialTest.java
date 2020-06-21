@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.java.Batalla.naval.TPFinal.ColocarBarcos;
 import main.java.Batalla.naval.TPFinal.RealizarDisparoEspecial;
 import main.java.Batalla.naval.TPFinal.Tablero;
 
@@ -26,26 +27,29 @@ class RealizarDisparoEspecialTest {
 	 * sistema, y a su vez, si las casillas afectadas por este cambiaron de estado satisfactoriamente.
 	 */
 	void testRealizarAccion() {
-		int[][] grilla = tablero.getGrillaJugador1();
+		int[][] grilla = tablero.getGrillaJugador0();
 		prepararGrilla(grilla);
-		tablero.setGrillaJugador1(grilla);
+		tablero.printMatriz();
+		tablero.setGrillaJugador0(grilla);
 		try{
-			disparo.realizarAccion(1, 0, 0, 1);
+			disparo.realizarAccion(1, 0, 0, 0);
+	    //tablero.printMatriz();
 		}catch(ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		grilla = tablero.getGrillaJugador1();
-		assertEquals(tablero.AGUA_MISS, grilla[0][0]);
-		assertEquals(tablero.AGUA_MISS, grilla[0][1]);
-		assertEquals(tablero.BARCO_HIT, grilla[1][0]);
-		assertEquals(tablero.BARCO_HIT, grilla[1][1]);
+		grilla = tablero.getGrillaJugador0();
+		assertEquals(Tablero.AGUA_MISS, grilla[0][0]);
+		assertEquals(Tablero.AGUA_MISS, grilla[0][1]);
+		assertEquals(Tablero.BARCO_HIT, grilla[1][0]);
+		assertEquals(Tablero.BARCO_HIT, grilla[1][1]);
 	}
 	
 	private void prepararGrilla(int[][] grilla) {
-		grilla[0][0] = tablero.AGUA;
-		grilla[0][1] = tablero.AGUA;
-		grilla[1][0] = tablero.BARCO;
-		grilla[1][1] = tablero.BARCO;
+    tablero.setTurno(0);
+    ColocarBarcos colocarBarco = new ColocarBarcos(tablero);
+    colocarBarco.realizarAccion(3, 1, 0, 0);
+		grilla[0][0] = Tablero.AGUA;
+		grilla[0][1] = Tablero.AGUA;
 	}
 
 	@Test
