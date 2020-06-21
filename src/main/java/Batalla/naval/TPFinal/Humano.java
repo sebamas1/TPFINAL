@@ -6,7 +6,6 @@ public class Humano implements Jugador {
 
   protected String nombre;
   protected int playerID;
-  protected ArrayList<Barco> barcos;
 
   public Humano() {
     
@@ -36,9 +35,6 @@ public class Humano implements Jugador {
     this.barcosColocadosJugador = barcosColocadosJugador;
   }
 
-  public void setBarcos(ArrayList<Barco> barcos) {
-    this.barcos = barcos;
-  }
 
   public int barcosColocadosJugador = 0;
 
@@ -54,22 +50,10 @@ public class Humano implements Jugador {
 
 
   public Humano(String nombre, int playerID) {
-
-    this.barcos = new ArrayList<Barco>();
-    BarcosFactory factory = new BarcosFactory();
     this.nombre = nombre;
     this.playerID = playerID;
-    barcos.add(factory.createBarco("Corbeta"));
-    barcos.add(factory.createBarco("Corbeta"));
-    barcos.add(factory.createBarco("Fragata"));
-    barcos.add(factory.createBarco("Fragata"));
-    barcos.add(factory.createBarco("Destructor"));
-    barcos.add(factory.createBarco("Portaaviones"));
   }
 
-  public ArrayList<Barco> getBarcos() {
-    return this.barcos;
-  }
   
   public int[] realizarTurno() {
     return null;

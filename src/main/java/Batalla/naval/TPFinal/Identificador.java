@@ -10,27 +10,30 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Identificador {
-  private String ID = "Jugador 1";
+  private String id = "Jugador 1";
   private JTextField idField;
   private JLabel priceLabel;
 
   public Identificador() {
     idField = new JTextField(10);
-    crearYDesplegarGUI();
+    crearyDesplegarGUI();
   }
 
-  private void crearYDesplegarGUI() {
-    int selection = JOptionPane.showConfirmDialog(null, getPanel(), "Ingreso del ID : ", JOptionPane.OK_CANCEL_OPTION,
+  private void crearyDesplegarGUI() {
+    int selection = JOptionPane.showConfirmDialog(null, getPanel(),
+        "Ingreso del ID : ", JOptionPane.OK_CANCEL_OPTION,
         JOptionPane.PLAIN_MESSAGE);
 
     if (selection == JOptionPane.OK_OPTION) // si el usuario ingreso el ID y presiono OK
     {
       String aux = String.valueOf(idField.getText());
       //System.out.println("aux es:" + aux + ".");
-      if (aux != null && aux.length() > 0)
-        ID = aux;
+      if (aux != null && aux.length() > 0) {
+        id = aux;
+      }
 
-      JOptionPane.showMessageDialog(null, "ID ingresado : " + (ID), "ID : ", JOptionPane.PLAIN_MESSAGE);
+      JOptionPane.showMessageDialog(null, "ID ingresado : " + (id), "ID :"
+          + " ", JOptionPane.PLAIN_MESSAGE);
     } else if (selection == JOptionPane.CANCEL_OPTION) // si se apreto el boton cancelar
     {
       JOptionPane.showMessageDialog(null, "El identificador fue seteado al ID por defecto", null,
@@ -39,7 +42,7 @@ public class Identificador {
   }
 
   public String getID() {
-    return ID;
+    return id;
   }
 
   private JPanel getPanel() {

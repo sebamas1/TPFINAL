@@ -3,14 +3,14 @@ package main.java.Batalla.naval.TPFinal;
 public class RealizarDisparoEspecial implements AccionBehavior {
 
   private Tablero tablero;
-  private final static int LADO = 3;
+  private static final int LADO = 3;
 
   public RealizarDisparoEspecial(Tablero board) {
     this.tablero = board;
   }
 
   /**
-   * Realiza un disparo cuadrado de LADO = nro impar
+   * Realiza un disparo cuadrado de LADO = nro impar.
    */
   public void realizarAccion(int click, int row, int column, int idCasilla) {
     // TODO Auto-generated method stub

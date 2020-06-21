@@ -18,16 +18,8 @@ public class AI extends Humano implements Jugador {
     r = new Random();
     coord = new int[2];
     this.tablero = board;
-    this.barcos = new ArrayList<Barco>();
-    BarcosFactory factory = new BarcosFactory();
     this.nombre = "AI";
     this.playerID = 1;
-    barcos.add(factory.createBarco("Corbeta"));
-    barcos.add(factory.createBarco("Corbeta"));
-    barcos.add(factory.createBarco("Fragata"));
-    barcos.add(factory.createBarco("Fragata"));
-    barcos.add(factory.createBarco("Destructor"));
-    barcos.add(factory.createBarco("Portaaviones"));
   }
   
   /**

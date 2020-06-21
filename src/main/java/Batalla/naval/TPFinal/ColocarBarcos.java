@@ -8,6 +8,10 @@ public class ColocarBarcos implements AccionBehavior {
   private Tablero tablero;
   private int nBarco = 0;
 
+  /**
+   * Constructor.
+   * @param tablero el tablero sobre el que colocara los barcos
+   */
   public ColocarBarcos(Tablero tablero) {
 
     this.tablero = tablero;
@@ -19,7 +23,7 @@ public class ColocarBarcos implements AccionBehavior {
    * celdas logicas deja todo listo para que notifiquemos al display y coloree
    * como corresponda
    * 
-   * @param e         El mouseEvent que tiene el boton se apreto, para saber si
+   * @param click     El mouseEvent que tiene el boton se apreto, para saber si
    *                  chequeo a la derecha o abajo
    * @param row       En que fila esta el boton
    * @param column    En que columna esta el boton
@@ -34,8 +38,8 @@ public class ColocarBarcos implements AccionBehavior {
     }
 
     int[][] grilla = turnoJugador == 0 ? tablero.getGrillaJugador0() : tablero.getGrillaJugador1();
-    ArrayList<Barco> barcosJug = turnoJugador % 2 == 0 ? tablero.getJugador0().getBarcos()
-        : tablero.getJugador1().getBarcos();
+    ArrayList<Barco> barcosJug = turnoJugador % 2 == 0 ? tablero.getBarcosJug0() :
+        tablero.getBarcosJug1();
     if (click == 1) {
       try {
         for (int i = 0; i < barcosJug.get(nBarco).getSize(); i++) {
@@ -54,8 +58,8 @@ public class ColocarBarcos implements AccionBehavior {
       } catch (IndexOutOfBoundsException e) {
         System.out.println("No se deberian estar colocando barcos");
       }
-      barcosJug.get(nBarco).setPos(new PosicionBarco(row, column, row, 
-          (column + barcosJug.get(nBarco).getSize() - 1)));
+      barcosJug.get(nBarco).setPos(new PosicionBarco(row, column, row, (
+          column + barcosJug.get(nBarco).getSize() - 1)));
     }
     tablero.setTurno(tablero.getTurno() + 1);
   }
@@ -66,11 +70,11 @@ public class ColocarBarcos implements AccionBehavior {
    * movimiento sea hecho en la grilla del jugador Chequea que no se puedan poner
    * barcos que colisionarian con otros
    * 
-   * @param e         El mouseEvent que tiene el boton se apreto, para saber si
-   *                  chequeo a la derecha o abajo
-   * @param row       En que fila esta el boton
-   * @param column    En que columna esta el boton
-   * @param idCasilla En que grilla esta el boton
+   * @param mouseClick El mouseEvent que tiene el boton se apreto, para saber si
+   *                   chequeo a la derecha o abajo
+   * @param row        En que fila esta el boton
+   * @param column     En que columna esta el boton
+   * @param idCasilla  En que grilla esta el boton
    * @return boolean
    */
 
@@ -81,8 +85,8 @@ public class ColocarBarcos implements AccionBehavior {
       return false;
     }
     int[][] grilla = turnoJugador == 0 ? tablero.getGrillaJugador0() : tablero.getGrillaJugador1();
-    ArrayList<Barco> barcos = turnoJugador == 0 ? tablero.getJugador0().getBarcos() : tablero.getJugador1().getBarcos();
-    
+    ArrayList<Barco> barcos = turnoJugador == 0 ? tablero.getBarcosJug0() : tablero.getBarcosJug1();
+
     for (int i = 0; i < barcos.size(); i++) {
       if (barcos.get(i).pos == null) {
         nBarco = i;

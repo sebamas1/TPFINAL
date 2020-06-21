@@ -18,9 +18,5 @@ public interface Jugador {
   
   public void setBarcosColocadosJugador(int barcosColocadosJugador);
   
-  public void setBarcos(ArrayList<Barco> barcos);
-  
-  public ArrayList<Barco> getBarcos();
-  
   public int[] realizarTurno();
 }

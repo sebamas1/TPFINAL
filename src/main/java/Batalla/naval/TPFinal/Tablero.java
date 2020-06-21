@@ -10,6 +10,8 @@ public class Tablero implements Subject {
   private int[][] grillaJugador1;
   private Jugador jugador0;
   private Jugador jugador1;
+  private ArrayList<Barco> barcosJug0;
+  private ArrayList<Barco> barcosJug1;
   public static final int BARCO = 0;
   public static final int AGUA = 1;
   public static final int BARCO_HIT = 2;
@@ -25,6 +27,9 @@ public class Tablero implements Subject {
 
   public Tablero() {
 
+    barcosJug0 = new ArrayList<Barco>();
+    barcosJug1 = new ArrayList<Barco>();
+    BarcosFactory factory = new BarcosFactory();
     this.turno = 0;
     jugador0 = new Humano("JP", 0);
     jugador1 = new AI(this);
@@ -32,6 +37,15 @@ public class Tablero implements Subject {
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
     observers = new HashSet<Observer>();
+    for (int i = 0; i < 2; i++) {
+      ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
+      aux.add(factory.createBarco("Corbeta"));
+      aux.add(factory.createBarco("Corbeta"));
+      aux.add(factory.createBarco("Fragata"));
+      aux.add(factory.createBarco("Fragata"));
+      aux.add(factory.createBarco("Destructor"));
+      aux.add(factory.createBarco("Portaaviones"));
+    }
   }
 
   public void setGrillaJugador0(int[][] grillaJugador0) {
@@ -199,22 +213,22 @@ public class Tablero implements Subject {
     int xf;
     int yi;
     int yf;
-    Jugador jugador = this.getTurno() % 2 == 0 ? this.getJugador1() : this.getJugador0();
+    ArrayList<Barco> barcosList = this.getTurno() % 2 == 0 ? barcosJug1 : barcosJug0;
 
-    for (int i = 0; i < jugador.getBarcos().size(); i++) {
-      xi = jugador.getBarcos().get(i).getPos().getInicialX();
-      xf = jugador.getBarcos().get(i).getPos().getFinalX();
-      yi = jugador.getBarcos().get(i).getPos().getInicialY();
-      yf = jugador.getBarcos().get(i).getPos().getFinalY();
+    for (int i = 0; i < barcosList.size(); i++) {
+      xi = barcosList.get(i).getPos().getInicialX();
+      xf = barcosList.get(i).getPos().getFinalX();
+      yi = barcosList.get(i).getPos().getInicialY();
+      yf = barcosList.get(i).getPos().getFinalY();
       boolean variaFilas = yi == yf ? true : false;
-      for (int j = 0; j < jugador.getBarcos().get(i).getSize(); j++) {
+      for (int j = 0; j < barcosList.get(i).getSize(); j++) {
         if (variaFilas) {
           if (xi + j == x && yi == y) {
-            return jugador.getBarcos().get(i);
+            return barcosList.get(i);
           }
         } else {
           if (xi == x && yi + j == y) {
-            return jugador.getBarcos().get(i);
+            return barcosList.get(i);
           }
         }
       }
@@ -222,14 +236,30 @@ public class Tablero implements Subject {
     return null;
   }
 
+  public ArrayList<Barco> getBarcosJug0() {
+    return barcosJug0;
+  }
+
+  public void setBarcosJug0(ArrayList<Barco> barcosJug0) {
+    this.barcosJug0 = barcosJug0;
+  }
+
+  public ArrayList<Barco> getBarcosJug1() {
+    return barcosJug1;
+  }
+
+  public void setBarcosJug1(ArrayList<Barco> barcosJug1) {
+    this.barcosJug1 = barcosJug1;
+  }
+
   private boolean terminoPartida() {
     boolean perdio0 = true;
     boolean perdio1 = true;
     for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
-      if (jugador0.getBarcos().get(i).getVida() != 0) {
+      if (this.barcosJug0.get(i).getVida() != 0) {
         perdio0 = false;
       }
-      if (jugador1.getBarcos().get(i).getVida() != 0) {
+      if (this.barcosJug1.get(i).getVida() != 0) {
         perdio1 = false;
       }
     }
@@ -240,10 +270,10 @@ public class Tablero implements Subject {
     boolean perdio0 = true;
     boolean perdio1 = true;
     for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
-      if (jugador0.getBarcos().get(i).getVida() != 0) {
+      if (this.barcosJug0.get(i).getVida() != 0) {
         perdio0 = false;
       }
-      if (jugador1.getBarcos().get(i).getVida() != 0) {
+      if (this.barcosJug1.get(i).getVida() != 0) {
         perdio1 = false;
       }
     }

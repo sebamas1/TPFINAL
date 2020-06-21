@@ -18,14 +18,14 @@ class TableroTest {
     tablero = new Tablero();
   }
 
-  @Test
   /**
    * Testea que las grillas no puedan ser creadas mas de una vez.
    */
+  @Test
   void testCrearGrilla() {
     tablero.crearGrilla();
     int[][] grilla = tablero.getGrillaJugador1();
-    grilla[0][0] = tablero.BARCO;
+    grilla[0][0] = Tablero.BARCO;
     tablero.setGrillaJugador1(grilla);
     tablero.crearGrilla();
     assertEquals(grilla, tablero.getGrillaJugador1());

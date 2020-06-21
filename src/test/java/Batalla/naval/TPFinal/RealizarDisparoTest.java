@@ -40,8 +40,8 @@ class RealizarDisparoTest {
   @Test
   void testEsValidoCasillaRepetida() {
     int[][] grilla = tablero.getGrillaJugador1();
-    grilla[0][0] = tablero.AGUA_MISS;
-    grilla[0][1] = tablero.BARCO_HIT;
+    grilla[0][0] = Tablero.AGUA_MISS;
+    grilla[0][1] = Tablero.BARCO_HIT;
     tablero.setGrillaJugador1(grilla);
     assertFalse(disparo.esValido(0, 0, 0, 1));
     assertFalse(disparo.esValido(0, 0, 1, 1));
