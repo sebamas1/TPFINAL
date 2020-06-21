@@ -33,6 +33,7 @@ class RealizarDisparoTest {
   }
   
 
+<<<<<<< HEAD
   /**
    * Testea si al repetir un disparo en una casilla, indica que es un disparo no valido.
    */
@@ -67,5 +68,25 @@ class RealizarDisparoTest {
     disparo.realizarAccion(0, 3, 4, 1);
     assertEquals(Tablero.AGUA_MISS, (tablero.getGrillaJugador1())[3][4]);
   }
+=======
+/*	@Test
+	/**
+	 * Testea si al realizar una accion se pasa satisfactoriamente al turno siguiente y de que al realizar
+	 * el disparo las casillas cambien de estado satisfactoriamente
+	 *agregarbarritaacacuandoandeeltest
+	void testRealizarAccion() {
+		tablero.setTurno(0);
+		int[][] grilla = tablero.getGrillaJugador1();
+		grilla[3][3] = tablero.BARCO;
+		grilla[3][4] = tablero.AGUA;
+		tablero.setGrillaJugador1(grilla);
+		disparo.realizarAccion(0, 3, 3, 1);
+		assertEquals(tablero.BARCO_HIT,(tablero.getGrillaJugador1())[3][3]);
+		assertEquals(1,tablero.getTurno());
+		tablero.setTurno(0);
+		disparo.realizarAccion(0, 3, 4, 1);
+		assertEquals(tablero.AGUA_MISS,(tablero.getGrillaJugador1())[3][4]);
+	}*/
+>>>>>>> 3cf771fd131406e483f28ecc0d55ebb9a39f4000
 
 }

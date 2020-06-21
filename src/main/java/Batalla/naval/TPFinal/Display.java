@@ -1,13 +1,16 @@
 package main.java.Batalla.naval.TPFinal;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Display extends JFrame implements Observer {
   private Tablero tablero;
@@ -20,34 +23,48 @@ public class Display extends JFrame implements Observer {
   public static final int SIZE_CASILLA = 30;
   public static final int WIDTH = 750;
   public static final int HEIGHT = 780;
-  public static final int MARGEN_TOP_GRILLA1 = 10;
+  public static final int MARGEN_TOP_GRILLA1 = 50;
   public static final int MARGEN_LEFT_GRILLA1 = 10;
-  public static final int MARGEN_TOP_GRILLA2 = 430;
+  public static final int MARGEN_TOP_GRILLA2 = 400;
   public static final int MARGEN_LEFT_GRILLA2 = 10;
   private final Controler controler;
   private Casilla[][] casillas0;
   private Casilla[][] casillas1;
+  private Container contenedor;
 
   /** Crea la UI
    * Dibuja el tablero creando 2 matrices de botones
    * crea tambien el tablero que va a manejar la logica
    * y el controler del mvc
-   * Guarda referencia a éste y las matrices de botones.
+   * Guarda referencia a ï¿½ste y las matrices de botones.
    */
   public Display() {
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
+    this.setResizable(true);
     this.setLocationRelativeTo(null);
-    this.setVisible(true);
-    this.setLayout(null);
     tablero = new Tablero();
     tablero.registerObserver(this);
     controler = new Controler(tablero);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
+    contenedor = this.getContentPane();
+    contenedor.setLayout(new BorderLayout());
     this.crearGrilla();
+    this.generarID();
+    this.setVisible(true);
+  }
+  
+  /**
+   * Crea al identificador y recibe el string ingresado para agregarlo a la UI final
+   */
+  private void generarID() {
+	  Identificador id = new Identificador();
+	  JLabel identificador = new JLabel("ID: " + id.getID());
+	  identificador.setFont(identificador.getFont().deriveFont(24.0f)); //Cambiar el tamanio de fuente del texto de la eiqueta
+	  contenedor.add(identificador, BorderLayout.NORTH);
+      contenedor.add(new JLabel(),BorderLayout.SOUTH);
   }
 
   public Tablero getTablero() {
@@ -76,7 +93,7 @@ public class Display extends JFrame implements Observer {
             (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, j, i);
         casilla.setBackground(CELESTE);
         casillas0[j][i] = casilla;
-        add(casilla);
+        contenedor.add(casilla,BorderLayout.SOUTH);
       }
     }
     for (int i = 0; i < COLUMNAS; i++) {
@@ -85,7 +102,7 @@ public class Display extends JFrame implements Observer {
             (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, j, i);
         casilla.setBackground(CELESTE);
         casillas1[j][i] = casilla;
-        add(casilla);
+        contenedor.add(casilla,BorderLayout.SOUTH);
       }
     }
   }
