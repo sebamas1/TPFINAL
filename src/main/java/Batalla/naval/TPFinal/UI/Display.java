@@ -1,4 +1,4 @@
-package main.java.Batalla.naval.TPFinal;
+package main.java.Batalla.naval.TPFinal.UI;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import main.java.Batalla.naval.TPFinal.Controler;
+import main.java.Batalla.naval.TPFinal.Tablero;
 
 public class Display extends JFrame implements Observer {
   private Tablero tablero;

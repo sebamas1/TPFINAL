@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.awt.AWTException;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import main.java.Batalla.naval.TPFinal.Display;
+import main.java.Batalla.naval.TPFinal.UI.Display;
 import main.java.Batalla.naval.TPFinal.Tablero;
 import org.junit.jupiter.api.Test;
 

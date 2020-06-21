@@ -1,4 +1,4 @@
-package main.java.Batalla.naval.TPFinal;
+package main.java.Batalla.naval.TPFinal.UI;
 
 import java.awt.Color;
 import java.awt.GridLayout;

@@ -88,7 +88,7 @@ public class ColocarBarcos implements AccionBehavior {
     ArrayList<Barco> barcos = turnoJugador == 0 ? tablero.getBarcosJug0() : tablero.getBarcosJug1();
 
     for (int i = 0; i < barcos.size(); i++) {
-      if (barcos.get(i).pos == null) {
+      if (barcos.get(i).getPos() == null) {
         nBarco = i;
         break;
       }

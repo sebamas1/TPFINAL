@@ -31,7 +31,12 @@ public class RealizarDisparoEspecial implements AccionBehavior {
               break;
             case Tablero.BARCO:
               grilla[row + i][column + j] = Tablero.BARCO_HIT;
-              tablero.encontrarBarco(row + i, column + j).reducirVida();
+              Barco barquito = tablero.encontrarBarco(row, column);
+              barquito.reducirVida();
+              if (barquito.getVida() == 0) {
+                System.out.println("Destruiste un/una " + barquito.getTipo()
+                    + " del jugador" + idCasilla);
+              }
               break;
             default:
               ;

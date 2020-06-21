@@ -3,6 +3,8 @@ package main.java.Batalla.naval.TPFinal;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import main.java.Batalla.naval.TPFinal.UI.Observer;
+
 public class Tablero implements Subject {
   public static final int FILAS = 10;
   public static final int COLUMNAS = 10;
@@ -29,7 +31,6 @@ public class Tablero implements Subject {
 
     barcosJug0 = new ArrayList<Barco>();
     barcosJug1 = new ArrayList<Barco>();
-    BarcosFactory factory = new BarcosFactory();
     this.turno = 0;
     jugador0 = new Humano("JP", 0);
     jugador1 = new AI(this);
@@ -39,12 +40,12 @@ public class Tablero implements Subject {
     observers = new HashSet<Observer>();
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
-      aux.add(factory.createBarco("Corbeta"));
-      aux.add(factory.createBarco("Corbeta"));
-      aux.add(factory.createBarco("Fragata"));
-      aux.add(factory.createBarco("Fragata"));
-      aux.add(factory.createBarco("Destructor"));
-      aux.add(factory.createBarco("Portaaviones"));
+      aux.add(new Barco(2, "Corbeta"));
+      aux.add(new Barco(2, "Corbeta"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(4, "Destructor"));
+      aux.add(new Barco(5, "Portaaviones"));
     }
   }
 
@@ -233,6 +234,7 @@ public class Tablero implements Subject {
         }
       }
     }
+    System.out.println("no deberia ejecutarme nunca");
     return null;
   }
 
