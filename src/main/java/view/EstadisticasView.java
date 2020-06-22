@@ -64,6 +64,7 @@ public class EstadisticasView implements Observer{
         display.mostrarID(Integer.toString(disparosRealizados), 400, 460, 15, 30);
         display.mostrarID(Integer.toString(this.barcosColocados), 600, 110, 15, 30);
         display.mostrarID(Integer.toString(this.barcosColocados), 600, 460, 15, 30);
+        this.display.repaint();
         break;
 
     

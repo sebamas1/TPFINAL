@@ -1,6 +1,9 @@
 package model;
 
+import java.awt.event.ActionListener;
+
 import view.Display;
+import view.Felicitaciones;
 
 public class Main {
 

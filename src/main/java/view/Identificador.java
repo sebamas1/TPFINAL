@@ -13,7 +13,6 @@ public class Identificador extends JFrame {
   public JTextField nombre = new JTextField(15);
   private JLabel instruccion = new JLabel("Ingrese su nombre");
   private JButton botonIngresar = new JButton("Ok");
-  private ActionListener ingresarListener;
 
   public Identificador(ActionListener e) {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,10 +29,6 @@ public class Identificador extends JFrame {
     this.setLocationRelativeTo(null);
     this.setVisible(true);
   }
-  
-  void setActionListener(ActionListener e) {
-    this.ingresarListener = e;
-  }
 
   class IngresarListener implements ActionListener {
     private Identificador ident;
@@ -43,7 +38,6 @@ public class Identificador extends JFrame {
     }
 
     public void actionPerformed(ActionEvent e) {
-      System.out.println(nombre.getText());
       this.ident.dispose();
     }
   }

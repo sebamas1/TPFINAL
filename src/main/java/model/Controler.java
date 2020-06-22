@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import view.Display;
 import view.EstadisticasView;
+import view.Felicitaciones;
 import view.Identificador;
 
 public class Controler {
@@ -13,6 +14,7 @@ public class Controler {
   private Display display;
   private Identificador identificador;
   private EstadisticasView estadisticas;
+  private Felicitaciones felicitaciones;
 
   /**
    * El controler del sistema siguiendo MVC.
@@ -28,7 +30,8 @@ public class Controler {
     tablero.registerObserver(estadisticas);
     tablero.crearGrillas();
     identificador = new Identificador(new NameListener());
-
+    felicitaciones = new Felicitaciones(tablero);
+    tablero.registerObserver(felicitaciones);
   }
 
   /**
@@ -51,18 +54,17 @@ public class Controler {
     this.identificador = identificador;
   }
   
-  class NameListener implements ActionListener {
+ private class NameListener implements ActionListener {
     
     public NameListener() {
       
     }
    
     public void actionPerformed(ActionEvent e) {
-      display.mostrarID(identificador.nombre.getText(), 50, 10, 100, 40);
+      String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1" : identificador.nombre.getText();
+      display.mostrarID(aux, 50, 10, 100, 40);
       display.mostrarID("Bot", 50, 350, 100, 40);
-      System.out.println(identificador.nombre.getText());
-      tablero.getJugador0().setNombre(identificador.nombre.getText());
-      System.out.println(display.getHeight());
+      tablero.getJugador0().setNombre(aux);
     }
 
   }

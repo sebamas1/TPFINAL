@@ -50,6 +50,6 @@ test {
 }
 jar{
      manifest{
-         attributes 'Main-Class': 'main.java.model.Main'
+         attributes 'Main-Class': 'model.Main'
      }
 }

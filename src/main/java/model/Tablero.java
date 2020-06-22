@@ -32,14 +32,13 @@ public class Tablero implements Subject {
 
   public Tablero() {
     
-    System.out.println("ASDF");
 
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
     barcosJug0 = new ArrayList<Barco>();
     barcosJug1 = new ArrayList<Barco>();
     this.turno = 0;
-    jugador0 = new Humano("JP", 0);
+    jugador0 = new Humano("Jugador humano", 0);
     jugador1 = new AI(this);
     observers = new HashSet<Observer>();
     for (int i = 0; i < 2; i++) {
@@ -135,14 +134,13 @@ public class Tablero implements Subject {
     
     if (terminoPartida()) {
       System.out.println("GANO: " + this.encontrarGanador().getNombre());
+      accion = Observer.TERMINO_PARTIDA;
+      notifyObservers();
     }
 
     if(this.movimientoExitoso) {
       this.notifyObservers();
       this.movimientoExitoso = false;
-    }
-    if(turno >= 23) {
-      resetearJuego();
     }
   }
 
