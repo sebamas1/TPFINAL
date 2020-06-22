@@ -17,7 +17,7 @@ public class AI extends Humano implements Jugador {
     random = new Random();
     coord = new int[3];
     //this.tablero = board;
-    this.nombre = "AI";
+    this.nombre = "R2-D2";
     this.playerID = 1;
   }
   

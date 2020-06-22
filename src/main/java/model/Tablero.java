@@ -45,10 +45,10 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(4, "Destructor"));
-      aux.add(new Barco(5, "Portaaviones"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(4, "Destructor"));
+//      aux.add(new Barco(5, "Portaaviones"));
     }
   }
 
@@ -118,11 +118,13 @@ public class Tablero implements Subject {
     this.accion = this.getTurno() < Humano.CANT_BARCOS *2 ? 
         Observer.COLOCA_BARCOS : Observer.REALIZA_DISPARO;
     
+    int nroDisparo = this.getTurno() - Humano.CANT_BARCOS * 2;
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (this.getTurno() != 20) {
+      if (nroDisparo % 10 > 1
+      || nroDisparo < 2) {
         deltaGrillaBehaviour = new RealizarDisparo(this);
       } else {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);

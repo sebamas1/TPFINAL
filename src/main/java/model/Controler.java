@@ -30,8 +30,13 @@ public class Controler {
     tablero.registerObserver(estadisticas);
     tablero.crearGrillas();
     identificador = new Identificador(new NameListener());
+
     felicitaciones = new Felicitaciones(tablero);
     tablero.registerObserver(felicitaciones);
+
+    display.getBotonReinicio().addActionListener(new ReinicioListener());
+
+
   }
 
   /**
@@ -68,8 +73,15 @@ public class Controler {
     }
 
   }
+
+  class ReinicioListener implements ActionListener {
+
+    public ReinicioListener() {
+    }
+
+	public void actionPerformed(ActionEvent e) {
+    tablero.resetearJuego();
+	}
+  }
+
 }
-
-
-
-
