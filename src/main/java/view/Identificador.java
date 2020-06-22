@@ -1,65 +1,53 @@
 package view;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import javax.swing.BorderFactory;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Identificador {
-  private String id = "Jugador 1";
-  private JTextField idField;
-  private JLabel priceLabel;
+public class Identificador extends JFrame {
 
-  public Identificador() {
-    idField = new JTextField(10);
-    desplegarUserInt();
+  public JTextField nombre = new JTextField(15);
+  private JLabel instruccion = new JLabel("Ingrese su nombre");
+  private JButton botonIngresar = new JButton("Ok");
+  private ActionListener ingresarListener;
+
+  public Identificador(ActionListener e) {
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setSize(200, 130);
+    botonIngresar.addActionListener(new IngresarListener(this));
+    botonIngresar.addActionListener(e);
+    
+    JPanel identPanel = new JPanel();
+    identPanel.add(instruccion);
+    identPanel.add(nombre);
+    identPanel.add(botonIngresar);
+    
+    this.add(identPanel);
+    this.setLocationRelativeTo(null);
+    this.setVisible(true);
+  }
+  
+  void setActionListener(ActionListener e) {
+    this.ingresarListener = e;
   }
 
-  private void desplegarUserInt() {
-    int selection = JOptionPane.showConfirmDialog(null, getPanel(), "Ingreso del ID : ",
-        JOptionPane.OK_CANCEL_OPTION,
-        JOptionPane.PLAIN_MESSAGE);
+  class IngresarListener implements ActionListener {
+    private Identificador ident;
 
-    // si el usuario ingreso el ID y presiono OK
-    if (selection == JOptionPane.OK_OPTION) {
-      String aux = String.valueOf(idField.getText());
-      // System.out.println("aux es:" + aux + ".");
-      if (aux != null && aux.length() > 0) {
-        id = aux;
-      }
+    public IngresarListener(Identificador ident) {
+      this.ident = ident;
+    }
 
-      JOptionPane.showMessageDialog(null, "ID ingresado : " + (id), "ID :" + " ",
-          JOptionPane.PLAIN_MESSAGE);
-    } else if (selection == JOptionPane.CANCEL_OPTION) {     // si se apreto el boton cancelar
-      JOptionPane.showMessageDialog(null, "El identificador fue seteado al ID por defecto", null,
-          JOptionPane.PLAIN_MESSAGE);
+    public void actionPerformed(ActionEvent e) {
+      System.out.println(nombre.getText());
+      this.ident.dispose();
     }
   }
+  
 
-  public String getID() {
-    return id;
-  }
 
-  private JPanel getPanel() {
-    JPanel basePanel = new JPanel();
-    basePanel.setOpaque(true);
-    basePanel.setBackground(Color.BLUE.darker());
-
-    JPanel centerPanel = new JPanel();
-    centerPanel.setLayout(new GridLayout(3, 2, 5, 5));
-    centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-    centerPanel.setOpaque(true);
-    centerPanel.setBackground(Color.WHITE);
-
-    priceLabel = new JLabel("Ingrese su ID : ");
-
-    centerPanel.add(priceLabel);
-    centerPanel.add(idField);
-    basePanel.add(centerPanel);
-
-    return basePanel;
-  }
 }

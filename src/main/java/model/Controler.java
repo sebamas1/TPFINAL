@@ -1,12 +1,16 @@
 package model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import view.Display;
+import view.Identificador;
 
 public class Controler {
   private Tablero tablero;
   private Display display;
+  private Identificador identificador;
 
   /**
    * El controler del sistema siguiendo MVC.
@@ -19,6 +23,7 @@ public class Controler {
     display.setControler(this);
     tablero.registerObserver(display);
     tablero.crearGrillas();
+    identificador = new Identificador(new NameListener());
 
   }
 
@@ -36,5 +41,25 @@ public class Controler {
     if (e.getButton() == 1 || e.getButton() == 3) {
       tablero.dispararEventoEnGrilla(e.getButton(), i, j, id);
     }
+  }
+  
+  public void setIdentificador(Identificador identificador) {
+    this.identificador = identificador;
+  }
+  
+  class NameListener implements ActionListener {
+    
+    public NameListener() {
+      
+    }
+   
+    public void actionPerformed(ActionEvent e) {
+      display.mostrarID(identificador.nombre.getText(), 50, 10, 100, 40);
+      display.mostrarID("Bot", 50, 350, 100, 40);
+      System.out.println(identificador.nombre.getText());
+      tablero.getJugador0().setNombre(identificador.nombre.getText());
+      System.out.println(display.getHeight());
+    }
+
   }
 }

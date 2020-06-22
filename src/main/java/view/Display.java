@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import model.Controler;
 import model.Tablero;
 
@@ -30,7 +32,6 @@ public class Display extends JFrame implements Observer {
   private Controler controler;
   private Casilla[][] casillas0;
   private Casilla[][] casillas1;
-  private Container contenedor;
 
   /**
    * Crea la UI Dibuja el tablero creando 2 matrices de botones crea tambien el
@@ -46,26 +47,33 @@ public class Display extends JFrame implements Observer {
     this.setLocationRelativeTo(null);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
-    contenedor = this.getContentPane();
-    contenedor.setLayout(new BorderLayout());
     this.crearGrilla();
-    this.generarID();
+    this.setLayout(null);
     this.setVisible(true);
+    
+//    this.namePanel = new JPanel();
+//    this.displayNombre = new JLabel();
+//    this.displayNombre.setText("ASD");
+//    this.namePanel.add(displayNombre);
+//    this.namePanel.setBounds(150, 20, 15, 50);
+//    this.add(namePanel);
+    
+
   }
 
   /**
    * Crea al identificador y recibe el string ingresado para agregarlo a la UI
    * final.
    */
-  private void generarID() {
-    Identificador id = new Identificador();
-    JLabel identificador = new JLabel("ID: " + id.getID());
-    identificador.setFont(identificador.getFont().deriveFont(24.0f)); 
-    // Cambiar el tamanio de fuente del texto de la eiqueta
-    contenedor.add(identificador, BorderLayout.NORTH);
-    contenedor.add(new JLabel(), BorderLayout.SOUTH);
+  public void mostrarID(String nombre, int x, int y, int largo, int ancho) {
+    JPanel namePanel = new JPanel(new BorderLayout());
+    JLabel displayNombre = new JLabel(nombre);
+    System.out.println(displayNombre.getText());
+    namePanel.add(displayNombre);
+    namePanel.setBounds(x, y, largo, ancho);
+    this.add(namePanel);
+    this.validate();
   }
-
   public Tablero getTablero() {
     return this.tablero;
   }
@@ -99,10 +107,10 @@ public class Display extends JFrame implements Observer {
             1, j, i);
         casilla1.setBackground(CELESTE);
         casillas1[j][i] = casilla1;
-        contenedor.add(casilla1, BorderLayout.SOUTH);
+        this.add(casilla1, BorderLayout.SOUTH);
         casilla0.setBackground(CELESTE);
         casillas0[j][i] = casilla0;
-        contenedor.add(casilla0, BorderLayout.SOUTH);
+        this.add(casilla0, BorderLayout.SOUTH);
       }
     }
   }
