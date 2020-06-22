@@ -1,4 +1,4 @@
-package main.java.model;
+package model;
 
 /** Guarda 4 ints que definen donde esta el barco.
  * La posicion de los barcos esta definida por donde empiezan

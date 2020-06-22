@@ -1,8 +1,8 @@
-package main.java.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import main.java.view.Observer;
+import view.Observer;
 
 public class Tablero implements Subject {
   public static final int FILAS = 10;

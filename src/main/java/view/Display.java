@@ -1,4 +1,4 @@
-package main.java.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import main.java.model.Controler;
-import main.java.model.Tablero;
+import model.Controler;
+import model.Tablero;
 
 @SuppressWarnings("serial")
 public class Display extends JFrame implements Observer {
