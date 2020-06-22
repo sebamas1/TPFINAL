@@ -5,12 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import view.Display;
+import view.EstadisticasView;
 import view.Identificador;
 
 public class Controler {
   private Tablero tablero;
   private Display display;
   private Identificador identificador;
+  private EstadisticasView estadisticas;
 
   /**
    * El controler del sistema siguiendo MVC.
@@ -20,8 +22,10 @@ public class Controler {
   public Controler(Tablero tablero, Display display) {
     this.tablero = tablero;
     this.display = display;
+    estadisticas = new EstadisticasView(display);
     display.setControler(this);
     tablero.registerObserver(display);
+    tablero.registerObserver(estadisticas);
     tablero.crearGrillas();
     identificador = new Identificador(new NameListener());
 
@@ -63,3 +67,7 @@ public class Controler {
 
   }
 }
+
+
+
+

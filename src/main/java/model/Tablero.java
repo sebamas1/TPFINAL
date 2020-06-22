@@ -21,12 +21,18 @@ public class Tablero implements Subject {
   private boolean grillaCreada = false;
   private int turno;
   private AccionBehavior deltaGrillaBehaviour;
+  private int turnoJugador;
+  private int accion;
+  private boolean movimientoExitoso = false;
+  
 
   /**
    * titulo. doc
    */
 
   public Tablero() {
+    
+    System.out.println("ASDF");
 
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
@@ -92,7 +98,7 @@ public class Tablero implements Subject {
 
   public void notifyObservers() {
     for (Observer observer : observers) {
-      observer.update();
+      observer.update(accion, turnoJugador);
     }
   }
 
@@ -108,6 +114,11 @@ public class Tablero implements Subject {
   
   //gran parte de esto hay que meterlo en el controler
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
+    
+    this.turnoJugador = this.getTurno() % 2;
+    this.accion = this.getTurno() < Humano.CANT_BARCOS *2 ? 
+        Observer.COLOCA_BARCOS : Observer.REALIZA_DISPARO;
+    
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
@@ -118,26 +129,18 @@ public class Tablero implements Subject {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
       }
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
+    }
+    
+    this.turnoMaquina();
+    
+    if (terminoPartida()) {
+      System.out.println("GANO: " + this.encontrarGanador().getNombre());
+    }
 
+    if(this.movimientoExitoso) {
+      this.notifyObservers();
+      this.movimientoExitoso = false;
     }
-    if (terminoPartida()) {
-      System.out.println("GANO: " + this.encontrarGanador().getNombre());
-    }
-    
-    int aux;
-    int[] coord;
-    while (this.getTurno() % 2 == 1) {
-      aux = turno < Humano.CANT_BARCOS * 2 ? jugador1.getPlayerID() : jugador0.getPlayerID();
-      coord = jugador1.realizarTurno();
-      if (deltaGrillaBehaviour.esValido(1, coord[0], coord[1], aux)) {
-        deltaGrillaBehaviour.realizarAccion(1, coord[0], coord[1], aux);
-      }
-    }
-    
-    if (terminoPartida()) {
-      System.out.println("GANO: " + this.encontrarGanador().getNombre());
-    }
-    this.notifyObservers();
   }
 
   public int[][] getGrillaJugador0() {
@@ -303,5 +306,40 @@ public class Tablero implements Subject {
       }
     }
     return true;
+  }
+
+  
+  public boolean isMovimientoExitoso() {
+    return movimientoExitoso;
+  }
+
+  
+  public void setMovimientoExitoso(boolean movimientoExitoso) {
+    this.movimientoExitoso = movimientoExitoso;
+  }
+
+  public void setAccion(int accion) {
+    this.accion = accion;
+  }
+
+  public void setTurnoJugador(int jugador) {
+    this.turnoJugador = jugador;
+  }
+
+  public int getTurnoJugador() {
+    return this.turnoJugador;
+  }
+
+  private void turnoMaquina(){
+    int aux;
+    int[] coord;
+    while (this.getTurno() % 2 == 1) {
+      this.turnoJugador = 1;
+      aux = turno < Humano.CANT_BARCOS * 2 ? jugador1.getPlayerID() : jugador0.getPlayerID();
+      coord = jugador1.realizarTurno();
+      if (deltaGrillaBehaviour.esValido(coord[0], coord[1], coord[2], aux)) {
+        deltaGrillaBehaviour.realizarAccion(coord[0], coord[1], coord[2], aux);
+      }
+    }
   }
 }

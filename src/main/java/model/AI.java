@@ -15,7 +15,7 @@ public class AI extends Humano implements Jugador {
    */
   public AI(Tablero board) {
     random = new Random();
-    coord = new int[2];
+    coord = new int[3];
     //this.tablero = board;
     this.nombre = "AI";
     this.playerID = 1;
@@ -23,17 +23,24 @@ public class AI extends Humano implements Jugador {
   
   /**
    * Devuelve las coordenadas para que el tablero ejecuta la accion que 
-   * corresponda ahí.
+   * corresponda ahï¿½.
    * @return 2 enteros
    */
   
   public int[] realizarTurno() {
 
-    coord[0] = this.random.nextInt((9 - 0) + 1) + 0;
-    coord[1] = this.random.nextInt((9 - 0) + 1) + 0;
+    coord[0] = this.next();
+    coord[1] = this.random.nextInt((9 - 0) + 1);
+    coord[2] = this.random.nextInt((9 - 0) + 1);
     return coord;
   }
   
-  
+  private int next() {
+    if (random.nextBoolean()) {
+      return 1;
+    } else {
+      return 3;
+    }
+  }
   
 }

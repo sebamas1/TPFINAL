@@ -1,5 +1,6 @@
 package model;
 
+import view.Observer;
 
 public class RealizarDisparo implements AccionBehavior {
   private Tablero tablero;
@@ -51,6 +52,9 @@ public class RealizarDisparo implements AccionBehavior {
         Barco barquito = tablero.encontrarBarco(row, column);
         barquito.reducirVida();
         if (barquito.getVida() == 0) {
+          tablero.setAccion(Observer.DESTRUYE_BARCO);
+          tablero.notifyObservers();
+          tablero.setAccion(Observer.REALIZA_DISPARO);
           System.out.println("Destruiste un/una " + barquito.getTipo()
               + " del jugador" + idCasilla);
         }
@@ -59,8 +63,8 @@ public class RealizarDisparo implements AccionBehavior {
       default:
       ;
     }
-
     tablero.setTurno(tablero.getTurno() + 1);
+    tablero.setMovimientoExitoso(true);
   }
 
 }

@@ -61,6 +61,7 @@ public class ColocarBarcos implements AccionBehavior {
           column + barcosJug.get(nrobarco).getSize() - 1)));
     }
     tablero.setTurno(tablero.getTurno() + 1);
+    tablero.setMovimientoExitoso(true);
   }
 
   /**

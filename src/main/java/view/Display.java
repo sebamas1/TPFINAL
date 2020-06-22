@@ -15,7 +15,7 @@ import model.Tablero;
 
 @SuppressWarnings("serial")
 public class Display extends JFrame implements Observer {
-  private Tablero tablero;
+  private final Tablero tablero;
   public static final Color ROJO = new Color(255, 0, 0);
   public static final Color GRIS = new Color(130, 130, 130);
   public static final Color AZUL = new Color(0, 0, 255);
@@ -31,14 +31,14 @@ public class Display extends JFrame implements Observer {
   public static final int MARGEN_LEFT_GRILLA2 = 10;
   private Controler controler;
   private Casilla[][] casillas0;
-  private Casilla[][] casillas1;
+  private final Casilla[][] casillas1;
 
   /**
    * Crea la UI Dibuja el tablero creando 2 matrices de botones crea tambien el
    * tablero que va a manejar la logica y el controler del mvc Guarda referencia a
    * �ste y las matrices de botones.
    */
-  public Display(Tablero tablero) {
+  public Display(final Tablero tablero) {
     this.tablero = tablero;
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
@@ -50,14 +50,13 @@ public class Display extends JFrame implements Observer {
     this.crearGrilla();
     this.setLayout(null);
     this.setVisible(true);
-    
-//    this.namePanel = new JPanel();
-//    this.displayNombre = new JLabel();
-//    this.displayNombre.setText("ASD");
-//    this.namePanel.add(displayNombre);
-//    this.namePanel.setBounds(150, 20, 15, 50);
-//    this.add(namePanel);
-    
+
+    // this.namePanel = new JPanel();
+    // this.displayNombre = new JLabel();
+    // this.displayNombre.setText("ASD");
+    // this.namePanel.add(displayNombre);
+    // this.namePanel.setBounds(150, 20, 15, 50);
+    // this.add(namePanel);
 
   }
 
@@ -65,15 +64,16 @@ public class Display extends JFrame implements Observer {
    * Crea al identificador y recibe el string ingresado para agregarlo a la UI
    * final.
    */
-  public void mostrarID(String nombre, int x, int y, int largo, int ancho) {
-    JPanel namePanel = new JPanel(new BorderLayout());
-    JLabel displayNombre = new JLabel(nombre);
+  public void mostrarID(final String nombre, final int x, final int y, final int largo, final int ancho) {
+    final JPanel namePanel = new JPanel(new BorderLayout());
+    final JLabel displayNombre = new JLabel(nombre);
     System.out.println(displayNombre.getText());
     namePanel.add(displayNombre);
     namePanel.setBounds(x, y, largo, ancho);
     this.add(namePanel);
     this.validate();
   }
+
   public Tablero getTablero() {
     return this.tablero;
   }
@@ -82,29 +82,28 @@ public class Display extends JFrame implements Observer {
     return casillas0;
   }
 
-  public void setCasillas0(Casilla[][] casillas0) {
+  public void setCasillas0(final Casilla[][] casillas0) {
     this.casillas0 = casillas0;
   }
 
-  public void update() {
+  public void update(final int accion, final int idJugador) {
     colorearGrilla();
   }
 
-  public void setControler(Controler controler) {
+  public void setControler(final Controler controler) {
     this.controler = controler;
   }
+
   /**
    * Crea las grillas de botones en la UI.
    */
   public void crearGrilla() {
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
-        Casilla casilla0 = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
-            (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j),
-            0, j, i);
-        Casilla casilla1 = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
-            (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j),
-            1, j, i);
+        final Casilla casilla0 = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
+            (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j), 0, j, i);
+        final Casilla casilla1 = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
+            (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j), 1, j, i);
         casilla1.setBackground(CELESTE);
         casillas1[j][i] = casilla1;
         this.add(casilla1, BorderLayout.SOUTH);
@@ -120,8 +119,8 @@ public class Display extends JFrame implements Observer {
    */
 
   public void colorearGrilla() {
-    int[][] tableroLogico0 = tablero.getGrillaJugador0();
-    int[][] tableroLogico1 = tablero.getGrillaJugador1();
+    final int[][] tableroLogico0 = tablero.getGrillaJugador0();
+    final int[][] tableroLogico1 = tablero.getGrillaJugador1();
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++) {
 
@@ -136,7 +135,7 @@ public class Display extends JFrame implements Observer {
             casillas1[i][j].setBackground(ROJO);
             break;
           default:
-          ;
+            ;
         }
 
         switch (tableroLogico0[i][j]) {
@@ -150,7 +149,7 @@ public class Display extends JFrame implements Observer {
             casillas0[i][j].setBackground(ROJO);
             break;
           default:
-          ;
+            ;
         }
       }
     }
@@ -171,7 +170,7 @@ public class Display extends JFrame implements Observer {
      * @param fil     para que la casilla sepa en donde esta en la grilla
      * @param col     para que la casilla sepa en que columna esta en la grilla
      */
-    public Casilla(int x, int y, int jugador, int fil, int col) {
+    public Casilla(final int x, final int y, final int jugador, final int fil, final int col) {
       this.setPropietario(jugador);
       this.setBounds(x, y, SIZE_CASILLA, SIZE_CASILLA);
       this.setFila(fil);
@@ -179,7 +178,7 @@ public class Display extends JFrame implements Observer {
       this.addMouseListener(this);
     }
 
-    public void setPropietario(int a) {
+    public void setPropietario(final int a) {
       this.propietario = a;
     }
 
@@ -187,35 +186,35 @@ public class Display extends JFrame implements Observer {
       return this.propietario;
     }
 
-    public void setFila(int a) {
+    public void setFila(final int a) {
       this.fila = a;
     }
 
-    public void setColumna(int b) {
+    public void setColumna(final int b) {
       this.columna = b;
     }
 
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
 
     }
 
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(final MouseEvent e) {
 
     }
 
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(final MouseEvent e) {
 
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(final MouseEvent e) {
 
     }
 
     /**
-     * Cuando se suelta el mouse sobre un boton de la grilla,
-     * se notifica al tablero.
+     * Cuando se suelta el mouse sobre un boton de la grilla, se notifica al
+     * tablero.
      */
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(final MouseEvent e) {
       // Le avisa al controlador de que se solto el click, en que fila, columna y de
       // que grilla
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
