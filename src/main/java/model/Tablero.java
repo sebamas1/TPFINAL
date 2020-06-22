@@ -28,13 +28,13 @@ public class Tablero implements Subject {
 
   public Tablero() {
 
+    grillaJugador0 = new int[FILAS][COLUMNAS];
+    grillaJugador1 = new int[FILAS][COLUMNAS];
     barcosJug0 = new ArrayList<Barco>();
     barcosJug1 = new ArrayList<Barco>();
     this.turno = 0;
     jugador0 = new Humano("JP", 0);
     jugador1 = new AI(this);
-    grillaJugador0 = new int[FILAS][COLUMNAS];
-    grillaJugador1 = new int[FILAS][COLUMNAS];
     observers = new HashSet<Observer>();
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;

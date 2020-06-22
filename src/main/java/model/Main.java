@@ -10,7 +10,9 @@ public class Main {
    */
   public static void main(String[] args) {
     @SuppressWarnings("unused")
-    Display launcher = new Display();
+    Tablero tablero = new Tablero();
+    Display display = new Display(tablero);
+    Controler controler = new Controler(tablero, display);
     
   }
 

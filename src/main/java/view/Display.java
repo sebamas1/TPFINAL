@@ -27,7 +27,7 @@ public class Display extends JFrame implements Observer {
   public static final int MARGEN_LEFT_GRILLA1 = 10;
   public static final int MARGEN_TOP_GRILLA2 = 400;
   public static final int MARGEN_LEFT_GRILLA2 = 10;
-  private final Controler controler;
+  private Controler controler;
   private Casilla[][] casillas0;
   private Casilla[][] casillas1;
   private Container contenedor;
@@ -37,15 +37,13 @@ public class Display extends JFrame implements Observer {
    * tablero que va a manejar la logica y el controler del mvc Guarda referencia a
    * �ste y las matrices de botones.
    */
-  public Display() {
+  public Display(Tablero tablero) {
+    this.tablero = tablero;
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(true);
     this.setLocationRelativeTo(null);
-    tablero = new Tablero();
-    tablero.registerObserver(this);
-    controler = new Controler(tablero);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
     contenedor = this.getContentPane();
@@ -84,28 +82,27 @@ public class Display extends JFrame implements Observer {
     colorearGrilla();
   }
 
+  public void setControler(Controler controler) {
+    this.controler = controler;
+  }
   /**
    * Crea las grillas de botones en la UI.
    */
   public void crearGrilla() {
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
-        Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
+        Casilla casilla0 = new Casilla((MARGEN_LEFT_GRILLA1 + SIZE_CASILLA * i),
             (MARGEN_TOP_GRILLA1 + SIZE_CASILLA * j),
             0, j, i);
-        casilla.setBackground(CELESTE);
-        casillas0[j][i] = casilla;
-        contenedor.add(casilla, BorderLayout.SOUTH);
-      }
-    }
-    for (int i = 0; i < COLUMNAS; i++) {
-      for (int j = 0; j < FILAS; j++) {
-        Casilla casilla = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
+        Casilla casilla1 = new Casilla((MARGEN_LEFT_GRILLA2 + SIZE_CASILLA * i),
             (MARGEN_TOP_GRILLA2 + SIZE_CASILLA * j),
             1, j, i);
-        casilla.setBackground(CELESTE);
-        casillas1[j][i] = casilla;
-        contenedor.add(casilla, BorderLayout.SOUTH);
+        casilla1.setBackground(CELESTE);
+        casillas1[j][i] = casilla1;
+        contenedor.add(casilla1, BorderLayout.SOUTH);
+        casilla0.setBackground(CELESTE);
+        casillas0[j][i] = casilla0;
+        contenedor.add(casilla0, BorderLayout.SOUTH);
       }
     }
   }
