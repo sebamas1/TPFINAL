@@ -274,16 +274,9 @@ public class Tablero implements Subject {
    * @return Devuelve al jugador ganador
    */
   public Jugador encontrarGanador() {
-    boolean perdio0 = true;
-    boolean perdio1 = true;
-    for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
-      if (this.barcosJug0.get(i).getVida() != 0) {
-        perdio0 = false;
-      }
-      if (this.barcosJug1.get(i).getVida() != 0) {
-        perdio1 = false;
-      }
-    }
+    
+    boolean perdio0 = this.perdio(this.getBarcosJug0());
+    boolean perdio1 = this.perdio(this.getBarcosJug1());
     if (perdio0 && !perdio1) {
       return jugador1;
     } else if (perdio1 && !perdio0) {
@@ -301,5 +294,14 @@ public class Tablero implements Subject {
   public void setObservers(HashSet<Observer> observers) {
 
     this.observers = observers;
+  }
+
+  public boolean perdio(ArrayList<Barco> barcos) {
+    for (int i = 0; i < barcos.size(); i++) {
+      if (barcos.get(i).getVida() > 0) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -35,7 +35,6 @@ class RealizarDisparoEspecialTest {
   void testRealizarAccion() {
     int[][] grilla = tablero.getGrillaJugador0();
     prepararGrilla(grilla);
-    tablero.printMatriz();
     tablero.setGrillaJugador0(grilla);
     try {
       disparo.realizarAccion(1, 0, 0, 0);

@@ -52,7 +52,6 @@ public class Humano implements Jugador {
     this.nombre = nombre;
     this.playerID = playerID;
   }
-
   
   public int[] realizarTurno() {
     return null;

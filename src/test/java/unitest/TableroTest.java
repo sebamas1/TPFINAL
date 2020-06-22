@@ -156,7 +156,19 @@ class TableroTest {
   }
 
   @Test
+  void testPerdio() {
+    ArrayList<Barco> barcos = tablero.getBarcosJug0();
+    barcos.get(0).setVida(1);
+    assertFalse("No deberia perder si quedan barcos con vida", tablero.perdio(barcos));
+    for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
+      barcos.get(i).setVida(0);
+    }
+    assertTrue("Deberia perder si todos sus barcos tienen vida 0", tablero.perdio(barcos));
+  }
+  
+  @Test
   void testEncontrarGanador() {
+
     
     ArrayList<Barco> barcos0 = tablero.getBarcosJug0();
     ArrayList<Barco> barcos1 = tablero.getBarcosJug1();

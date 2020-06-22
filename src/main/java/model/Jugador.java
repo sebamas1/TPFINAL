@@ -18,4 +18,5 @@ public interface Jugador {
   public void setBarcosColocadosJugador(int barcosColocadosJugador);
   
   public int[] realizarTurno();
+  
 }
