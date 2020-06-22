@@ -3,7 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
@@ -39,7 +38,6 @@ public class Display extends JFrame implements Observer {
    * �ste y las matrices de botones.
    */
   public Display(final Tablero tablero) {
-    this.tablero = tablero;
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +45,8 @@ public class Display extends JFrame implements Observer {
     this.setLocationRelativeTo(null);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
-    this.crearGrilla();
+    this.crearGrilla(); //estas dos lineas estaban arriba de todo e invertidas(primero this.tablero = tablero, luego crearGrilla())
+    this.tablero = tablero;
     this.setLayout(null);
     this.setVisible(true);
 
@@ -134,6 +133,9 @@ public class Display extends JFrame implements Observer {
           case Tablero.BARCO_HIT:
             casillas1[i][j].setBackground(ROJO);
             break;
+          case Tablero.AGUA:
+            casillas1[i][j].setBackground(CELESTE);
+            break;
           default:
             ;
         }
@@ -147,6 +149,9 @@ public class Display extends JFrame implements Observer {
             break;
           case Tablero.BARCO_HIT:
             casillas0[i][j].setBackground(ROJO);
+            break;
+          case Tablero.AGUA:
+            casillas0[i][j].setBackground(CELESTE);
             break;
           default:
             ;
@@ -220,4 +225,5 @@ public class Display extends JFrame implements Observer {
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
     }
   }
+  
 }

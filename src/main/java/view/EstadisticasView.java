@@ -55,7 +55,7 @@ public class EstadisticasView implements Observer{
 
       case Observer.REINICIA_JUEGO:
         this.disparosRealizados = 0;
-        this.barcosDestruidosJug0 = /*  */0;
+        this.barcosDestruidosJug0 = 0;
         this.barcosDestruidosJug1 = 0;
         this.barcosColocados = 0;
         display.mostrarID(Integer.toString(this.barcosDestruidosJug1), 400, 590, 180, 50);

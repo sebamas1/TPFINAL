@@ -141,8 +141,33 @@ public class Tablero implements Subject {
       this.notifyObservers();
       this.movimientoExitoso = false;
     }
+    if(turno >= 23) {
+      resetearJuego();
+    }
   }
 
+  public void resetearJuego() {
+    accion = Observer.REINICIA_JUEGO;
+    turno = 0;
+    for(int i = 0; i < COLUMNAS; i++) {
+      for(int j = 0; j < FILAS; j++) {
+        grillaJugador0[i][j] = Tablero.AGUA;
+        grillaJugador1[i][j] = Tablero.AGUA;
+      }
+    }
+    barcosJug0.clear();
+    barcosJug1.clear();
+    for (int i = 0; i < 2; i++) {
+      ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
+      aux.add(new Barco(2, "Corbeta"));
+      aux.add(new Barco(2, "Corbeta"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(4, "Destructor"));
+      aux.add(new Barco(5, "Portaaviones"));
+    }
+    notifyObservers();
+  }
   public int[][] getGrillaJugador0() {
     return this.grillaJugador0;
   }
