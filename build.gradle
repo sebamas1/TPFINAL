@@ -10,6 +10,7 @@ plugins {
     // Apply the java plugin to add support for Java
     id 'java'
     
+    id 'eclipse'
     // Para que compile todo 
     id 'java-library'
 
@@ -26,7 +27,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
-
+    testCompile 'junit:junit:[4.8,)'
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
@@ -34,10 +35,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 application {
     // Define the main class for the application.

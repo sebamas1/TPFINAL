@@ -1,4 +1,4 @@
-package test.java.unitest;
+package unitest;
 
 
 import static org.junit.Assert.assertEquals;
@@ -6,11 +6,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import main.java.model.Barco;
-import main.java.model.Jugador;
-import main.java.model.PosicionBarco;
-import main.java.model.Tablero;
-import main.java.view.Observer;
+import model.Barco;
+import model.Jugador;
+import model.PosicionBarco;
+import model.Tablero;
+import view.Observer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

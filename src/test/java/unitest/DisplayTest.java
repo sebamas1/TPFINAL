@@ -1,4 +1,4 @@
-package test.java.unitest;
+package unitest;
 
 import org.junit.jupiter.api.Test;
 

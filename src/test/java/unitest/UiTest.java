@@ -1,12 +1,12 @@
-package test.java.unitest;
+package unitest;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.AWTException;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import main.java.model.Tablero;
-import main.java.view.Display;
+import model.Tablero;
+import view.Display;
 import org.junit.jupiter.api.Test;
 
 /**

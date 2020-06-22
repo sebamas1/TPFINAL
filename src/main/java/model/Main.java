@@ -1,6 +1,6 @@
-package main.java.model;
+package model;
 
-import main.java.view.Display;
+import view.Display;
 
 public class Main {
 

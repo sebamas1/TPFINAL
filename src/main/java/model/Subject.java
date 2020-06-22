@@ -1,6 +1,6 @@
-package main.java.model;
+package model;
 
-import main.java.view.Observer;
+import view.Observer;
 
 public interface Subject {
   
