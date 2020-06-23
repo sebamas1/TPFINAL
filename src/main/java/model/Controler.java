@@ -28,6 +28,7 @@ public class Controler {
     tablero.registerObserver(estadisticas);
     tablero.crearGrillas();
     identificador = new Identificador(new NameListener());
+    display.getBotonReinicio().addActionListener(new ReinicioListener());
 
   }
 
@@ -66,8 +67,15 @@ public class Controler {
     }
 
   }
+
+  class ReinicioListener implements ActionListener {
+
+    public ReinicioListener() {
+    }
+
+	public void actionPerformed(ActionEvent e) {
+    tablero.resetearJuego();
+	}
+  }
+
 }
-
-
-
-

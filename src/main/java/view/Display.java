@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +35,7 @@ public class Display extends JFrame implements Observer {
   private Controler controler;
   private Casilla[][] casillas0;
   private final Casilla[][] casillas1;
+  private JButton botonReinicio;
 
   /**
    * Crea la UI Dibuja el tablero creando 2 matrices de botones crea tambien el
@@ -38,6 +43,7 @@ public class Display extends JFrame implements Observer {
    * �ste y las matrices de botones.
    */
   public Display(final Tablero tablero) {
+    this.tablero = tablero;
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,9 +51,9 @@ public class Display extends JFrame implements Observer {
     this.setLocationRelativeTo(null);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
-    this.crearGrilla(); //estas dos lineas estaban arriba de todo e invertidas(primero this.tablero = tablero, luego crearGrilla())
-    this.tablero = tablero;
+    this.crearGrilla();
     this.setLayout(null);
+    this.crearBotonReinicio();
     this.setVisible(true);
 
     // this.namePanel = new JPanel();
@@ -124,9 +130,9 @@ public class Display extends JFrame implements Observer {
       for (int j = 0; j < COLUMNAS; j++) {
 
         switch (tableroLogico1[i][j]) {
-          case Tablero.BARCO:
-            casillas1[i][j].setBackground(GRIS);
-            break;
+          // case Tablero.BARCO:
+          //   casillas1[i][j].setBackground(GRIS);
+          //   break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
             break;
@@ -158,6 +164,21 @@ public class Display extends JFrame implements Observer {
         }
       }
     }
+  }
+
+  public JButton getBotonReinicio() {
+    return this.botonReinicio;
+  }
+
+  private void crearBotonReinicio() {
+    this.botonReinicio = new JButton("Reiniciar");
+    //this.botonReinicio.addActionListener(e);
+    JPanel botonPanel = new JPanel();
+    botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+    botonPanel.setBounds(500, 325, 120,80);
+    botonPanel.add(botonReinicio);
+    this.add(botonPanel);
+    this.validate();
   }
 
   public class Casilla extends Button implements MouseListener {
@@ -225,5 +246,4 @@ public class Display extends JFrame implements Observer {
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
     }
   }
-  
 }

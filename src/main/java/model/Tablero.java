@@ -31,8 +31,6 @@ public class Tablero implements Subject {
    */
 
   public Tablero() {
-    
-    System.out.println("ASDF");
 
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
@@ -119,11 +117,13 @@ public class Tablero implements Subject {
     this.accion = this.getTurno() < Humano.CANT_BARCOS *2 ? 
         Observer.COLOCA_BARCOS : Observer.REALIZA_DISPARO;
     
+    int nroDisparo = this.getTurno() - Humano.CANT_BARCOS * 2;
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (this.getTurno() != 20) {
+      if (nroDisparo % 10 > 1
+      || nroDisparo < 2) {
         deltaGrillaBehaviour = new RealizarDisparo(this);
       } else {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
@@ -140,9 +140,6 @@ public class Tablero implements Subject {
     if(this.movimientoExitoso) {
       this.notifyObservers();
       this.movimientoExitoso = false;
-    }
-    if(turno >= 23) {
-      resetearJuego();
     }
   }
 
