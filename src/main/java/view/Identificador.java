@@ -1,11 +1,8 @@
 package view;
 
-import java.awt.*;
-import java.applet.Applet;
-import java.awt.LayoutManager;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,8 +19,7 @@ public class Identificador extends JFrame {
 
   private static final long serialVersionUID = 1L;
   public JTextField nombre = new JTextFieldLimit(15);
-  private JLabel instruccion = new JLabel("Ingrese su nombre",
-   SwingConstants.CENTER);
+  private JLabel instruccion = new JLabel("Ingrese su nombre", SwingConstants.CENTER);
   private JButton botonIngresar = new JButton("Ok");
 
   /**
@@ -60,39 +56,41 @@ public class Identificador extends JFrame {
       this.ident.dispose();
     }
   }
-  
 
-   class JTextFieldLimit extends JTextField {
+  class JTextFieldLimit extends JTextField {
     private int limit;
 
     public JTextFieldLimit(int limit) {
-        super();
-        this.limit = limit;
+      super();
+      this.limit = limit;
     }
 
     @Override
     protected Document createDefaultModel() {
-        return new LimitDocument();
+      return new LimitDocument();
     }
 
     private class LimitDocument extends PlainDocument {
 
-        /**
-       *
-       */
+      /**
+      * 
+      */
       private static final long serialVersionUID = 1L;
 
       @Override
-        public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
-            if (str == null) return;
+      public void insertString(int offset, String str, AttributeSet attr)
+          throws BadLocationException {
+        if (str == null) {
+          return;
+        }
 
-            if ((getLength() + str.length()) <= limit) {
-                super.insertString(offset, str, attr);
-            }
-        }       
+        if ((getLength() + str.length()) <= limit) {
+          super.insertString(offset, str, attr);
+        }
+      }
 
     }
 
-}
+  }
 
 }

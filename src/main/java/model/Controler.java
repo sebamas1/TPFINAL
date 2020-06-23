@@ -70,8 +70,8 @@ public class Controler {
       String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1"
           : identificador.nombre.getText();
       display.mostrarString(aux, 50, 10, 100, 40);
-      display.mostrarString(tablero.getJugador1().getNombre()
-          , 50, 350, 100, 40);
+      display.mostrarString(tablero.getJugador1().getNombre(),
+          50, 350, 100, 40);
       display.setVisible(true);
       tablero.getJugador0().setNombre(aux);
     }

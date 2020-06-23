@@ -1,8 +1,8 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+
 import model.Controler;
 import model.Tablero;
 
@@ -21,7 +23,7 @@ public class Display extends JFrame implements Observer {
   private static final ImageIcon barco = new ImageIcon("barco.png");
   private static final ImageIcon explosion = new ImageIcon("explosion.png");
   private final Tablero tablero;
-  public static final Color BACKGROUND = new Color(168,197,255);
+  public static final Color BACKGROUND = new Color(168, 197, 255);
   public static final Color ROJO = new Color(230, 86, 45);
   public static final Color GRIS = new Color(130, 130, 130);
   public static final Color AZUL = new Color(0, 0, 255);
@@ -39,6 +41,7 @@ public class Display extends JFrame implements Observer {
   private Casilla[][] casillas0;
   private final Casilla[][] casillas1;
   private JButton botonReinicio;
+  private boolean estanDisparando;
 
   /**
    * Crea la UI Dibuja el tablero creando 2 matrices de botones crea tambien el
@@ -58,6 +61,7 @@ public class Display extends JFrame implements Observer {
     this.setLayout(null);
     this.crearBotonReinicio();
     this.setVisible(false);
+    this.estanDisparando = false;
   }
 
   /**
@@ -68,6 +72,7 @@ public class Display extends JFrame implements Observer {
         final int y, final int largo, final int ancho) {
     final JPanel namePanel = new JPanel(new BorderLayout());
     final JLabel displayNombre = new JLabel(nombre);
+    displayNombre.setFont(new Font("ROMAN_BASELINE", Font.BOLD, 14));
     namePanel.setBackground(Display.BACKGROUND);
     namePanel.add(displayNombre);
     namePanel.setBounds(x, y, largo, ancho);
@@ -93,6 +98,10 @@ public class Display extends JFrame implements Observer {
       this.enableGrillas(false);
     } else if (accion == Observer.REINICIA_JUEGO) {
       this.enableGrillas(true);
+      this.estanDisparando = false;
+      this.botonReinicio.setVisible(false);
+    } else if (accion == Observer.REALIZA_DISPARO && !this.estanDisparando) {
+      this.botonReinicio.setVisible(true);
     }
   }
 
@@ -185,9 +194,10 @@ public class Display extends JFrame implements Observer {
     botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
     botonPanel.setBounds(500, 325, 120, 80);
     botonPanel.add(botonReinicio);
-    botonPanel.setBackground(this.BACKGROUND);
+    botonPanel.setBackground(Display.BACKGROUND);
     this.add(botonPanel);
     this.validate();
+    this.botonReinicio.setVisible(false);
   }
 
   private void enableGrillas(boolean enable) {
@@ -264,4 +274,5 @@ public class Display extends JFrame implements Observer {
       controler.notifyEvent(e, this.fila, this.columna, this.propietario);
     }
   }
+
 }
