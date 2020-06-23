@@ -26,8 +26,8 @@ public class EstadisticasView implements Observer {
 
     display.mostrarString("Tiros Realizados", 380, 420, 180, 50);
     display.mostrarString("Tiros Realizados", 380, 70, 180, 50);
-    display.mostrarString(Integer.toString(disparosRealizados), 400, 110, 15, 30);
-    display.mostrarString(Integer.toString(disparosRealizados), 400, 460, 15, 30);
+    display.mostrarString(Integer.toString(disparosRealizados), 400, 110, 30, 30);
+    display.mostrarString(Integer.toString(disparosRealizados), 400, 460, 30, 30);
   }
   
   /**

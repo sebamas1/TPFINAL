@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+
 import view.Display;
 import view.EstadisticasView;
 import view.Felicitaciones;
 import view.Identificador;
+import view.MensajeHelp;
 
 public class Controler {
   private Tablero tablero;
@@ -35,7 +37,7 @@ public class Controler {
     tablero.registerObserver(felicitaciones);
 
     display.getBotonReinicio().addActionListener(new ReinicioListener());
-
+    display.getBotonHelp().addActionListener(new HelpListener());
 
   }
 
@@ -92,5 +94,16 @@ public class Controler {
     public void actionPerformed(ActionEvent e) {
       tablero.resetearJuego();
     }
+  }
+  
+  class HelpListener implements ActionListener{
+	MensajeHelp mensajeHelp;
+	public HelpListener() {
+		mensajeHelp = new MensajeHelp();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		mensajeHelp.showMensaje();
+	}
   }
 }
