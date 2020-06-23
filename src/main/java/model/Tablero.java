@@ -45,10 +45,10 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(4, "Destructor"));
-//      aux.add(new Barco(5, "Portaaviones"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(4, "Destructor"));
+      aux.add(new Barco(5, "Portaaviones"));
     }
   }
 
@@ -132,12 +132,23 @@ public class Tablero implements Subject {
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     }
     
+    if (terminoPartida()) {
+      System.out.println(this.perdio(this.barcosJug0) + "  " + this.perdio(barcosJug1));
+      Jugador jugador = this.encontrarGanador();
+      System.out.println("GANO: " + jugador.getNombre());
+      accion = Observer.TERMINO_PARTIDA;
+      notifyObservers();
+      return;
+    }
+
     this.turnoMaquina();
     
     if (terminoPartida()) {
-      System.out.println("GANO: " + this.encontrarGanador().getNombre());
+      Jugador jugador = this.encontrarGanador();
+      System.out.println("GANO: " + jugador.getNombre());
       accion = Observer.TERMINO_PARTIDA;
       notifyObservers();
+      return;
     }
 
     if(this.movimientoExitoso) {
