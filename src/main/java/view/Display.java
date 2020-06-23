@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -20,6 +21,7 @@ public class Display extends JFrame implements Observer {
   private static final ImageIcon agua2 = new ImageIcon("agua2.png");
   private static final ImageIcon barco = new ImageIcon("barco.png");
   private static final ImageIcon explosion = new ImageIcon("explosion.png");
+  private static final ImageIcon help = new ImageIcon("about.png");
   private final Tablero tablero;
   public static final Color BACKGROUND = new Color(168,197,255);
   public static final Color ROJO = new Color(230, 86, 45);
@@ -39,6 +41,7 @@ public class Display extends JFrame implements Observer {
   private Casilla[][] casillas0;
   private final Casilla[][] casillas1;
   private JButton botonReinicio;
+  private JButton botonHelp;
 
   /**
    * Crea la UI Dibuja el tablero creando 2 matrices de botones crea tambien el
@@ -57,6 +60,7 @@ public class Display extends JFrame implements Observer {
     this.crearGrilla();
     this.setLayout(null);
     this.crearBotonReinicio();
+    this.crearBotonHelp();
     this.setVisible(false);
   }
 
@@ -177,6 +181,10 @@ public class Display extends JFrame implements Observer {
   public JButton getBotonReinicio() {
     return this.botonReinicio;
   }
+  
+  public JButton getBotonHelp() {
+	return this.botonHelp;
+  }
 
   private void crearBotonReinicio() {
     this.botonReinicio = new JButton("Reiniciar");
@@ -188,6 +196,18 @@ public class Display extends JFrame implements Observer {
     botonPanel.setBackground(this.BACKGROUND);
     this.add(botonPanel);
     this.validate();
+  }
+  
+  private void crearBotonHelp() {
+	  this.botonHelp = new JButton(this.help);
+	  botonHelp.setPreferredSize(new Dimension(48, 48));
+	  JPanel botonPanel = new JPanel();
+	  botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+	  botonPanel.setBounds(this.WIDTH-80,this.HEIGHT-160 , 100, 150);
+	  botonPanel.add(botonHelp);
+	  botonPanel.setBackground(this.BACKGROUND);
+	  this.add(botonPanel);
+	  this.validate();
   }
 
   private void enableGrillas(boolean enable) {

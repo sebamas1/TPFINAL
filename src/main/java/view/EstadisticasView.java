@@ -19,8 +19,8 @@ public class EstadisticasView implements Observer {
     display.mostrarString(Integer.toString(this.barcosColocados), 600, 110, 15, 30);
     display.mostrarString(Integer.toString(this.barcosColocados), 600, 460, 15, 30);
 
-    display.mostrarString("Barcos enemigos destruidos", 380, 550, 180, 50);
-    display.mostrarString("Barcos enemigos destruidos", 380, 200, 180, 50);
+    display.mostrarString("Barcos enemigos destruidos", 380, 550, 210, 50);
+    display.mostrarString("Barcos enemigos destruidos", 380, 200, 210, 50);
     display.mostrarString(Integer.toString(this.barcosDestruidosJug1), 400, 590, 180, 50);
     display.mostrarString(Integer.toString(this.barcosDestruidosJug0), 400, 240, 180, 50);
 
