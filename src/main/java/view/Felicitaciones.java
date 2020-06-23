@@ -9,14 +9,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import model.Tablero;
 
-public class Felicitaciones extends JFrame implements Observer{
+public class Felicitaciones extends JFrame implements Observer {
+
+  private static final long serialVersionUID = 1L;
   private JButton botonIngresar = new JButton("Ok");
   private JLabel mensaje;
   private Tablero tablero;
-  
+
   public Felicitaciones(Tablero tablero) {
     this.tablero = tablero;
+    this.setResizable(false);
   }
+
+  /**
+   * Crea la ventana felicitando al ganador.
+   * 
+   * @param nombre Nombre del ganador.
+   */
   public void felicitar(String nombre) {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setSize(220, 100);
@@ -31,11 +40,15 @@ public class Felicitaciones extends JFrame implements Observer{
     this.setVisible(true);
   }
 
+  /**
+   * Recibe updates del tablero.
+   */
   public void update(int accion, int idJugador) {
-     if(accion == Observer.TERMINO_PARTIDA) {
-       felicitar(tablero.encontrarGanador().getNombre());
-     }
+    if (accion == Observer.TERMINO_PARTIDA) {
+      felicitar(tablero.encontrarGanador().getNombre());
+    }
   }
+
   class IngresarListener implements ActionListener {
     private Felicitaciones felic;
 
@@ -47,7 +60,5 @@ public class Felicitaciones extends JFrame implements Observer{
       this.felic.dispose();
     }
   }
-  
-
 
 }

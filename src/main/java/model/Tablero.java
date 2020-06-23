@@ -115,16 +115,15 @@ public class Tablero implements Subject {
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
     
     this.turnoJugador = this.getTurno() % 2;
-    this.accion = this.getTurno() < Humano.CANT_BARCOS *2 ? 
-        Observer.COLOCA_BARCOS : Observer.REALIZA_DISPARO;
+    this.accion = this.getTurno() < Humano.CANT_BARCOS * 2 ? Observer.COLOCA_BARCOS 
+        : Observer.REALIZA_DISPARO;
     
     int nroDisparo = this.getTurno() - Humano.CANT_BARCOS * 2;
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (nroDisparo % 10 > 1
-      || nroDisparo < 2) {
+      if (nroDisparo % 10 > 1 || nroDisparo < 2) {
         deltaGrillaBehaviour = new RealizarDisparo(this);
       } else {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
@@ -151,17 +150,20 @@ public class Tablero implements Subject {
       return;
     }
 
-    if(this.movimientoExitoso) {
+    if (this.movimientoExitoso) {
       this.notifyObservers();
       this.movimientoExitoso = false;
     }
   }
 
+  /**
+   * Resetea las grillas y los arrays de barcos.
+   */
   public void resetearJuego() {
     accion = Observer.REINICIA_JUEGO;
     turno = 0;
-    for(int i = 0; i < COLUMNAS; i++) {
-      for(int j = 0; j < FILAS; j++) {
+    for (int i = 0; i < COLUMNAS; i++) {
+      for (int j = 0; j < FILAS; j++) {
         grillaJugador0[i][j] = Tablero.AGUA;
         grillaJugador1[i][j] = Tablero.AGUA;
       }
@@ -179,6 +181,7 @@ public class Tablero implements Subject {
     }
     notifyObservers();
   }
+  
   public int[][] getGrillaJugador0() {
     return this.grillaJugador0;
   }
@@ -335,6 +338,11 @@ public class Tablero implements Subject {
     this.observers = observers;
   }
 
+  /**
+   * Chequea si la lista de barcos es de un perdedor.
+   * @param barcos Lista a chequear
+   * @return true si es de un perdedor
+   */
   public boolean perdio(ArrayList<Barco> barcos) {
     for (int i = 0; i < barcos.size(); i++) {
       if (barcos.get(i).getVida() > 0) {
@@ -366,7 +374,7 @@ public class Tablero implements Subject {
     return this.turnoJugador;
   }
 
-  private void turnoMaquina(){
+  private void turnoMaquina() {
     int aux;
     int[] coord;
     while (this.getTurno() % 2 == 1) {

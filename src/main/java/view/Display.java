@@ -4,15 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.Controler;
 import model.Tablero;
 
@@ -47,21 +44,14 @@ public class Display extends JFrame implements Observer {
     this.setTitle("Batalla naval!");
     this.setSize(WIDTH, HEIGHT);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(true);
+    this.setResizable(false);
     this.setLocationRelativeTo(null);
     casillas0 = new Casilla[FILAS][COLUMNAS];
     casillas1 = new Casilla[FILAS][COLUMNAS];
     this.crearGrilla();
     this.setLayout(null);
     this.crearBotonReinicio();
-    this.setVisible(true);
-
-    // this.namePanel = new JPanel();
-    // this.displayNombre = new JLabel();
-    // this.displayNombre.setText("ASD");
-    // this.namePanel.add(displayNombre);
-    // this.namePanel.setBounds(150, 20, 15, 50);
-    // this.add(namePanel);
+    this.setVisible(false);
 
   }
 
@@ -69,7 +59,8 @@ public class Display extends JFrame implements Observer {
    * Crea al identificador y recibe el string ingresado para agregarlo a la UI
    * final.
    */
-  public void mostrarID(final String nombre, final int x, final int y, final int largo, final int ancho) {
+  public void mostrarString(final String nombre, final int x,
+        final int y, final int largo, final int ancho) {
     final JPanel namePanel = new JPanel(new BorderLayout());
     final JLabel displayNombre = new JLabel(nombre);
     System.out.println(displayNombre.getText());
@@ -131,8 +122,8 @@ public class Display extends JFrame implements Observer {
 
         switch (tableroLogico1[i][j]) {
           // case Tablero.BARCO:
-          //   casillas1[i][j].setBackground(GRIS);
-          //   break;
+          // casillas1[i][j].setBackground(GRIS);
+          // break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
             break;
@@ -143,7 +134,7 @@ public class Display extends JFrame implements Observer {
             casillas1[i][j].setBackground(CELESTE);
             break;
           default:
-            ;
+          ;
         }
 
         switch (tableroLogico0[i][j]) {
@@ -160,7 +151,7 @@ public class Display extends JFrame implements Observer {
             casillas0[i][j].setBackground(CELESTE);
             break;
           default:
-            ;
+          ;
         }
       }
     }
@@ -172,10 +163,10 @@ public class Display extends JFrame implements Observer {
 
   private void crearBotonReinicio() {
     this.botonReinicio = new JButton("Reiniciar");
-    //this.botonReinicio.addActionListener(e);
+    // this.botonReinicio.addActionListener(e);
     JPanel botonPanel = new JPanel();
     botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-    botonPanel.setBounds(500, 325, 120,80);
+    botonPanel.setBounds(500, 325, 120, 80);
     botonPanel.add(botonReinicio);
     this.add(botonPanel);
     this.validate();

@@ -3,7 +3,6 @@ package model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-
 import view.Display;
 import view.EstadisticasView;
 import view.Felicitaciones;
@@ -59,16 +58,19 @@ public class Controler {
     this.identificador = identificador;
   }
   
- private class NameListener implements ActionListener {
+  private class NameListener implements ActionListener {
     
     public NameListener() {
       
     }
    
     public void actionPerformed(ActionEvent e) {
-      String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1" : identificador.nombre.getText();
-      display.mostrarID(aux, 50, 10, 100, 40);
-      display.mostrarID("Bot", 50, 350, 100, 40);
+      String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1"
+          : identificador.nombre.getText();
+      display.mostrarString(aux, 50, 10, 100, 40);
+      display.mostrarString(tablero.getJugador1().getNombre()
+          , 50, 350, 100, 40);
+      display.setVisible(true);
       tablero.getJugador0().setNombre(aux);
     }
 
@@ -78,10 +80,9 @@ public class Controler {
 
     public ReinicioListener() {
     }
-
-	public void actionPerformed(ActionEvent e) {
-    tablero.resetearJuego();
-	}
+    
+    public void actionPerformed(ActionEvent e) {
+      tablero.resetearJuego();
+    }
   }
-
 }

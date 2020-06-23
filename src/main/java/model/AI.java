@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-public class AI extends Humano implements Jugador {
+public class AI extends Humano{
   
   //private Tablero tablero;
   public int[] coord;

@@ -52,8 +52,7 @@ public class RealizarDisparoEspecial implements AccionBehavior {
 
       }
     }
-    int jugador = tablero.getTurno() % 2 == 0 ? 
-      1 : 0;
+    int jugador = tablero.getTurno() % 2 == 0 ? 1 : 0;
     tablero.setMovimientoExitoso(true);
     tablero.setTurnoJugador(jugador);
     tablero.setTurno(tablero.getTurno() + 1);
