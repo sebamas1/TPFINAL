@@ -161,10 +161,12 @@ class TableroTest {
     barcos.get(0).setVida(1);
     assertFalse("No deberia perder si quedan barcos con vida", tablero.perdio(barcos));
     for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
-      barcos.get(i).setVida(0);
-    }
+        barcos.get(i).setVida(0);
+      }
+  
     assertTrue("Deberia perder si todos sus barcos tienen vida 0", tablero.perdio(barcos));
-  }
+    }
+    
   
   @Test
   void testEncontrarGanador() {
@@ -192,4 +194,48 @@ class TableroTest {
     assertTrue("Deberia ganar el jugador 0", tablero.encontrarGanador().getNombre() 
         == tablero.getJugador0().getNombre());
   }
-}
+  
+  @Test
+  void testResetearJuego() {
+	ArrayList<Barco> barcos0 = tablero.getBarcosJug0();
+	ArrayList<Barco> barcos1 = tablero.getBarcosJug1();
+	
+	for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
+		barcos0.get(i).setVida(1);
+		barcos1.get(i).setVida(2);
+      }
+	
+	  
+	  tablero.crearGrillas();
+	  int[][] grilla0 = tablero.getGrillaJugador0();
+	  int[][] grilla1 = tablero.getGrillaJugador1();
+	  
+	 for(int i = 1; i < 4; i++) {
+		 grilla0[i][2] = Tablero.BARCO;
+	     grilla1[i][3] = Tablero.BARCO;
+	     grilla0[6][i] = Tablero.BARCO;
+	     grilla1[7][i] = Tablero.BARCO;
+		 
+	 }
+	  
+      tablero.resetearJuego();
+      
+      for (int i = 0; i < Jugador.CANT_BARCOS; i++) {
+    	  assertEquals(barcos0.get(i).getVida(), barcos0.get(i).getSize());
+          assertEquals(barcos1.get(i).getVida(), barcos1.get(i).getSize());
+        }
+      for (int i = 0; i < tablero.getGrillaJugador0().length; i++) {
+         for (int j = 0; j < grilla0[i].length; j++) {
+        	 assertEquals(tablero.getGrillaJugador0()[i][j], Tablero.AGUA);
+             
+          }
+        }
+      for (int i = 0; i < tablero.getGrillaJugador1().length; i++) {
+          for (int j = 0; j < grilla1[i].length; j++) {
+         	 
+              assertEquals(tablero.getGrillaJugador1()[i][j], Tablero.AGUA);
+           }
+         }
+  }
+  }
+
