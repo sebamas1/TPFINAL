@@ -67,8 +67,14 @@ public class Controler {
    
     public void actionPerformed(ActionEvent e) {
       display.getContentPane().setBackground(Display.BACKGROUND);
-      String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1"
-          : identificador.nombre.getText();
+      String nombreIngresado = identificador.nombre.getText();
+      String aux;
+      if (nombreIngresado.length() == 0 || 
+      nombreIngresado.equals(tablero.getJugador1().getNombre())){
+        aux = "Jugador 1";
+      } else {
+        aux = nombreIngresado;
+      }
       display.mostrarString(aux, 50, 10, 100, 40);
       display.mostrarString(tablero.getJugador1().getNombre(),
           50, 350, 100, 40);
