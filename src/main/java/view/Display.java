@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,8 +16,13 @@ import model.Tablero;
 
 @SuppressWarnings("serial")
 public class Display extends JFrame implements Observer {
+  private static final ImageIcon agua = new ImageIcon("agua.png");
+  private static final ImageIcon agua2 = new ImageIcon("agua2.png");
+  private static final ImageIcon barco = new ImageIcon("barco.png");
+  private static final ImageIcon explosion = new ImageIcon("explosion.png");
   private final Tablero tablero;
-  public static final Color ROJO = new Color(255, 0, 0);
+  public static final Color BACKGROUND = new Color(168,197,255);
+  public static final Color ROJO = new Color(230, 86, 45);
   public static final Color GRIS = new Color(130, 130, 130);
   public static final Color AZUL = new Color(0, 0, 255);
   public static final Color CELESTE = new Color(60, 220, 255);
@@ -52,7 +58,6 @@ public class Display extends JFrame implements Observer {
     this.setLayout(null);
     this.crearBotonReinicio();
     this.setVisible(false);
-
   }
 
   /**
@@ -63,7 +68,7 @@ public class Display extends JFrame implements Observer {
         final int y, final int largo, final int ancho) {
     final JPanel namePanel = new JPanel(new BorderLayout());
     final JLabel displayNombre = new JLabel(nombre);
-    System.out.println(displayNombre.getText());
+    namePanel.setBackground(Display.BACKGROUND);
     namePanel.add(displayNombre);
     namePanel.setBounds(x, y, largo, ancho);
     this.add(namePanel);
@@ -84,6 +89,11 @@ public class Display extends JFrame implements Observer {
 
   public void update(final int accion, final int idJugador) {
     colorearGrilla();
+    if (accion == Observer.TERMINO_PARTIDA) {
+      this.enableGrillas(false);
+    } else if (accion == Observer.REINICIA_JUEGO) {
+      this.enableGrillas(true);
+    }
   }
 
   public void setControler(final Controler controler) {
@@ -126,12 +136,15 @@ public class Display extends JFrame implements Observer {
           // break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
+            casillas1[i][j].setIcon(agua2);
             break;
           case Tablero.BARCO_HIT:
             casillas1[i][j].setBackground(ROJO);
+            casillas1[i][j].setIcon(explosion);
             break;
           case Tablero.AGUA:
             casillas1[i][j].setBackground(CELESTE);
+            casillas1[i][j].setIcon(agua);
             break;
           default:
           ;
@@ -140,15 +153,19 @@ public class Display extends JFrame implements Observer {
         switch (tableroLogico0[i][j]) {
           case Tablero.BARCO:
             casillas0[i][j].setBackground(GRIS);
+            casillas0[i][j].setIcon(barco);
             break;
           case Tablero.AGUA_MISS:
             casillas0[i][j].setBackground(AZUL);
+            casillas0[i][j].setIcon(agua2);
             break;
           case Tablero.BARCO_HIT:
             casillas0[i][j].setBackground(ROJO);
+            casillas0[i][j].setIcon(explosion);
             break;
           case Tablero.AGUA:
             casillas0[i][j].setBackground(CELESTE);
+            casillas0[i][j].setIcon(agua);
             break;
           default:
           ;
@@ -168,11 +185,21 @@ public class Display extends JFrame implements Observer {
     botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
     botonPanel.setBounds(500, 325, 120, 80);
     botonPanel.add(botonReinicio);
+    botonPanel.setBackground(this.BACKGROUND);
     this.add(botonPanel);
     this.validate();
   }
 
-  public class Casilla extends Button implements MouseListener {
+  private void enableGrillas(boolean enable) {
+    for (int i = 0; i < FILAS; i++) {
+      for (int j = 0; j < COLUMNAS; j++){
+        casillas0[i][j].setEnabled(enable);
+        casillas1[i][j].setEnabled(enable);
+      }
+    }
+  }
+
+  public class Casilla extends JButton implements MouseListener {
 
     private int fila;
     private int columna;

@@ -55,7 +55,6 @@ public class EstadisticasView implements Observer {
           this.barcosDestruidosJug0++;
           display.mostrarString(Integer.toString(this.barcosDestruidosJug0), 400, 240, 180, 50);
         } else if (idJugador == 1) {
-          System.out.println(this.barcosDestruidosJug1);
           this.barcosDestruidosJug1++;
           display.mostrarString(Integer.toString(this.barcosDestruidosJug1), 400, 590, 180, 50);
         }

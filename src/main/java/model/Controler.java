@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -65,6 +66,7 @@ public class Controler {
     }
    
     public void actionPerformed(ActionEvent e) {
+      display.getContentPane().setBackground(Display.BACKGROUND);
       String aux = identificador.nombre.getText().length() == 0 ? "Jugador 1"
           : identificador.nombre.getText();
       display.mostrarString(aux, 50, 10, 100, 40);

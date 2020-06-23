@@ -42,5 +42,7 @@ public class AI extends Humano{
       return 3;
     }
   }
+
+  
   
 }
