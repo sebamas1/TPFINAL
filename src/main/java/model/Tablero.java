@@ -43,10 +43,10 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(4, "Destructor"));
-//      aux.add(new Barco(5, "Portaaviones"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(4, "Destructor"));
+      aux.add(new Barco(5, "Portaaviones"));
     }
   }
 
@@ -119,7 +119,7 @@ public class Tablero implements Subject {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (enableNuclear && nroDisparo >= 10) {
+      if (enableNuclear && nroDisparo > 10) {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
       } else {
         deltaGrillaBehaviour = new RealizarDisparo(this);
@@ -128,7 +128,6 @@ public class Tablero implements Subject {
     }
 
     if (terminoPartida()) {
-      System.out.println(this.perdio(this.barcosJug0) + "  " + this.perdio(barcosJug1));
       Jugador jugador = this.encontrarGanador();
       System.out.println("GANO: " + jugador.getNombre());
       notifyObservers(new Evento(Evento.TERMINO_PARTIDA, jugador.getPlayerID()));
@@ -167,10 +166,10 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(3, "Fragata"));
-//      aux.add(new Barco(4, "Destructor"));
-//      aux.add(new Barco(5, "Portaaviones"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(3, "Fragata"));
+      aux.add(new Barco(4, "Destructor"));
+      aux.add(new Barco(5, "Portaaviones"));
     }
     notifyObservers(new Evento(Evento.REINICIA_JUEGO, 0));
   }

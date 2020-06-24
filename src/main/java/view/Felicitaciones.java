@@ -29,6 +29,7 @@ public class Felicitaciones extends JFrame implements Observer {
    * @param nombre Nombre del ganador.
    */
   public void felicitar(String nombre) {
+    this.getContentPane().removeAll();
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setSize(220, 100);
     botonIngresar.addActionListener(new IngresarListener(this));
@@ -59,7 +60,7 @@ public class Felicitaciones extends JFrame implements Observer {
     }
 
     public void actionPerformed(ActionEvent e) {
-      this.felic.dispose();
+      this.felic.setVisible(false);
     }
   }
 
