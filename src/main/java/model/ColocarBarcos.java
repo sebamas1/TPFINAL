@@ -60,6 +60,7 @@ public class ColocarBarcos implements AccionBehavior {
       barcosJug.get(nrobarco).setPos(new PosicionBarco(row, column, row, (
           column + barcosJug.get(nrobarco).getSize() - 1)));
     }
+    tablero.notifyObservers(new Evento(Evento.COLOCA_BARCOS, idCasilla));
     tablero.setTurno(tablero.getTurno() + 1);
     tablero.setMovimientoExitoso(true);
   }
@@ -117,5 +118,4 @@ public class ColocarBarcos implements AccionBehavior {
     }
     return true;
   }
-
 }

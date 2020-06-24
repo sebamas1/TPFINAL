@@ -45,16 +45,16 @@ public class RealizarDisparo implements AccionBehavior {
 
       case Tablero.AGUA:
         grilla[row][column] = Tablero.AGUA_MISS;
+        tablero.notifyObservers(new Evento(Evento.REALIZA_DISPARO, tablero.getTurnoJugador()));
         break;
   
       case Tablero.BARCO:
         grilla[row][column] = Tablero.BARCO_HIT;
-        Barco barquito = tablero.encontrarBarco(row, column);
+        tablero.notifyObservers(new Evento(Evento.REALIZA_DISPARO, tablero.getTurnoJugador()));
+        Barco barquito = tablero.encontrarBarco(row, column, idCasilla);
         barquito.reducirVida();
         if (barquito.getVida() == 0) {
-          tablero.setAccion(Observer.DESTRUYE_BARCO);
-          tablero.notifyObservers();
-          tablero.setAccion(Observer.REALIZA_DISPARO);
+          tablero.notifyObservers(new Evento(Evento.DESTRUYE_BARCO, tablero.getTurnoJugador()));
           System.out.println("Destruiste un/una " + barquito.getTipo()
               + " del jugador" + idCasilla);
         }

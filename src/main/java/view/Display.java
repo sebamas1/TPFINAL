@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import model.Controler;
+import model.Evento;
 import model.Tablero;
 
 @SuppressWarnings("serial")
@@ -24,6 +25,7 @@ public class Display extends JFrame implements Observer {
   private static final ImageIcon barco = new ImageIcon("barco.png");
   private static final ImageIcon explosion = new ImageIcon("explosion.png");
   private static final ImageIcon help = new ImageIcon("about.png");
+  private static final ImageIcon nuclear = new ImageIcon("radiation.png");
   private final Tablero tablero;
   public static final Color BACKGROUND = new Color(168, 197, 255);
   public static final Color ROJO = new Color(230, 86, 45);
@@ -44,6 +46,7 @@ public class Display extends JFrame implements Observer {
   private final Casilla[][] casillas1;
   private JButton botonReinicio;
   private JButton botonHelp;
+  private JButton botonNuclear;
   private boolean estanDisparando;
 
   /**
@@ -64,6 +67,7 @@ public class Display extends JFrame implements Observer {
     this.setLayout(null);
     this.crearBotonReinicio();
     this.crearBotonHelp();
+    this.crearBotonNuclear();
     this.setVisible(false);
     this.estanDisparando = false;
   }
@@ -96,15 +100,15 @@ public class Display extends JFrame implements Observer {
     this.casillas0 = casillas0;
   }
 
-  public void update(final int accion, final int idJugador) {
+  public void update(Evento e) {
     colorearGrilla();
-    if (accion == Observer.TERMINO_PARTIDA) {
+    if (e.getEvento() == Evento.TERMINO_PARTIDA) {
       this.enableGrillas(false);
-    } else if (accion == Observer.REINICIA_JUEGO) {
+    } else if (e.getEvento() == Evento.REINICIA_JUEGO) {
       this.enableGrillas(true);
       this.estanDisparando = false;
       this.botonReinicio.setVisible(false);
-    } else if (accion == Observer.REALIZA_DISPARO && !this.estanDisparando) {
+    } else if (e.getEvento() == Evento.REALIZA_DISPARO && !this.estanDisparando) {
       this.botonReinicio.setVisible(true);
     }
   }
@@ -144,9 +148,9 @@ public class Display extends JFrame implements Observer {
       for (int j = 0; j < COLUMNAS; j++) {
 
         switch (tableroLogico1[i][j]) {
-          // case Tablero.BARCO:
-          // casillas1[i][j].setBackground(GRIS);
-          // break;
+           case Tablero.BARCO:
+           casillas1[i][j].setBackground(GRIS);
+           break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
             casillas1[i][j].setIcon(agua2);
@@ -194,13 +198,17 @@ public class Display extends JFrame implements Observer {
   public JButton getBotonHelp() {
 	return this.botonHelp;
   }
+  
+  public JButton getBotonNuclear() {
+    return this.botonNuclear;
+  }
 
   private void crearBotonReinicio() {
     this.botonReinicio = new JButton("Reiniciar");
     // this.botonReinicio.addActionListener(e);
     JPanel botonPanel = new JPanel();
     botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-    botonPanel.setBounds(500, 325, 120, 80);
+    botonPanel.setBounds(500, 340, 120, 80);
     botonPanel.add(botonReinicio);
     botonPanel.setBackground(Display.BACKGROUND);
     this.add(botonPanel);
@@ -220,6 +228,17 @@ public class Display extends JFrame implements Observer {
 	  this.validate();
   }
 
+  private void crearBotonNuclear() {
+    this.botonNuclear = new JButton(Display.nuclear);
+    botonNuclear.setPreferredSize(new Dimension(48, 48));
+    JPanel botonPanel = new JPanel();
+    botonPanel.setBounds(Display.WIDTH-440,Display.HEIGHT - 435 , 56, 56);
+    botonPanel.add(botonNuclear);
+    botonPanel.setBackground(Display.BACKGROUND);
+    this.add(botonPanel);
+    this.validate();
+  }
+  
   private void enableGrillas(boolean enable) {
     for (int i = 0; i < FILAS; i++) {
       for (int j = 0; j < COLUMNAS; j++){

@@ -8,6 +8,6 @@ public interface Subject {
   
   public void detachObserver(Observer observer);
   
-  public void notifyObservers();
+  public void notifyObservers(Evento e);
 
 }

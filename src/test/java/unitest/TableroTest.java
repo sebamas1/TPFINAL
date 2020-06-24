@@ -83,18 +83,15 @@ class TableroTest {
     barco.setPos(new PosicionBarco(0, 0, 0, 3));
     
     // Barcos posicionados en forma vertical
-    tablero.setTurno(1);
-    Barco resultado = tablero.encontrarBarco(0, 1);
+    Barco resultado = tablero.encontrarBarco(0, 1, 0);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     
-    tablero.setTurno(1);
-    resultado = tablero.encontrarBarco(0, 2);
+    resultado = tablero.encontrarBarco(0, 2, 0);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     
-    tablero.setTurno(1);
-    resultado = tablero.encontrarBarco(0, 3);
+    resultado = tablero.encontrarBarco(0, 3, 0);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     
@@ -105,17 +102,17 @@ class TableroTest {
     barco.setSize(4);
     barco.setPos(new PosicionBarco(6, 9, 9, 9));
     tablero.setTurno(2);
-    resultado = tablero.encontrarBarco(6, 9);
+    resultado = tablero.encontrarBarco(6, 9, 1);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     
     tablero.setTurno(2);
-    resultado = tablero.encontrarBarco(7, 9);
+    resultado = tablero.encontrarBarco(7, 9, 1);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     
     tablero.setTurno(2);
-    resultado = tablero.encontrarBarco(9, 9);
+    resultado = tablero.encontrarBarco(9, 9, 1);
     assertTrue((barco.getTipo()) == resultado.getTipo() 
         && (barco.getSize() == resultado.getSize()));
     

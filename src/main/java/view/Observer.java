@@ -1,5 +1,7 @@
 package view;
 
+import model.Evento;
+
 public interface Observer {
   
   public static final int COLOCA_BARCOS = 10;
@@ -8,6 +10,6 @@ public interface Observer {
   public static final int REINICIA_JUEGO = 40;
   public static final int TERMINO_PARTIDA = 50;
   
-  public void update(int accion, int idJugador);
+  public void update(Evento e);
 
 }

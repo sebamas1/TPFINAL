@@ -22,16 +22,14 @@ public class Tablero implements Subject {
   private int turno;
   private AccionBehavior deltaGrillaBehaviour;
   private int turnoJugador;
-  private int accion;
   private boolean movimientoExitoso = false;
-  
+  private boolean enableNuclear = false;
 
   /**
    * titulo. doc
    */
 
   public Tablero() {
-    
 
     grillaJugador0 = new int[FILAS][COLUMNAS];
     grillaJugador1 = new int[FILAS][COLUMNAS];
@@ -45,10 +43,10 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(4, "Destructor"));
-      aux.add(new Barco(5, "Portaaviones"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(4, "Destructor"));
+//      aux.add(new Barco(5, "Portaaviones"));
     }
   }
 
@@ -69,7 +67,7 @@ public class Tablero implements Subject {
         }
       }
       grillaCreada = true;
-      notifyObservers();
+      notifyObservers(new Evento(Evento.GRILLA_CREADA, 0));
     }
   }
 
@@ -95,9 +93,9 @@ public class Tablero implements Subject {
    * 
    */
 
-  public void notifyObservers() {
+  public void notifyObservers(Evento evento) {
     for (Observer observer : observers) {
-      observer.update(accion, turnoJugador);
+      observer.update(evento);
     }
   }
 
@@ -110,48 +108,43 @@ public class Tablero implements Subject {
    * @param j     En que columna esta la casilla
    * @param id    En que grilla esta la casilla
    */
-  
-  //gran parte de esto hay que meterlo en el controler
+
+  // gran parte de esto hay que meterlo en el controler
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
-    
+
     this.turnoJugador = this.getTurno() % 2;
-    this.accion = this.getTurno() < Humano.CANT_BARCOS * 2 ? Observer.COLOCA_BARCOS 
-        : Observer.REALIZA_DISPARO;
-    
+
     int nroDisparo = this.getTurno() - Humano.CANT_BARCOS * 2;
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (nroDisparo % 10 > 1 || nroDisparo < 2) {
-        deltaGrillaBehaviour = new RealizarDisparo(this);
-      } else {
+      if (enableNuclear && nroDisparo >= 10) {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
+      } else {
+        deltaGrillaBehaviour = new RealizarDisparo(this);
       }
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     }
-    
+
     if (terminoPartida()) {
       System.out.println(this.perdio(this.barcosJug0) + "  " + this.perdio(barcosJug1));
       Jugador jugador = this.encontrarGanador();
       System.out.println("GANO: " + jugador.getNombre());
-      accion = Observer.TERMINO_PARTIDA;
-      notifyObservers();
+      notifyObservers(new Evento(Evento.TERMINO_PARTIDA, jugador.getPlayerID()));
       return;
     }
 
     this.turnoMaquina();
-    
+
     if (terminoPartida()) {
       Jugador jugador = this.encontrarGanador();
       System.out.println("GANO: " + jugador.getNombre());
-      accion = Observer.TERMINO_PARTIDA;
-      notifyObservers();
+      notifyObservers(new Evento(Evento.TERMINO_PARTIDA, jugador.getPlayerID()));
       return;
     }
 
     if (this.movimientoExitoso) {
-      this.notifyObservers();
       this.movimientoExitoso = false;
     }
   }
@@ -160,7 +153,7 @@ public class Tablero implements Subject {
    * Resetea las grillas y los arrays de barcos.
    */
   public void resetearJuego() {
-    accion = Observer.REINICIA_JUEGO;
+    this.movimientoExitoso = false;
     turno = 0;
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
@@ -174,14 +167,14 @@ public class Tablero implements Subject {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(2, "Corbeta"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(3, "Fragata"));
-      aux.add(new Barco(4, "Destructor"));
-      aux.add(new Barco(5, "Portaaviones"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(3, "Fragata"));
+//      aux.add(new Barco(4, "Destructor"));
+//      aux.add(new Barco(5, "Portaaviones"));
     }
-    notifyObservers();
+    notifyObservers(new Evento(Evento.REINICIA_JUEGO, 0));
   }
-  
+
   public int[][] getGrillaJugador0() {
     return this.grillaJugador0;
   }
@@ -220,8 +213,7 @@ public class Tablero implements Subject {
   }
 
   /**
-   * para debuggear porque ver una matriz con el debugger
-   * es muy desagradable.
+   * para debuggear porque ver una matriz con el debugger es muy desagradable.
    */
   public void printMatriz() {
     for (int i = 0; i < FILAS; i++) {
@@ -248,12 +240,12 @@ public class Tablero implements Subject {
    * @param y columna
    * @return
    */
-  public Barco encontrarBarco(int x, int y) {
+  public Barco encontrarBarco(int x, int y, int idCasilla) {
 
     int xi;
     int yi;
     int yf;
-    ArrayList<Barco> barcosList = this.getTurno() % 2 == 0 ? barcosJug1 : barcosJug0;
+    ArrayList<Barco> barcosList = idCasilla == 0 ? barcosJug0 : barcosJug1;
 
     for (int i = 0; i < barcosList.size(); i++) {
       xi = barcosList.get(i).getPos().getInicialX();
@@ -294,9 +286,10 @@ public class Tablero implements Subject {
 
   /**
    * Chequea si termino la partida.
+   * 
    * @return booleano true si termino.
    */
-  
+
   public boolean terminoPartida() {
     boolean perdio0 = true;
     boolean perdio1 = true;
@@ -313,10 +306,11 @@ public class Tablero implements Subject {
 
   /**
    * Encuentra al ganador.
+   * 
    * @return Devuelve al jugador ganador
    */
   public Jugador encontrarGanador() {
-    
+
     boolean perdio0 = this.perdio(this.getBarcosJug0());
     boolean perdio1 = this.perdio(this.getBarcosJug1());
     if (perdio0 && !perdio1) {
@@ -328,7 +322,7 @@ public class Tablero implements Subject {
       return null;
     }
   }
-  
+
   public HashSet<Observer> getObservers() {
     return observers;
   }
@@ -340,6 +334,7 @@ public class Tablero implements Subject {
 
   /**
    * Chequea si la lista de barcos es de un perdedor.
+   * 
    * @param barcos Lista a chequear
    * @return true si es de un perdedor
    */
@@ -352,18 +347,12 @@ public class Tablero implements Subject {
     return true;
   }
 
-  
   public boolean isMovimientoExitoso() {
     return movimientoExitoso;
   }
 
-  
   public void setMovimientoExitoso(boolean movimientoExitoso) {
     this.movimientoExitoso = movimientoExitoso;
-  }
-
-  public void setAccion(int accion) {
-    this.accion = accion;
   }
 
   public void setTurnoJugador(int jugador) {
@@ -385,5 +374,9 @@ public class Tablero implements Subject {
         deltaGrillaBehaviour.realizarAccion(coord[0], coord[1], coord[2], aux);
       }
     }
+  }
+
+  public void setEnableNuclear(boolean enableNuclear) {
+    this.enableNuclear = enableNuclear;
   }
 }

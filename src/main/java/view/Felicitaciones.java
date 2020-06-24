@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Evento;
 import model.Tablero;
 
 public class Felicitaciones extends JFrame implements Observer {
@@ -43,8 +45,8 @@ public class Felicitaciones extends JFrame implements Observer {
   /**
    * Recibe updates del tablero.
    */
-  public void update(int accion, int idJugador) {
-    if (accion == Observer.TERMINO_PARTIDA) {
+  public void update(Evento e) {
+    if (e.getEvento() == Evento.TERMINO_PARTIDA) {
       felicitar(tablero.encontrarGanador().getNombre());
     }
   }

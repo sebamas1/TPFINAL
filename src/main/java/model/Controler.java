@@ -38,6 +38,7 @@ public class Controler {
 
     display.getBotonReinicio().addActionListener(new ReinicioListener());
     display.getBotonHelp().addActionListener(new HelpListener());
+    display.getBotonNuclear().addActionListener(new NuclearListener());
 
   }
 
@@ -105,5 +106,14 @@ public class Controler {
 	public void actionPerformed(ActionEvent e) {
 		mensajeHelp.showMensaje();
 	}
+  }
+
+  class NuclearListener implements ActionListener {
+    public NuclearListener() {
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+      tablero.setEnableNuclear(true);
+    }
   }
 }

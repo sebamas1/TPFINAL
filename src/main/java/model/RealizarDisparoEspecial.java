@@ -33,12 +33,10 @@ public class RealizarDisparoEspecial implements AccionBehavior {
               break;
             case Tablero.BARCO:
               grilla[row + i][column + j] = Tablero.BARCO_HIT;
-              Barco barquito = tablero.encontrarBarco(row + i, column + j);
+              Barco barquito = tablero.encontrarBarco(row + i, column + j, idCasilla);
               barquito.reducirVida();
               if (barquito.getVida() == 0) {
-                tablero.setAccion(Observer.DESTRUYE_BARCO);
-                tablero.notifyObservers();
-                tablero.setAccion(Observer.REALIZA_DISPARO);
+                tablero.notifyObservers(new Evento(Evento.DESTRUYE_BARCO, tablero.getTurnoJugador()));
                 System.out.println("Destruiste un/una " + barquito.getTipo() 
                     + " del jugador" + idCasilla);
               }
@@ -52,6 +50,7 @@ public class RealizarDisparoEspecial implements AccionBehavior {
 
       }
     }
+    tablero.notifyObservers(new Evento(Evento.REALIZA_DISPARO, idCasilla));
     int jugador = tablero.getTurno() % 2 == 0 ? 1 : 0;
     tablero.setMovimientoExitoso(true);
     tablero.setTurnoJugador(jugador);
