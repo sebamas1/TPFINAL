@@ -1,6 +1,5 @@
 package model;
 
-import view.Observer;
 
 public class RealizarDisparo implements AccionBehavior {
   private Tablero tablero;

@@ -23,16 +23,16 @@ public class MensajeHelp extends JOptionPane {
 	private void armarInstrucciones() {
 		instrucciones = "Instrucciones:\n"
 				+ "\nEtapa de colocacion de barcos\n\n"
-				+ "En la primer etapa del juego se disponen de seis barcos a colocar.\n"
+				+ "En la primer etapa del juego se disponen de cinco barcos a colocar.\n"
 				+ "Para esto se utiliza el click primario para ubicarlos orientados\n"
 				+ "verticalmente hacia abajo, y el click secundario para ubicarlos\n"
 				+ "de forma horizontal hacia la derecha.\n"
 				+ "\nEtapa de juego 1vs1\n\n"
 				+ "Se utiliza cualquier click para especificar la casilla a la cual se\n"
 				+ "desea disparar,el objetivo del juego es hundir todos los barcos\n"
-				+ "enemigos antes que el hunda tus propios barcos.\n"
-				+ "\nEn caso de querer reiniciar la partida, solo presione el boton ubicado\n"
-				+ "en la zona central de la pantalla";
+				+ "enemigos antes que él hunda los tuyos.\n"
+				+ "\nSi una vez ubicados los barcos, derea reiniciar el juego\n"
+				+ "solo presione el boton ubicado en la zona central de la pantalla";
 	}
 
 }

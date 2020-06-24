@@ -148,9 +148,9 @@ public class Display extends JFrame implements Observer {
       for (int j = 0; j < COLUMNAS; j++) {
 
         switch (tableroLogico1[i][j]) {
-           case Tablero.BARCO:
-           casillas1[i][j].setBackground(GRIS);
-           break;
+//        case Tablero.BARCO:
+//          casillas1[i][j].setBackground(GRIS);
+//          break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
             casillas1[i][j].setIcon(agua2);

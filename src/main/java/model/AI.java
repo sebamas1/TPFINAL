@@ -6,12 +6,20 @@ import java.util.Stack;
 
 public class AI extends Humano {
 
-  // private Tablero tablero;
+  /*
+   * SCORE_VACIAS_ALREDEDOR cuanto suma cada casilla de alrededor
 
-  private static final int SCORE_VACIAS_ALREDEDOR = 2;
-  private static final int SCORE_VACIAS_RECTAS = 1;
-  private static final int SCORE_BARCO_RECTO = 15;
-  private static final int SCORE_BARCO_DIAGONAL = 5;
+   * (las 8 que lo rodean)
+   * con estos parametros safa
+   * SCORE_VACIAS_RECTAS cuanto suma tener casillas vacias en linea recta       4
+   * hacia arriba/abajo/der/izq (util para q dispare sobre los costados)        3
+   * SCORE_BARCO_RECTO para que sume si la casilla esta a lado de un impacto   30
+   * SCORE_BARCO_DIAGONAL para que sume si esta en diagonal a un impacto       10
+   */
+  private static final int SCORE_VACIAS_ALREDEDOR = 4;
+  private static final int SCORE_VACIAS_RECTAS = 4;
+  private static final int SCORE_BARCO_RECTO = 30;
+  private static final int SCORE_BARCO_DIAGONAL = 10;
   private Tablero tablero;
   private Random random = new Random();
 
@@ -59,6 +67,7 @@ public class AI extends Humano {
         grillaAnalizada[i][j] = analizarCasilla(i, j, grillaAnalizada);
       }
     }
+    this.printMatriz(grillaAnalizada);
     ArrayList<int[]> listaCandidatos = new ArrayList<int[]>();
     int max = this.getMaxGrilla(grillaAnalizada);
     boolean apretado;
@@ -84,8 +93,9 @@ public class AI extends Humano {
   }
 
   private int analizarCasilla(int fila, int columna, int[][] grilla) {
-    int puntaje = 0;
-    boolean apretado;
+    int puntaje = 1;
+    boolean bordeVertical = fila == 0 || fila == Tablero.FILAS-1;
+    boolean bordeLateral = columna == 0 || columna == Tablero.FILAS-1;
     int[][] grilla0 = tablero.getGrillaJugador0();
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
@@ -101,16 +111,21 @@ public class AI extends Humano {
         }
       }
     }
-    puntaje = puntaje + this.analizarProximidades(grilla0, fila, columna);
+    
+    if (bordeVertical || bordeLateral) {
+      System.out.println(puntaje);
+      puntaje = (int) Math.round(puntaje * 1.4);
+    }
+    puntaje += this.analizarProximidades(grilla0, fila, columna);
     puntaje += this.otroAnalisisMas(grilla0, fila, columna);
     return puntaje;
   }
 
   private int[] turnoRandom() {
     int[] coord = new int[3];
-    coord[0] = 1;
-    coord[1] = random.nextInt((4 - 0) + 1);
-    coord[2] = random.nextInt((4 - 0) + 1);
+    coord[0] = this.next();
+    coord[1] = random.nextInt((9 - 0) + 1);
+    coord[2] = random.nextInt((9 - 0) + 1);
     return coord;
   }
 
