@@ -213,7 +213,7 @@ public class Display extends JFrame implements Observer {
 	  botonHelp.setPreferredSize(new Dimension(48, 48));
 	  JPanel botonPanel = new JPanel();
 	  botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-	  botonPanel.setBounds(Display.WIDTH-80,Display.HEIGHT-160 , 100, 150);
+	  botonPanel.setBounds(Display.WIDTH-150,Display.HEIGHT-160 , 100, 150);
 	  botonPanel.add(botonHelp);
 	  botonPanel.setBackground(Display.BACKGROUND);
 	  this.add(botonPanel);
