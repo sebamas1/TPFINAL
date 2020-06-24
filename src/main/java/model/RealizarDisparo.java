@@ -64,7 +64,6 @@ public class RealizarDisparo implements AccionBehavior {
       ;
     }
     tablero.setTurno(tablero.getTurno() + 1);
-    tablero.setMovimientoExitoso(true);
   }
 
 }

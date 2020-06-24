@@ -8,6 +8,10 @@ public class AI extends Humano {
 
   // private Tablero tablero;
 
+  private static final int SCORE_VACIAS_ALREDEDOR = 2;
+  private static final int SCORE_VACIAS_RECTAS = 1;
+  private static final int SCORE_BARCO_RECTO = 15;
+  private static final int SCORE_BARCO_DIAGONAL = 5;
   private Tablero tablero;
   private Random random = new Random();
 
@@ -49,8 +53,7 @@ public class AI extends Humano {
 
   private int[] disparo() {
     int[][] grillaAnalizada = new int[Tablero.FILAS][Tablero.COLUMNAS];
-    int[][] grilla0 = tablero.getGrillaJugador0();
-    this.copiarGrilla(grilla0, grillaAnalizada);
+    int[][] grilla0 = tablero.getGrillaJugador0().clone();
     for (int i = 0; i < Tablero.FILAS; i++) {
       for (int j = 0; j < Tablero.COLUMNAS; j++) {
         grillaAnalizada[i][j] = analizarCasilla(i, j, grillaAnalizada);
@@ -67,6 +70,7 @@ public class AI extends Humano {
         }
       }
     }
+    System.out.println("TURNO \n\n\n");
     this.printMatriz(grillaAnalizada);
     int[] coord = { 1, 1, 1 };
     try {
@@ -80,7 +84,7 @@ public class AI extends Humano {
   }
 
   private int analizarCasilla(int fila, int columna, int[][] grilla) {
-    int contadorCasillasVacias = -1;
+    int puntaje = 0;
     boolean apretado;
     int[][] grilla0 = tablero.getGrillaJugador0();
     for (int i = -1; i < 2; i++) {
@@ -90,22 +94,16 @@ public class AI extends Humano {
             return 0;
           }
           if (grilla0[fila + i][columna + j] == Tablero.AGUA || grilla0[fila + i][columna + j] == Tablero.BARCO) {
-            contadorCasillasVacias++;
+            puntaje += AI.SCORE_VACIAS_ALREDEDOR;
           }
         } catch (ArrayIndexOutOfBoundsException e) {
           ;
         }
       }
     }
-    return contadorCasillasVacias;
-  }
-
-  private void copiarGrilla(int[][] grillaCopiar, int[][] grillaCopiada) {
-    for (int i = 0; i < grillaCopiar.length; i++) {
-      for (int j = 0; j < grillaCopiar[i].length; j++) {
-        grillaCopiada[i][j] = grillaCopiar[i][j];
-      }
-    }
+    puntaje = puntaje + this.analizarProximidades(grilla0, fila, columna);
+    puntaje += this.otroAnalisisMas(grilla0, fila, columna);
+    return puntaje;
   }
 
   private int[] turnoRandom() {
@@ -113,14 +111,14 @@ public class AI extends Humano {
     coord[0] = 1;
     coord[1] = random.nextInt((4 - 0) + 1);
     coord[2] = random.nextInt((4 - 0) + 1);
-    tablero.printMatriz();
     return coord;
   }
 
   private void printMatriz(int[][] grilla) {
     for (int i = 0; i < grilla.length; i++) {
       for (int j = 0; j < grilla[i].length; j++) {
-        System.out.print(grilla[i][j] + " ");
+        System.out.print(String.format("%03d", grilla[i][j]) + "  ");
+        ;
       }
       System.out.println();
     }
@@ -136,5 +134,94 @@ public class AI extends Humano {
       }
     }
     return max;
+  }
+
+  private int analizarProximidades(int[][] grilla0, int fila, int columna) {
+    int puntajeAcum = 0;
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        boolean diagonal = j != 0 && i != 0;
+        try {
+          if (diagonal && grilla0[fila + i][columna + j] == Tablero.BARCO_HIT) {
+            puntajeAcum += AI.SCORE_BARCO_DIAGONAL;
+          } else if (!diagonal && grilla0[fila + i][columna + j] == Tablero.BARCO_HIT) {
+            puntajeAcum += AI.SCORE_BARCO_RECTO;
+          }
+        } catch (ArrayIndexOutOfBoundsException e) {
+          ;
+        }
+      }
+    }
+    return puntajeAcum;
+  }
+
+  // Tiene en cuenta el tamaño del barco vivo mas chico y cuantas
+  // casillas rectas vacias tiene
+  private int otroAnalisisMas(int[][] grilla0, int fila, int columna) {
+    int minimo = this.sizeMenorBarcoVivo();
+    int puntaje = 0;
+    boolean colisiona1 = false;
+    boolean colisiona2 = false;
+    boolean colisiona3 = false;
+    boolean colisiona4 = false;
+    for (int i = 1; i < minimo; i++) {
+      try {
+        boolean vacia1 = grilla0[fila + i][columna] == Tablero.AGUA || 
+            grilla0[fila+i][columna] == Tablero.BARCO;
+        if (vacia1 && !colisiona1) {
+          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+        } else if (!vacia1) {
+          colisiona1 = true;
+        }
+      } catch (ArrayIndexOutOfBoundsException e) {
+      }
+      
+      try {
+        boolean vacia2 = grilla0[fila - i][columna] == Tablero.AGUA || 
+            grilla0[fila - i][columna] == Tablero.BARCO;
+        if (vacia2 && !colisiona2) {
+          puntaje += AI.SCORE_VACIAS_RECTAS; 
+        } else if (!vacia2) {
+          colisiona2 = true;
+        }
+      } catch (ArrayIndexOutOfBoundsException e) {
+      }
+      
+      
+      try {
+        boolean vacia3 = grilla0[fila][columna + i] == Tablero.AGUA || 
+            grilla0[fila][columna + i] == Tablero.BARCO;
+        if (vacia3 && !colisiona3) {
+          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+        } else if (!vacia3) {
+          colisiona3 = true;
+        }
+      } catch (ArrayIndexOutOfBoundsException e) {
+      }
+      
+      
+      try {
+        boolean vacia4 = grilla0[fila][columna - i] == Tablero.AGUA || 
+            grilla0[fila][columna - i] == Tablero.BARCO;
+        if (vacia4 && !colisiona4) {
+          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+        } else if (!vacia4) {
+          colisiona4 = true;
+        }
+      } catch (ArrayIndexOutOfBoundsException e) {
+      }
+    }
+    return puntaje;
+  }
+
+  private int sizeMenorBarcoVivo() {
+    ArrayList<Barco> barcos = tablero.getBarcosJug0();
+    int min = 10;
+    for (int i = 0; i < barcos.size(); i++) {
+      if (barcos.get(i).getVida() > 0 && barcos.get(i).getSize() < min) {
+        min = barcos.get(i).getSize();
+      }
+    }
+    return min;
   }
 }

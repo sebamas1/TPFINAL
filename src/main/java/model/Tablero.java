@@ -22,7 +22,6 @@ public class Tablero implements Subject {
   private int turno;
   private AccionBehavior deltaGrillaBehaviour;
   private int turnoJugador;
-  private boolean movimientoExitoso = false;
   private boolean enableNuclear = false;
 
   /**
@@ -42,7 +41,7 @@ public class Tablero implements Subject {
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
-      aux.add(new Barco(2, "Corbeta"));
+//      aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(4, "Destructor"));
@@ -142,17 +141,12 @@ public class Tablero implements Subject {
       notifyObservers(new Evento(Evento.TERMINO_PARTIDA, jugador.getPlayerID()));
       return;
     }
-
-    if (this.movimientoExitoso) {
-      this.movimientoExitoso = false;
-    }
   }
 
   /**
    * Resetea las grillas y los arrays de barcos.
    */
   public void resetearJuego() {
-    this.movimientoExitoso = false;
     turno = 0;
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
@@ -165,7 +159,7 @@ public class Tablero implements Subject {
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
-      aux.add(new Barco(2, "Corbeta"));
+//      aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(4, "Destructor"));
@@ -344,14 +338,6 @@ public class Tablero implements Subject {
       }
     }
     return true;
-  }
-
-  public boolean isMovimientoExitoso() {
-    return movimientoExitoso;
-  }
-
-  public void setMovimientoExitoso(boolean movimientoExitoso) {
-    this.movimientoExitoso = movimientoExitoso;
   }
 
   public void setTurnoJugador(int jugador) {

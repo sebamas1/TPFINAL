@@ -3,7 +3,7 @@ package model;
 
 public interface Jugador {
   
-  public static final int CANT_BARCOS = 6;
+  public static final int CANT_BARCOS = 5;
 
   public String getNombre();
 
