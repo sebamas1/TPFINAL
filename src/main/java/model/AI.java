@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Stack;
 
 public class AI extends Humano {
 
@@ -79,14 +78,13 @@ public class AI extends Humano {
         }
       }
     }
-    System.out.println("TURNO \n\n\n");
-    this.printMatriz(grillaAnalizada);
+    //System.out.println("TURNO \n\n\n");
+    //this.printMatriz(grillaAnalizada);
     int[] coord = { 1, 1, 1 };
     try {
       coord = listaCandidatos.get(random.nextInt(listaCandidatos.size()));
     } catch (IllegalArgumentException e) {
-      System.out.println(listaCandidatos.size());
-      System.out.println("fuck");
+      System.out.println("LISTA VACIA EN IA disparo()");
     }
     return coord;
 
@@ -94,17 +92,20 @@ public class AI extends Humano {
 
   private int analizarCasilla(int fila, int columna, int[][] grilla) {
     int puntaje = 1;
-    boolean bordeVertical = fila == 0 || fila == Tablero.FILAS-1;
-    boolean bordeLateral = columna == 0 || columna == Tablero.FILAS-1;
+    boolean bordeVertical = fila == 0 || fila == Tablero.FILAS - 1;
+    boolean bordeLateral = columna == 0 || columna == Tablero.FILAS - 1;
     int[][] grilla0 = tablero.getGrillaJugador0();
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
         try {
-          if (grilla0[fila][columna] == Tablero.AGUA_MISS || grilla0[fila][columna] == Tablero.BARCO_HIT) {
+          if (grilla0[fila][columna] == Tablero.AGUA_MISS 
+              || grilla0[fila][columna] == Tablero.BARCO_HIT) {
             return 0;
           }
-          if (grilla0[fila + i][columna + j] == Tablero.AGUA || grilla0[fila + i][columna + j] == Tablero.BARCO) {
-            puntaje += tablero.getEnableNuclear() ? SCORE_VACIAS_ALREDEDOR*2 : AI.SCORE_VACIAS_ALREDEDOR;
+          if (grilla0[fila + i][columna + j] == Tablero.AGUA 
+              || grilla0[fila + i][columna + j] == Tablero.BARCO) {
+            puntaje += tablero.getEnableNuclear() ? SCORE_VACIAS_ALREDEDOR * 2 
+                : AI.SCORE_VACIAS_ALREDEDOR;
           }
         } catch (ArrayIndexOutOfBoundsException e) {
           ;
@@ -124,8 +125,8 @@ public class AI extends Humano {
   private int[] turnoRandom() {
     int[] coord = new int[3];
     coord[0] = this.next();
-    coord[1] = random.nextInt((9 - 0) + 1);
-    coord[2] = random.nextInt((9 - 0) + 1);
+    coord[1] = random.nextInt(Tablero.FILAS);
+    coord[2] = random.nextInt(Tablero.COLUMNAS);
     return coord;
   }
 
@@ -181,49 +182,53 @@ public class AI extends Humano {
     boolean colisiona4 = false;
     for (int i = 1; i < minimo; i++) {
       try {
-        boolean vacia1 = grilla0[fila + i][columna] == Tablero.AGUA || 
-            grilla0[fila+i][columna] == Tablero.BARCO;
+        boolean vacia1 = grilla0[fila + i][columna] == Tablero.AGUA 
+            || grilla0[fila + i][columna] == Tablero.BARCO;
         if (vacia1 && !colisiona1) {
-          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+          puntaje += AI.SCORE_VACIAS_RECTAS; 
         } else if (!vacia1) {
           colisiona1 = true;
         }
       } catch (ArrayIndexOutOfBoundsException e) {
+        ;
       }
       
       try {
-        boolean vacia2 = grilla0[fila - i][columna] == Tablero.AGUA || 
-            grilla0[fila - i][columna] == Tablero.BARCO;
+        boolean vacia2 = grilla0[fila - i][columna] == Tablero.AGUA 
+            || grilla0[fila - i][columna] == Tablero.BARCO;
         if (vacia2 && !colisiona2) {
           puntaje += AI.SCORE_VACIAS_RECTAS; 
         } else if (!vacia2) {
           colisiona2 = true;
         }
       } catch (ArrayIndexOutOfBoundsException e) {
+        ;
       }
       
       
       try {
-        boolean vacia3 = grilla0[fila][columna + i] == Tablero.AGUA || 
-            grilla0[fila][columna + i] == Tablero.BARCO;
+        boolean vacia3 = grilla0[fila][columna + i] == Tablero.AGUA 
+            || grilla0[fila][columna + i] == Tablero.BARCO;
         if (vacia3 && !colisiona3) {
-          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+          puntaje += AI.SCORE_VACIAS_RECTAS; 
         } else if (!vacia3) {
           colisiona3 = true;
         }
       } catch (ArrayIndexOutOfBoundsException e) {
+        ;
       }
       
       
       try {
-        boolean vacia4 = grilla0[fila][columna - i] == Tablero.AGUA || 
-            grilla0[fila][columna - i] == Tablero.BARCO;
+        boolean vacia4 = grilla0[fila][columna - i] == Tablero.AGUA 
+            || grilla0[fila][columna - i] == Tablero.BARCO;
         if (vacia4 && !colisiona4) {
-          puntaje+= AI.SCORE_VACIAS_RECTAS; 
+          puntaje += AI.SCORE_VACIAS_RECTAS; 
         } else if (!vacia4) {
           colisiona4 = true;
         }
       } catch (ArrayIndexOutOfBoundsException e) {
+        ;
       }
     }
     return puntaje;

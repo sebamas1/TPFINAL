@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.Evento;
 import model.Tablero;
 
@@ -31,9 +30,14 @@ public class Felicitaciones extends JFrame implements Observer {
   public void felicitar(String nombre) {
     this.getContentPane().removeAll();
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(220, 100);
+    this.setSize(400, 100);
     botonIngresar.addActionListener(new IngresarListener(this));
-    mensaje = new JLabel("Felicitaciones " + nombre + " ganaste!");
+    if (tablero.encontrarGanador().getPlayerID() == 0) {
+      mensaje = new JLabel("Felicitaciones " + nombre + " ganaste!");
+    } else {
+      mensaje = new JLabel("Mal ahi " + tablero.getJugador0().getNombre() 
+          + " aprieta reiniciar para intentarlo de nuevo");
+    }
     mensaje.setMinimumSize(new Dimension(40, 30));
     JPanel identPanel = new JPanel();
     identPanel.add(mensaje);

@@ -12,8 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-
 import model.Controler;
 import model.Evento;
 import model.Tablero;
@@ -100,6 +98,9 @@ public class Display extends JFrame implements Observer {
     this.casillas0 = casillas0;
   }
 
+  /**
+   * Decide que hacer segun el evento.
+   */
   public void update(Evento e) {
     colorearGrilla();
     if (e.getEvento() == Evento.TERMINO_PARTIDA) {
@@ -148,9 +149,9 @@ public class Display extends JFrame implements Observer {
       for (int j = 0; j < COLUMNAS; j++) {
 
         switch (tableroLogico1[i][j]) {
-//        case Tablero.BARCO:
-//          casillas1[i][j].setBackground(GRIS);
-//          break;
+          //case Tablero.BARCO:
+          //casillas1[i][j].setBackground(GRIS);
+          //break;
           case Tablero.AGUA_MISS:
             casillas1[i][j].setBackground(AZUL);
             casillas1[i][j].setIcon(agua2);
@@ -196,9 +197,9 @@ public class Display extends JFrame implements Observer {
   }
   
   public JButton getBotonHelp() {
-	return this.botonHelp;
+    return this.botonHelp;
   }
-  
+
   public JButton getBotonNuclear() {
     return this.botonNuclear;
   }
@@ -215,18 +216,18 @@ public class Display extends JFrame implements Observer {
     this.validate();
     this.botonReinicio.setVisible(false);
   }
-  
+
   private void crearBotonHelp() {
-	  this.botonHelp = new JButton(Display.help);
+    this.botonHelp = new JButton(Display.help);
     this.botonHelp.setToolTipText("¿Necesitas ayuda?");
-	  botonHelp.setPreferredSize(new Dimension(48, 48));
-	  JPanel botonPanel = new JPanel();
-	  botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-	  botonPanel.setBounds(Display.WIDTH-150,Display.HEIGHT-160 , 100, 150);
-	  botonPanel.add(botonHelp);
-	  botonPanel.setBackground(Display.BACKGROUND);
-	  this.add(botonPanel);
-	  this.validate();
+    botonHelp.setPreferredSize(new Dimension(48, 48));
+    JPanel botonPanel = new JPanel();
+    botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+    botonPanel.setBounds(Display.WIDTH - 150, Display.HEIGHT - 160, 100, 150);
+    botonPanel.add(botonHelp);
+    botonPanel.setBackground(Display.BACKGROUND);
+    this.add(botonPanel);
+    this.validate();
   }
 
   private void crearBotonNuclear() {
@@ -234,7 +235,7 @@ public class Display extends JFrame implements Observer {
     this.botonNuclear.setToolTipText("Empezar guerra nuclear (disparos 3x3)");
     botonNuclear.setPreferredSize(new Dimension(48, 48));
     JPanel botonPanel = new JPanel();
-    botonPanel.setBounds(Display.WIDTH-440,Display.HEIGHT - 435 , 56, 56);
+    botonPanel.setBounds(Display.WIDTH - 440, Display.HEIGHT - 435, 56, 56);
     botonPanel.add(botonNuclear);
     botonPanel.setBackground(Display.BACKGROUND);
     this.add(botonPanel);
@@ -243,7 +244,7 @@ public class Display extends JFrame implements Observer {
   
   private void enableGrillas(boolean enable) {
     for (int i = 0; i < FILAS; i++) {
-      for (int j = 0; j < COLUMNAS; j++){
+      for (int j = 0; j < COLUMNAS; j++) {
         casillas0[i][j].setEnabled(enable);
         casillas1[i][j].setEnabled(enable);
       }

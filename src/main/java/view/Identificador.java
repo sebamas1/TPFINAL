@@ -19,7 +19,7 @@ public class Identificador extends JFrame {
 
   private static final long serialVersionUID = 1L;
   public JTextField nombre = new JTextFieldLimit(15);
-  private JLabel instruccion = new JLabel("Ingrese su nombre", SwingConstants.CENTER);
+  private JLabel instruccion = new JLabel("Ingrese su nombre de usuario", SwingConstants.CENTER);
   private JButton botonIngresar = new JButton("Ok");
 
   /**
@@ -31,7 +31,7 @@ public class Identificador extends JFrame {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     botonIngresar.addActionListener(new IngresarListener(this));
     botonIngresar.addActionListener(e);
-
+    this.nombre.setToolTipText("No mas de 15 caracteres");
     JPanel identPanel = new JPanel();
     identPanel.add(instruccion);
     identPanel.add(nombre);
@@ -57,7 +57,12 @@ public class Identificador extends JFrame {
     }
   }
 
+  
   class JTextFieldLimit extends JTextField {
+    /**
+     * Stackoverflow me dijo que asi limito los caracteres de una JLabel.
+     */
+    private static final long serialVersionUID = 1L;
     private int limit;
 
     public JTextFieldLimit(int limit) {
@@ -73,7 +78,7 @@ public class Identificador extends JFrame {
     private class LimitDocument extends PlainDocument {
 
       /**
-      * 
+      * .
       */
       private static final long serialVersionUID = 1L;
 

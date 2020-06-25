@@ -1,6 +1,5 @@
 package model;
 
-import view.Observer;
 
 public class RealizarDisparoEspecial implements AccionBehavior {
 
@@ -36,7 +35,8 @@ public class RealizarDisparoEspecial implements AccionBehavior {
               Barco barquito = tablero.encontrarBarco(row + i, column + j, idCasilla);
               barquito.reducirVida();
               if (barquito.getVida() == 0) {
-                tablero.notifyObservers(new Evento(Evento.DESTRUYE_BARCO, tablero.getTurnoJugador()));
+                tablero.notifyObservers(new Evento(Evento.DESTRUYE_BARCO,
+                    tablero.getTurnoJugador()));
                 System.out.println("Destruiste un/una " + barquito.getTipo() 
                     + " del jugador" + idCasilla);
               }

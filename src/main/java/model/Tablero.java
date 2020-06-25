@@ -41,7 +41,7 @@ public class Tablero implements Subject {
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
-//      aux.add(new Barco(2, "Corbeta"));
+      //aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(4, "Destructor"));
@@ -112,8 +112,6 @@ public class Tablero implements Subject {
   public void dispararEventoEnGrilla(int click, int i, int j, int id) {
 
     this.turnoJugador = this.getTurno() % 2;
-
-    int nroDisparo = this.getTurno() - Humano.CANT_BARCOS * 2;
     if (turno < Humano.CANT_BARCOS * 2) {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
@@ -160,7 +158,7 @@ public class Tablero implements Subject {
     for (int i = 0; i < 2; i++) {
       ArrayList<Barco> aux = i == 0 ? barcosJug0 : barcosJug1;
       aux.add(new Barco(2, "Corbeta"));
-//      aux.add(new Barco(2, "Corbeta"));
+      //aux.add(new Barco(2, "Corbeta"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(3, "Fragata"));
       aux.add(new Barco(4, "Destructor"));

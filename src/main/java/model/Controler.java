@@ -1,10 +1,9 @@
 package model;
 
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-
 import view.Display;
 import view.EstadisticasView;
 import view.Felicitaciones;
@@ -57,30 +56,29 @@ public class Controler {
       tablero.dispararEventoEnGrilla(e.getButton(), i, j, id);
     }
   }
-  
+
   public void setIdentificador(Identificador identificador) {
     this.identificador = identificador;
   }
-  
+
   private class NameListener implements ActionListener {
-    
+
     public NameListener() {
-      
+
     }
-   
+
     public void actionPerformed(ActionEvent e) {
       display.getContentPane().setBackground(Display.BACKGROUND);
       String nombreIngresado = identificador.nombre.getText();
       String aux;
-      if (nombreIngresado.length() == 0 || 
-      nombreIngresado.equals(tablero.getJugador1().getNombre())){
+      if (nombreIngresado.length() == 0 
+          || nombreIngresado.equals(tablero.getJugador1().getNombre())) {
         aux = "Jugador 1";
       } else {
         aux = nombreIngresado;
       }
       display.mostrarString(aux, 50, 10, 100, 40);
-      display.mostrarString(tablero.getJugador1().getNombre(),
-          50, 350, 100, 40);
+      display.mostrarString(tablero.getJugador1().getNombre(), 50, 350, 100, 40);
       display.setVisible(true);
       tablero.getJugador0().setNombre(aux);
     }
@@ -91,27 +89,28 @@ public class Controler {
 
     public ReinicioListener() {
     }
-    
+
     public void actionPerformed(ActionEvent e) {
       tablero.resetearJuego();
     }
   }
-  
-  class HelpListener implements ActionListener{
-	MensajeHelp mensajeHelp;
-	public HelpListener() {
-		mensajeHelp = new MensajeHelp();
-	}
 
-	public void actionPerformed(ActionEvent e) {
-		mensajeHelp.showMensaje();
-	}
+  class HelpListener implements ActionListener {
+    MensajeHelp mensajeHelp;
+
+    public HelpListener() {
+      mensajeHelp = new MensajeHelp();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+      mensajeHelp.showMensaje();
+    }
   }
 
   class NuclearListener implements ActionListener {
     public NuclearListener() {
     }
-    
+
     public void actionPerformed(ActionEvent e) {
       tablero.setEnableNuclear(true);
     }
