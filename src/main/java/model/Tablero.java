@@ -118,7 +118,7 @@ public class Tablero implements Subject {
       deltaGrillaBehaviour = new ColocarBarcos(this);
       deltaGrillaBehaviour.realizarAccion(click, i, j, id);
     } else {
-      if (enableNuclear && nroDisparo > 10) {
+      if (enableNuclear) {
         deltaGrillaBehaviour = new RealizarDisparoEspecial(this);
       } else {
         deltaGrillaBehaviour = new RealizarDisparo(this);
@@ -148,6 +148,7 @@ public class Tablero implements Subject {
    */
   public void resetearJuego() {
     turno = 0;
+    this.setEnableNuclear(false);
     for (int i = 0; i < COLUMNAS; i++) {
       for (int j = 0; j < FILAS; j++) {
         grillaJugador0[i][j] = Tablero.AGUA;
@@ -363,5 +364,9 @@ public class Tablero implements Subject {
 
   public void setEnableNuclear(boolean enableNuclear) {
     this.enableNuclear = enableNuclear;
+  }
+  
+  public boolean getEnableNuclear() {
+    return this.enableNuclear;
   }
 }

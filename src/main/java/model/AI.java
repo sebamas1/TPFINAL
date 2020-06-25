@@ -11,15 +11,15 @@ public class AI extends Humano {
 
    * (las 8 que lo rodean)
    * con estos parametros safa
-   * SCORE_VACIAS_RECTAS cuanto suma tener casillas vacias en linea recta       4
-   * hacia arriba/abajo/der/izq (util para q dispare sobre los costados)        3
-   * SCORE_BARCO_RECTO para que sume si la casilla esta a lado de un impacto   30
-   * SCORE_BARCO_DIAGONAL para que sume si esta en diagonal a un impacto       10
+   * SCORE_VACIAS_RECTAS cuanto suma tener casillas vacias seguidas en linea recta       4
+   * hacia arriba/abajo/der/izq (util para q dispare sobre los costados)                 3
+   * SCORE_BARCO_RECTO para que sume si la casilla esta a lado de un impacto            30
+   * SCORE_BARCO_DIAGONAL para que sume si esta en diagonal a un impacto                10
    */
   private static final int SCORE_VACIAS_ALREDEDOR = 4;
-  private static final int SCORE_VACIAS_RECTAS = 4;
-  private static final int SCORE_BARCO_RECTO = 30;
-  private static final int SCORE_BARCO_DIAGONAL = 10;
+  private static final int SCORE_VACIAS_RECTAS = 3;
+  private static final int SCORE_BARCO_RECTO = 50;
+  private static final int SCORE_BARCO_DIAGONAL = 4;
   private Tablero tablero;
   private Random random = new Random();
 
@@ -104,7 +104,7 @@ public class AI extends Humano {
             return 0;
           }
           if (grilla0[fila + i][columna + j] == Tablero.AGUA || grilla0[fila + i][columna + j] == Tablero.BARCO) {
-            puntaje += AI.SCORE_VACIAS_ALREDEDOR;
+            puntaje += tablero.getEnableNuclear() ? SCORE_VACIAS_ALREDEDOR*2 : AI.SCORE_VACIAS_ALREDEDOR;
           }
         } catch (ArrayIndexOutOfBoundsException e) {
           ;
@@ -114,7 +114,7 @@ public class AI extends Humano {
     
     if (bordeVertical || bordeLateral) {
       System.out.println(puntaje);
-      puntaje = (int) Math.round(puntaje * 1.4);
+      puntaje = (int) Math.round(puntaje * 1.4 + 0.005 * tablero.getTurno());
     }
     puntaje += this.analizarProximidades(grilla0, fila, columna);
     puntaje += this.otroAnalisisMas(grilla0, fila, columna);

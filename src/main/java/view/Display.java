@@ -218,6 +218,7 @@ public class Display extends JFrame implements Observer {
   
   private void crearBotonHelp() {
 	  this.botonHelp = new JButton(Display.help);
+    this.botonHelp.setToolTipText("¿Necesitas ayuda?");
 	  botonHelp.setPreferredSize(new Dimension(48, 48));
 	  JPanel botonPanel = new JPanel();
 	  botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
@@ -230,6 +231,7 @@ public class Display extends JFrame implements Observer {
 
   private void crearBotonNuclear() {
     this.botonNuclear = new JButton(Display.nuclear);
+    this.botonNuclear.setToolTipText("Empezar guerra nuclear (disparos 3x3)");
     botonNuclear.setPreferredSize(new Dimension(48, 48));
     JPanel botonPanel = new JPanel();
     botonPanel.setBounds(Display.WIDTH-440,Display.HEIGHT - 435 , 56, 56);
