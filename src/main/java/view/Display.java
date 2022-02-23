@@ -18,12 +18,13 @@ import model.Tablero;
 
 @SuppressWarnings("serial")
 public class Display extends JFrame implements Observer {
-  private static final ImageIcon agua = new ImageIcon("agua.png");
-  private static final ImageIcon agua2 = new ImageIcon("agua2.png");
-  private static final ImageIcon barco = new ImageIcon("barco.png");
-  private static final ImageIcon explosion = new ImageIcon("explosion.png");
-  private static final ImageIcon help = new ImageIcon("about.png");
-  private static final ImageIcon nuclear = new ImageIcon("radiation.png");
+  private static final String resources_path = "./resources/";
+  private static final ImageIcon agua = new ImageIcon(resources_path + "agua.png");
+  private static final ImageIcon agua2 = new ImageIcon(resources_path + "agua2.png");
+  private static final ImageIcon barco = new ImageIcon(resources_path + "barco.png");
+  private static final ImageIcon explosion = new ImageIcon(resources_path + "explosion.png");
+  private static final ImageIcon help = new ImageIcon(resources_path + "about.png");
+  private static final ImageIcon nuclear = new ImageIcon(resources_path + "radiation.png");
   private final Tablero tablero;
   public static final Color BACKGROUND = new Color(168, 197, 255);
   public static final Color ROJO = new Color(230, 86, 45);
@@ -219,7 +220,7 @@ public class Display extends JFrame implements Observer {
 
   private void crearBotonHelp() {
     this.botonHelp = new JButton(Display.help);
-    this.botonHelp.setToolTipText("¿Necesitas ayuda?");
+    this.botonHelp.setToolTipText("ï¿½Necesitas ayuda?");
     botonHelp.setPreferredSize(new Dimension(48, 48));
     JPanel botonPanel = new JPanel();
     botonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
