@@ -4,4 +4,4 @@
   Facultad de Ciencias Exactas, Físicas y Naturales de la Universidad Nacional de Córdoba.
 
 
-![](resources/UI.png)
+![](resources/battleship.gif)
